@@ -33,6 +33,9 @@ public class RelatorioVendasView extends javax.swing.JFrame {
         }
         taTotalVendas.append("R$"+Double.toString(total));
     }
+    public void abrirTela(){
+        this.setVisible(true);
+    }
     
     private void decoracao(){
         getContentPane().setBackground(Color.decode("#3f3f46"));

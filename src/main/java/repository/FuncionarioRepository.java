@@ -12,7 +12,7 @@ import model.Pessoa;
  *
  * @author luizportel4
  */
-public interface IFuncionarioDAO {
+public interface FuncionarioRepository {
     public void addFuncionario(Funcionario funcionario);
     public List<Funcionario> getFuncionarios();
 }

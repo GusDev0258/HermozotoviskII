@@ -24,6 +24,11 @@ public class RemoverProdutoView extends javax.swing.JFrame {
         this.setTitle("Remover Produto");
         decoracao();
     }
+    
+    public void abrirTela(){
+        this.setVisible(true);
+    }
+    
     private void decoracao(){
         getContentPane().setBackground(Color.decode("#3f3f46"));
         lbInserirCodigo.setForeground(Color.decode("#fafaf9"));

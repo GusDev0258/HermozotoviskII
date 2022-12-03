@@ -1,5 +1,5 @@
 package model;
-import repository.IPessoa;
+import repository.PessoaRepository;
 /**
  *
  * @author luizportel4

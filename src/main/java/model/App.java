@@ -2,7 +2,7 @@ package model;
 
 import view.AdminView;
 import view.LoginView;
-import repository.IFuncionarioDAO;
+import repository.FuncionarioRepository;
 
 
 /**

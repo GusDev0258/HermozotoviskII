@@ -34,6 +34,9 @@ public class CadastroProdutoView extends javax.swing.JFrame {
         
         this.generateList();
     }
+    public void abrirTela(){
+        this.setVisible(true);
+    }
 
     public void generateList() {
         for (Produto pDAO : this.produtoDAO.getProdutos()) {

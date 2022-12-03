@@ -5,7 +5,7 @@
 package model;
 
 
-import repository.IFuncionario;
+import repository.ChecarFuncionarioRepository;
 
 
 public class Admin extends Funcionario {

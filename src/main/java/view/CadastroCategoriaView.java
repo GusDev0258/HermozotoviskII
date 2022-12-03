@@ -25,6 +25,9 @@ public class CadastroCategoriaView extends javax.swing.JFrame {
         this.setTitle("Cadastrar Categoria");
         decoracao();
     }
+    public void abrirTela(){
+        this.setVisible(true);
+    }
     private void decoracao(){
         getContentPane().setBackground(Color.decode("#3f3f46"));
         lbTitulo.setForeground(Color.decode("#fafaf9"));
@@ -35,6 +38,7 @@ public class CadastroCategoriaView extends javax.swing.JFrame {
         btCadastrar.setBackground(Color.decode("#38bdf8"));
         btCadastrar.setForeground(Color.decode("#fafaf9"));
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

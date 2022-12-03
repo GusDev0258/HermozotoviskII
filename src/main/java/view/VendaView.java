@@ -50,6 +50,10 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         atualizarTotal();
     }
 
+    public void abrirTela(){
+        this.setVisible(true);
+    }
+    
     private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));
         rbBoletoBancario.setBackground(Color.decode("#3f3f46"));
