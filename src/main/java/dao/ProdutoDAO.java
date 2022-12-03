@@ -3,21 +3,23 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 import model.Produto;
+import repository.ProdutoRepository;
 
 /**
  *
  * @author luizportel4
  */
-public class ProdutoDAO{
+public class ProdutoDAO implements ProdutoRepository{
     public static List<Produto> produtos = new ArrayList<>();
     
     public ProdutoDAO(){
 //        populateProdutos();
     }
+    @Override
     public void addProduto(Produto produto) {
         produtos.add(produto);
     }
-    
+    @Override
     public List<Produto> getProdutos() {
         return produtos;
     }

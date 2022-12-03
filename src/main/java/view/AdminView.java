@@ -12,8 +12,7 @@ import dao.ClienteDAO;
 import model.Cliente;
 import controller.Controller;
 import java.awt.Color;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
 import model.Admin;
 import model.Funcionario;
 
@@ -55,6 +54,28 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     public void limpaCampo(JTextArea textArea){
         textArea.setText("");
     }
+    public void adicionarAcaoAoItemMenuCadastrarProduto(ActionListener acao){
+        miCadastrarProduto.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuCadastrarCategoria(ActionListener acao){
+        miCadastrarCategoria.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRelatorioCliente(ActionListener acao){
+        miRelatorioCliente.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRelatorioProduto(ActionListener acao){
+        miRelatorioProdutos.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRelatorioVenda(ActionListener acao){
+        miRelatorioVenda.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRemoverProduto(ActionListener acao){
+        miRemoverProduto.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRemoverCliente(ActionListener acao){
+        miRelatorioCliente.addActionListener(acao);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
