@@ -31,13 +31,18 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     /**
      * Creates new form MainView
      */
-    public AdminView(Funcionario adm){
-        this.categorias = new ArrayList<>();
+    public AdminView(){
+//        this.categorias = new ArrayList<>();
         initComponents();
-        this.adm = (Admin) adm; 
+//        this.adm = (Admin) adm; 
         this.setTitle("LGC - HermosoStovisk");
         decoracao();
     }
+    
+    public void abrirTela(){
+        this.setVisible(true);
+    }
+    
     
     public List<Categoria> getCategorias(){
         return this.categorias;
@@ -129,11 +134,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         mCadastro.add(miCadastrarProduto);
 
         miCadastrarCategoria.setText("Cadastrar Categorias");
-        miCadastrarCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miCadastrarCategoriaActionPerformed(evt);
-            }
-        });
         mCadastro.add(miCadastrarCategoria);
 
         mbMain.add(mCadastro);
@@ -230,12 +230,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         relCliente.setVisible(true);
     }//GEN-LAST:event_miRelatorioClienteActionPerformed
 
-    private void miCadastrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadastrarCategoriaActionPerformed
-        // TODO add your handling code here:
-        CadastroCategoriaView novaCategoria = new CadastroCategoriaView(this);
-        novaCategoria.setVisible(true);
-    }//GEN-LAST:event_miCadastrarCategoriaActionPerformed
-
     private void miRelatorioProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRelatorioProdutosActionPerformed
         // TODO add your handling code here:
         RelatorioProdutoView relProd = new RelatorioProdutoView(this);
@@ -327,7 +321,7 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     
     private void decoracao(){
         getContentPane().setBackground(getBackground());
-        lbBoasVindas.setText("Olá " + adm.getNome() + ", Boa noite");
+//        lbBoasVindas.setText("Olá " + adm.getNome() + ", Boa noite");
         lbBoasVindas.setForeground(Color.decode("#fafaf9"));
         mbMain.setBackground(Color.decode("#71717a"));
         mCadastro.setForeground(Color.decode("#fafaf9"));

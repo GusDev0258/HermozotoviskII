@@ -1,8 +1,9 @@
 package model;
 
+import controller.AdminController;
+import controller.CadastroCategoriaController;
 import view.AdminView;
-import view.LoginView;
-import repository.FuncionarioRepository;
+import view.CadastroCategoriaView;
 
 
 /**
@@ -13,8 +14,11 @@ public class App {
     public static void main(String[] args) {
 //        CadastroProdutoView cadastro = new CadastroProdutoView();
 //        cadastro.setVisible(true);
-        LoginView login = new LoginView();
-        login.setVisible(true);
+//        LoginView login = new LoginView();
+//        login.setVisible(true);
+
+            AdminController telaInicial = new AdminController(new AdminView(), new CadastroCategoriaController(new CadastroCategoriaView(), null));
+            telaInicial.abrirTela();
     }
 }
 /*Paleta de Cores do Sistema:
