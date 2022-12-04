@@ -12,6 +12,7 @@ import repository.ProdutoRepository;
  */
 public class ProdutoDAO implements ProdutoRepository{
     public static List<Produto> produtos = new ArrayList<>();
+
     static int valid = 0;
     public ProdutoDAO(){
         if (valid == 0)   
@@ -19,6 +20,7 @@ public class ProdutoDAO implements ProdutoRepository{
        
         valid++;
     }
+    
     @Override
     public void addProduto(Produto produto) {
         produtos.add(produto);

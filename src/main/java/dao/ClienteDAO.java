@@ -17,9 +17,11 @@ import repository.ClienteRepository;
 public class ClienteDAO implements ClienteRepository{
     public static List<Cliente> clientes = new ArrayList<>();   
 
-    public ClienteDAO(){
-//        populateCliente();
+    public ClienteDAO() {
+        
     }
+    
+    
     
     @Override
     public void addCliente(Cliente cliente) {
@@ -47,13 +49,13 @@ public class ClienteDAO implements ClienteRepository{
     }
     
     private void populateCliente() {
-        Cliente[] clientes = {
+        Cliente[] clientesS = {
             new Cliente("João Silva", "2112", "Rua IX"),
             new Cliente("João Silva", "2223", "Rua X"),
             new Cliente("Geroncio Gerundido Geraldo Gerarmino da Silva", "7632", "Rua XI")
         };
-        for (Cliente cliente : clientes) {
-            this.addCliente(cliente);
+        for (Cliente cliente : clientesS) {
+            clientes.add(cliente);
         }
     }
     
