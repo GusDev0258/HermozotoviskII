@@ -20,6 +20,7 @@ import model.ItemProduto;
 import model.Produto;
 import model.Venda;
 import model.Vendedor;
+import view.CadClienteView;
 import view.VendaView;
 
 /**
@@ -38,7 +39,7 @@ public class VendaController implements Controller{
     private List<ItemProduto> pedido = new ArrayList<>();
     
     public VendaController(Funcionario vendedor) {
-        this.tela = new VendaView(vendedor);
+        this.tela = new VendaView();
         this.vendedor = vendedor;
         
         mostrarNomeVendedor();
@@ -50,11 +51,13 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
 //-------------------------                                     INICIALIZAÇÃO                                   -------------------------//
     
+    @Override
     public void exibirTela(){
         tela.exibirTela();
     }
     
-    private void inicializarBotoes(){
+    @Override
+    public void inicializarBotoes(){
         
         //Botoes
         tela.addActionBotaoFecharPedido     (e -> {fecharPedido();});
@@ -272,20 +275,21 @@ public class VendaController implements Controller{
         if (pedido.isEmpty()) {
             mensagem("nenhum pedido feito");
         } else {
-            int cancelar = JOptionPane.showConfirmDialog(null, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int cancelar = JOptionPane.showConfirmDialog
+        (tela, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (cancelar == JOptionPane.YES_OPTION) {
                 devolverProdutos();
                 pedido = new ArrayList<>();
                 limparTodosOsCampos();
             } else {
-                JOptionPane.showMessageDialog(null, "Operação Cancelada", "Action: Operação Cancelada", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(tela, "Operação Cancelada", "Action: Operação Cancelada", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
     
     private Venda gerarVenda(List<ItemProduto> pedido){
         if (pedido == null) {
-            JOptionPane.showMessageDialog(null, "Compra inválida!"
+            JOptionPane.showMessageDialog(tela, "Compra inválida!"
                     + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -298,17 +302,17 @@ public class VendaController implements Controller{
     
     private void finalizarVenda(){
         if (tela.getLtClientes().getSelectedValue() == null) {
-            JOptionPane.showMessageDialog(null, "Compra inválida!"
+            JOptionPane.showMessageDialog(tela, "Compra inválida!"
                     + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
         } else if (tela.getBgFormasDePagamento().getSelection() == null) {
-            JOptionPane.showMessageDialog(null, "Compra inválida!"
+            JOptionPane.showMessageDialog(tela, "Compra inválida!"
                     + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
         } else {
             
             try {
                 Venda venda = gerarVenda(pedido);
                 vendaDao.addVenda(venda);
-                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso!", "Compra Concluida", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(tela, "Compra Realizada com Sucesso!", "Compra Concluida", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Foi");
                 
             } catch (NullPointerException ex) {
@@ -370,7 +374,8 @@ public class VendaController implements Controller{
     }
     
     private void abrirTelaCadastroCliente(){
-        new CadastroClienteController().ccv.abrirTela();
+        CadClienteView cadClienteView = new CadClienteView();
+        new CadastroClienteController(cadClienteView, null).exibirTela();
     }
     
     private void disableCb(){
@@ -387,17 +392,14 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //       
 //-------------------------                                      UTILIDADES                                     -------------------------//
     
-    @Override
     public void mensagem(String mensagem) {
         JOptionPane.showMessageDialog(tela, mensagem);
     }
     
-    @Override
     public void limpaCampo(JTextField textField) {
         textField.setText("");
     }
 
-    @Override
     public void limpaCampo(JTextArea textArea) {
         textArea.setText("");
     }
@@ -425,7 +427,6 @@ public class VendaController implements Controller{
         tela.getTfNomeProduto().setText("");
     }
     
-    @Override
     public Produto buscarProdutoPorNome(String nome){
         for (Produto p : produtoDao.getProdutos()) {
             if(p.getNome().equals(nome))
@@ -434,7 +435,6 @@ public class VendaController implements Controller{
         return null;
     }
     
-    @Override
     public Produto buscarProdutoPorCodigo(int codigo){
         for (Produto p : produtoDao.getProdutos()) {
             if(p.getCodigo() == codigo)
@@ -443,8 +443,6 @@ public class VendaController implements Controller{
         return null;
     }
 
-
-    @Override
     public Cliente buscarClientePorNome(String nome) {
         for (Cliente c : clienteDao.getClientes()){
             if(c.getNome().equals(nome))
@@ -453,7 +451,6 @@ public class VendaController implements Controller{
         return null;
     }
 
-    @Override
     public Cliente buscarClientePorCPF(String CPF) {
         for (Cliente c : clienteDao.getClientes()) {
             if(c.getCPF().equals(CPF))
@@ -467,43 +464,3 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //  
 //---------------------------------------------------------------------------------------------------------------------------------------//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//--------------------                                             Bloco                                             --------------------//
-
-
-
-
-//-------------------------                                         end                                         -------------------------//
-//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
-//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //

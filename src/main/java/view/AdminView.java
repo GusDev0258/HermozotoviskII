@@ -21,7 +21,7 @@ import model.Funcionario;
  *
  * @author Gustavo
  */
-public class AdminView extends javax.swing.JFrame implements Controller {
+public class AdminView extends javax.swing.JFrame {
     
     /**    
     /**
@@ -36,12 +36,11 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     public void exibirTela(){
         this.setVisible(true);
     }
-    @Override
+
     public void limpaCampo(JTextField textField){
         textField.setText("");
     }
      
-    @Override
     public void limpaCampo(JTextArea textArea){
         textArea.setText("");
     }
@@ -64,8 +63,9 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         miRemoverProduto.addActionListener(acao);
     }
     public void adicionarAcaoAoItemMenuRemoverCliente(ActionListener acao){
-        miRelatorioCliente.addActionListener(acao);
+        miRemoverCliente.addActionListener(acao);
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,11 +140,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         mRemover.setText("Remover");
 
         miRemoverCliente.setText("Remover Cliente");
-        miRemoverCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRemoverClienteActionPerformed(evt);
-            }
-        });
         mRemover.add(miRemoverCliente);
 
         miRemoverProduto.setText("Remover Produto");
@@ -203,12 +198,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         relVendas.setVisible(true);
     }//GEN-LAST:event_miRelatorioVendaActionPerformed
 
-    private void miRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRemoverClienteActionPerformed
-        // TODO add your handling code here:
-        RemoverClienteView remCliente = new RemoverClienteView();
-        remCliente.setVisible(true);
-    }//GEN-LAST:event_miRemoverClienteActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -232,19 +221,14 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     private javax.swing.JMenuItem miRemoverProduto;
     // End of variables declaration//GEN-END:variables
 
-    @Override
     public Produto buscarProdutoPorNome(String nome) {
         return null;
     }
 
-    @Override
     public Produto buscarProdutoPorCodigo(int codigo) {
         throw new UnsupportedOperationException("Not supported."); 
     }
 
-
-
-    @Override
     public Cliente buscarClientePorNome(String nome) {
 //        for (Cliente c : clienteDAO.getClientes()) {
 //            if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
@@ -253,7 +237,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         return null;
     }
 
-    @Override
     public Cliente buscarClientePorCPF(String CPF) {
 //        for (Cliente c : clienteDAO.getClientes()) {
 //            if(CPF.equals(c.getCPF()))
@@ -262,7 +245,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         return null;
     }
 
-    @Override
     public void mensagem(String mensagem) {
           JOptionPane.showMessageDialog(null, mensagem);
     }

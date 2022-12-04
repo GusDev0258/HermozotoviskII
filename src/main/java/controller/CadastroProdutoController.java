@@ -15,53 +15,53 @@ import view.CadastroProdutoView;
  * @author gusdev0258
  */
 public class CadastroProdutoController {
-    CadastroProdutoView cpv;
-    Produto prod;
+    CadastroProdutoView cadProdutoView;
+    Produto produto;
 
-    public CadastroProdutoController(CadastroProdutoView cpv, Produto prod) {
-        this.cpv = cpv;
-        this.prod = prod;
+    public CadastroProdutoController(CadastroProdutoView cadProdutoView, Produto produto) {
+        this.cadProdutoView = cadProdutoView;
+        this.produto = produto;
         iniciaBotoes();
     }
     
         public void iniciaBotoes(){
-            cpv.adicionarAcaoAoBotaoCadastrar(e -> cadastraProduto());
+            cadProdutoView.adicionarAcaoAoBotaoCadastrar(e -> cadastraProduto());
         }
     
         public void cadastraProduto(){
-        String nome = cpv.getNomeProduto();
-        int quantidade = cpv.getQuantidadeProduto();
-        String descricao = cpv.getDescricaoProduto();
-        Categoria categoriaProduto = cpv.getCategoriaProduto();
-        Double preco = cpv.getPrecoProduto();
-        ProdutoRepository pDAO = new ProdutoDAO();
+        String nome = cadProdutoView.getNomeProduto();
+        int quantidade = cadProdutoView.getQuantidadeProduto();
+        String descricao = cadProdutoView.getDescricaoProduto();
+        Categoria categoriaProduto = cadProdutoView.getCategoriaProduto();
+        Double preco = cadProdutoView.getPrecoProduto();
+        ProdutoRepository produtoDAO = new ProdutoDAO();
         
         Produto aux = null;
-        for(int i = 0; i < pDAO.getProdutos().size(); i++){
-            if(pDAO.getProdutos().get(i).getNome().equals(nome)){
-                aux = pDAO.getProdutos().get(i);
+        for(int i = 0; i < produtoDAO.getProdutos().size(); i++){
+            if(produtoDAO.getProdutos().get(i).getNome().equals(nome)){
+                aux = produtoDAO.getProdutos().get(i);
             }
         }
         
         if(aux != null){
-        cpv.exibeMensagem("Produto já existe!");
-        cpv.limpaCampos();
+        cadProdutoView.exibeMensagem("Produto já existe!");
+        cadProdutoView.limpaCampos();
         }else{
-        Produto prod;
-        if (cpv.getQuantidadeProduto() == 0)
-            prod = new Produto(nome, preco, descricao, categoriaProduto);
+        Produto produto;
+        if (cadProdutoView.getQuantidadeProduto() == 0)
+            produto = new Produto(nome, preco, descricao, categoriaProduto);
         else
-            prod = new Produto(nome, preco, descricao, categoriaProduto, quantidade);
-        pDAO.addProduto(prod);
+            produto = new Produto(nome, preco, descricao, categoriaProduto, quantidade);
+        produtoDAO.addProduto(produto);
         
-        cpv.geraModel();
-        cpv.exibeMensagem("Produto Criado com Sucesso!");
-        cpv.limpaCampos();
-        cpv.generateList();
+        cadProdutoView.geraModel();
+        cadProdutoView.exibeMensagem("Produto Criado com Sucesso!");
+        cadProdutoView.limpaCampos();
+        cadProdutoView.generateList();
         }
         }
         
         public void abrirTela(){
-            cpv.abrirTela();
+            cadProdutoView.abrirTela();
         }
 }

@@ -1,4 +1,9 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 659556eac36790c870988d294e5339561c00fcdf
 controller\mainForTesters.class
 controller\RemoverClienteController.class
 view\CadastroCategoriaView.class
@@ -19,7 +24,6 @@ view\RelatorioVendasView$2.class
 repository\ChecarFuncionarioRepository.class
 controller\CadastroClienteController.class
 dao\FuncionarioDAO.class
-view\RelatorioProdutoView$2.class
 model\App.class
 repository\CategoriaRepository.class
 dao\ProdutoDAO.class
@@ -30,9 +34,7 @@ view\VendaView$2.class
 view\LoginView.class
 view\RemoverClienteView$1.class
 controller\RelatorioVendaController.class
-view\AdminView$5.class
 view\RelatorioVendasView.class
-view\RelatorioProdutoView$1.class
 utils\Mensagem.class
 controller\Controller.class
 model\Funcionario.class
@@ -55,7 +57,6 @@ repository\FuncionarioRepository.class
 view\CadClienteView$1.class
 model\Vendedor.class
 repository\PessoaRepository.class
-view\AdminView$4.class
 controller\CadastroCategoriaController.class
 view\RelatorioProdutoView.class
 controller\RemoverProdutoController.class
@@ -66,6 +67,8 @@ view\RemoverClienteView.class
 view\VendaView$4.class
 controller\RelatorioClienteController.class
 model\Admin.class
+<<<<<<< HEAD
+=======
 =======
 <<<<<<< HEAD
 repository/ProdutoRepository.class
@@ -75,6 +78,7 @@ view/RemoverProdutoView.class
 model/App.class
 view/CadastroProdutoView.class
 =======
+>>>>>>> 6a98a76faeb868106cccf13303f22bb39e2de30b
 repository/ChecarFuncionarioRepository.class
 repository/ProdutoRepository.class
 view/LoginView.class
@@ -92,7 +96,6 @@ model/Cliente.class
 model/Produto.class
 view/VendaView$7.class
 view/VendaView$10.class
-view/RelatorioProdutoView$2.class
 controller/CadastroCategoriaController.class
 controller/CadastroProdutoController.class
 view/RemoverClienteView$1.class
@@ -100,7 +103,6 @@ repository/CategoriaRepository.class
 model/Categoria.class
 view/VendaView$3.class
 view/VendaView$11.class
-view/AdminView$5.class
 dao/ClienteDAO.class
 exceptions/CadastroException.class
 repository/ClienteRepository.class
@@ -137,14 +139,12 @@ controller/RelatorioClienteController.class
 model/Venda.class
 model/Pessoa.class
 view/AdminView.class
-view/RelatorioProdutoView$1.class
 exceptions/RelatorioException.class
 utils/Mensagem.class
 view/VendaView$8.class
 view/VendaView$13.class
 view/RemoverProdutoView.class
 view/VendaView$1.class
-controller/VendaViewController.class
 controller/RelatorioVendaController.class
 model/Admin.class
 view/VendaView$16.class
@@ -153,7 +153,10 @@ model/App.class
 utils/Limpador.class
 view/VendaView.class
 controller/CadastroClienteController.class
-view/AdminView$4.class
 model/ItemProduto.class
+<<<<<<< HEAD
+=======
 >>>>>>> origin/develop
 >>>>>>> bb583657ddc729a9c01248dacb748560d7c21455
+>>>>>>> 6a98a76faeb868106cccf13303f22bb39e2de30b
+>>>>>>> 659556eac36790c870988d294e5339561c00fcdf
