@@ -1,9 +1,6 @@
 package model;
 
-import controller.AdminController;
-import controller.CadastroCategoriaController;
-import view.AdminView;
-import view.CadastroCategoriaView;
+import controller.LoginController;
 
 
 /**
@@ -17,8 +14,8 @@ public class App {
 //        LoginView login = new LoginView();
 //        login.setVisible(true);
 
-            AdminController telaInicial = new AdminController(new AdminView());
-            telaInicial.abrirTela();
+            LoginController loginController = new LoginController();
+            loginController.exibirTela();
     }
 }
 /*Paleta de Cores do Sistema:
