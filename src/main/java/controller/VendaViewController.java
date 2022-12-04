@@ -17,7 +17,7 @@ import view.VendaView;
 
 /**
  *
- * @author ndeba
+ * @author Nicolas Debacher
  */
 public class VendaViewController {
     
@@ -34,7 +34,7 @@ public class VendaViewController {
 //---------------------------------------------------------------------------------------------------------------------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
-//-------------------------                                     Inicialização                                   -------------------------//
+//-------------------------                                     INICIALIZAÇÃO                                   -------------------------//
     
     public void exbirTela(){
         tela.exibirTela();
@@ -44,34 +44,23 @@ public class VendaViewController {
         
         tela.addActionBotaoPesquisarProduto(e -> {pesquisarProduto();});
         
-        tela.addActionBotaoAdicionarProduto(e -> {});
+        tela.addActionBotaoAdicionarProduto(e -> {adicionarProdutoTabela();});
         
-        tela.addActionBotaoRemoverProduto(e -> {});
+        tela.addActionBotaoRemoverProduto(e -> {removerProdutoTabela();});
         
-        tela.addActionBotaoFecharPedido(e -> {});
+        tela.addActionBotaoFecharPedido(e -> {fecharPedido();});
         
-        tela.addActionBotaoPesquisarCliente(e ->{});
+        tela.addActionBotaoPesquisarCliente(e ->{pesquisarCliente();});
         
-        tela.addActionBotaoCancelarPedido(e -> {});
+        tela.addActionBotaoCancelarPedido(e -> {cancelarVenda();});
         
-        tela.addActionBotaoFinalizarVenda(e -> {});
+        tela.addActionBotaoFinalizarVenda(e -> {finalizarVenda();});
     }
 
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
-//-------------------------                                 Manipulação da tabela                               -------------------------//
-    
-    
-    
-    
-    
-    
-    
-//-------------------------                                         end                                         -------------------------//
-//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
-//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
-//-------------------------Metodos de pesquisa-------------------------//
+//-------------------------                                 METODOS DE PESQUISA                                 -------------------------//
     
     private void mostrarResultado(Produto p){
         DefaultListModel<Produto> listaProdutos = new DefaultListModel();
@@ -85,14 +74,14 @@ public class VendaViewController {
         tela.getLtClientes().setModel(listaClientes);
     }
     
-    public void pesquisarProdutoPorNome(String nome) {
+    private void pesquisarProdutoPorNome(String nome) {
         for (Produto p : produtoDao.getProdutos()) {
             if(p.getNome().toLowerCase().contains(nome.toLowerCase()))
                 mostrarResultado(p);
         }
     }
     
-    public void pesquisarProdutoPorCodigo(String codigo) {
+    private void pesquisarProdutoPorCodigo(String codigo) {
         try {
             Integer pCodigo = Integer.parseInt(codigo);
             
@@ -106,15 +95,29 @@ public class VendaViewController {
             }
             
         }catch(NumberFormatException e){
-           mensagem("");
+           mensagem("Utilize números na sua pesquisa!");
         }
     }
     
-    public void pesquisarProduto(){
+    private void pesquisarProduto(){
         
+        if(!campoNomeProdutoVazio() && campoCodigoVazio()){
+            pesquisarProdutoPorNome(tela.getNomeProduto());
+        }
+        else if (campoNomeProdutoVazio() && !campoCodigoVazio()){
+            pesquisarProdutoPorCodigo(tela.getCodigoProduto());
+        }
+        else if(!campoNomeProdutoVazio() && !campoCodigoVazio()){
+            pesquisarProdutoPorCodigo(tela.getCodigoProduto());
+            if(tela.getLtProdutos().getFirstVisibleIndex() == -1)
+            pesquisarProdutoPorNome(tela.getNomeProduto());
+        }
+        
+        else
+            mensagem("Nenhum valor inserido!");
     }
     
-    public void pesquisarClientePorNome(String nome) {
+    private void pesquisarClientePorNome(String nome) {
         for (Cliente c : clienteDao.getClientes()) {
             if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
                 mostrarResultado(c);
@@ -122,7 +125,7 @@ public class VendaViewController {
     }
 
  
-    public void pesquisarClientePorCPF(String CPF) {
+    private void pesquisarClientePorCPF(String CPF) {
         Set<Cliente> clientes = new HashSet<>();
         clientes.addAll(clienteDao.getClientes());
 
@@ -133,21 +136,122 @@ public class VendaViewController {
         }
     }
 
+    private void pesquisarCliente(){
+        
+    }
+//-------------------------                                         end                                         -------------------------//
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //    
+//-------------------------                                 MANIPULAÇÃO DA TABELA                               -------------------------//
+    
+    private void adicionarProdutoTabela(){
+        
+    }
+    
+    private void removerProdutoTabela(){
+        
+    }
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
-//--------------------                                             Utilities                                         --------------------//
+//-------------------------                                 MANIPULAÇÃO DA VENDA                                -------------------------//
     
-    public void mensagem(String mensagem) {
-        JOptionPane.showMessageDialog(tela, mensagem);
+    private void fecharPedido(){
+        
     }
+    
+    private void cancelarVenda(){
+        
+    }
+    
+    private void finalizarVenda(){
+    
+    }
+    
+//-------------------------                                         end                                         -------------------------//
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- // 
+//-------------------------                                      VALIDAÇÕES                                     -------------------------//
 
     
-    public void limpaCampo(JTextField textField) {
+
+
+
+//-------------------------                                         end                                         -------------------------//
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //       
+//-------------------------                                      UTILIDADES                                     -------------------------//
+    
+    private void mensagem(String mensagem) {
+        JOptionPane.showMessageDialog(tela, mensagem);
+    }
+    
+    private void limpaCampo(JTextField textField) {
         textField.setText("");
     }
 
-    public void limpaCampo(JTextArea textArea) {
+    private void limpaCampo(JTextArea textArea) {
         textArea.setText("");
-    } 
-}
+    }
+    
+    private boolean campoCodigoVazio() {
+        return tela.getCodigoProduto().isBlank();
+    }
+
+    private boolean campoNomeProdutoVazio() {
+        return tela.getNomeProduto().isBlank();
+    }
+
+    private boolean campoCPFVazio() {
+        return tela.getCPF().isBlank();
+    }
+
+    private boolean campoNomeClienteVazio(){
+        return tela.getNomeCliente().isBlank();
+    }
+
+ }  
+//-------------------------                                         end                                         -------------------------//
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //  
+//---------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//--------------------                                             Bloco                                             --------------------//
+
+
+
+
+//-------------------------                                         end                                         -------------------------//
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
+//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
