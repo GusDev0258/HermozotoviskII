@@ -19,14 +19,14 @@ import view.VendaView;
  *
  * @author Nicolas Debacher
  */
-public class VendaViewController {
+public class VendaController {
     
     Funcionario vendedor;
     VendaView tela;
     ProdutoDAO produtoDao = new ProdutoDAO();
     ClienteDAO clienteDao = new ClienteDAO();
     
-    public VendaViewController(Funcionario vendedor) {
+    public VendaController(Funcionario vendedor) {
         this.tela = new VendaView(vendedor);
         this.vendedor = vendedor;
         inicializarBotoes();
@@ -36,7 +36,7 @@ public class VendaViewController {
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
 //-------------------------                                     INICIALIZAÇÃO                                   -------------------------//
     
-    public void exbirTela(){
+    public void exibirTela(){
         tela.exibirTela();
     }
     
