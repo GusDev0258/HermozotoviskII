@@ -21,7 +21,7 @@ public class CadClienteView extends javax.swing.JFrame {
         this.setTitle("Cadastrar Cliente");
         decoracao();
     }
-    public void abrirTela(){
+    public void exibirTela(){
         this.setVisible(true);
     }
     

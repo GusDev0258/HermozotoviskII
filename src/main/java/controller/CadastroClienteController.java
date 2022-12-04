@@ -13,22 +13,25 @@ import view.CadClienteView;
  *
  * @author gusdev0258
  */
-public class CadastroClienteController {
+public class CadastroClienteController implements Controller {
     CadClienteView cadClienteView;
     Cliente clienteModel;
 
     public CadastroClienteController(CadClienteView cadClienteView, Cliente clienteModel) {
         this.cadClienteView = cadClienteView;
         this.clienteModel = clienteModel;
-        iniciaBotoes();
+        inicializarBotoes();  
     }
     
-    
-    
-    public void iniciaBotoes(){
+    @Override
+    public void inicializarBotoes() {
         cadClienteView.adicionarAcaoAoBotaoCadastrar(e -> cadastrarCliente());
     }
     
+    @Override
+    public void exibirTela() {
+        cadClienteView.exibirTela();
+    }
     
     public void cadastrarCliente(){
         Cliente cliente = cadClienteView.getDadosCliente();
@@ -39,4 +42,5 @@ public class CadastroClienteController {
         cadClienteView.exibirMensagem("Cliente cadastrado com sucesso");
         
     }
+
 }

@@ -1,3 +1,83 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+controller\mainForTesters.class
+controller\RemoverClienteController.class
+view\CadastroCategoriaView.class
+exceptions\CadastroException.class
+model\Pessoa.class
+model\Cliente.class
+model\Produto.class
+view\AdminView$1.class
+dao\ClienteDAO.class
+view\CadClienteView.class
+view\RemoverProdutoView$1.class
+view\RelatorioClienteView.class
+view\VendaView$3.class
+view\RelatorioVendasView$1.class
+view\VendaView$5.class
+controller\AdminController.class
+view\RelatorioVendasView$2.class
+repository\ChecarFuncionarioRepository.class
+controller\CadastroClienteController.class
+dao\FuncionarioDAO.class
+view\RelatorioProdutoView$2.class
+model\App.class
+repository\CategoriaRepository.class
+dao\ProdutoDAO.class
+view\AdminView$2.class
+view\AdminView.class
+view\VendaView.class
+view\VendaView$2.class
+view\LoginView.class
+view\RemoverClienteView$1.class
+controller\RelatorioVendaController.class
+view\AdminView$5.class
+view\RelatorioVendasView.class
+view\RelatorioProdutoView$1.class
+utils\Mensagem.class
+controller\Controller.class
+model\Funcionario.class
+controller\CadastroProdutoController.class
+view\VendaView$1.class
+view\AdminView$3.class
+view\CadClienteView$2.class
+view\CadastroProdutoView.class
+view\RemoverProdutoView.class
+model\Categoria.class
+controller\LoginController.class
+repository\ClienteRepository.class
+controller\RelatorioProdutoController.class
+exceptions\RelatorioException.class
+repository\VendaRepository.class
+model\Venda.class
+model\ItemProduto.class
+dao\VendaDAO.class
+repository\FuncionarioRepository.class
+view\CadClienteView$1.class
+model\Vendedor.class
+repository\PessoaRepository.class
+view\AdminView$4.class
+controller\CadastroCategoriaController.class
+view\RelatorioProdutoView.class
+controller\RemoverProdutoController.class
+dao\CategoriaDAO.class
+repository\ProdutoRepository.class
+utils\Limpador.class
+view\RemoverClienteView.class
+view\VendaView$4.class
+controller\RelatorioClienteController.class
+model\Admin.class
+=======
+<<<<<<< HEAD
+repository/ProdutoRepository.class
+dao/ProdutoDAO.class
+view/RemoverProdutoView$1.class
+view/RemoverProdutoView.class
+model/App.class
+view/CadastroProdutoView.class
+=======
+>>>>>>> 6a98a76faeb868106cccf13303f22bb39e2de30b
 repository/ChecarFuncionarioRepository.class
 repository/ProdutoRepository.class
 view/LoginView.class
@@ -73,3 +153,8 @@ utils/Limpador.class
 view/VendaView.class
 controller/CadastroClienteController.class
 model/ItemProduto.class
+<<<<<<< HEAD
+=======
+>>>>>>> origin/develop
+>>>>>>> bb583657ddc729a9c01248dacb748560d7c21455
+>>>>>>> 6a98a76faeb868106cccf13303f22bb39e2de30b

@@ -57,7 +57,7 @@ public class AdminController implements Controller {
   
   public void abrirCadastroDeCliente(){
       CadClienteView cadClienteView= new CadClienteView();
-      cadClienteView.abrirTela();
+      cadClienteView.exibirTela();
   }
 //  public void abrirRelatorioProdutoView(){
 //      RelatorioProdutoView rpv = new RelatorioProdutoView();
