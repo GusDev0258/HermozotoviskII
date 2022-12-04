@@ -21,13 +21,14 @@ import view.VendaView;
  */
 public class AdminController {
   AdminView telaInicial;
-  CadastroCategoriaController ccc;
-  CadastroProdutoController cpc;
+  CadastroCategoriaController cadCategoriaController;
+  CadastroProdutoController cadProdutoController;
 
-    public AdminController(AdminView telaInicial) {
-        this.telaInicial = telaInicial;
-        this.ccc = ccc;
-        this.cpc = cpc;
+    public AdminController() {
+        if (telaInicial == null)
+            telaInicial = new AdminView();
+        this.cadCategoriaController = cadCategoriaController;
+        this.cadProdutoController = cadProdutoController;
         iniciaBotoes();
     }
 
@@ -47,31 +48,31 @@ public class AdminController {
   }
   
   public void abrirCadastroDeCliente(){
-      CadClienteView cclv= new CadClienteView();
-      cclv.abrirTela();
+      CadClienteView cadClienteView= new CadClienteView();
+      cadClienteView.abrirTela();
   }
 //  public void abrirRelatorioProdutoView(){
 //      RelatorioProdutoView rpv = new RelatorioProdutoView();
 //      rpv.abrirTela();
 //  }
   public void abrirRelatorioVendasView(){
-      RelatorioVendasView rvv = new RelatorioVendasView();
-      rvv.abrirTela();
+      RelatorioVendasView relatorioVendasView = new RelatorioVendasView();
+      relatorioVendasView.abrirTela();
   }
   public void abrirRemoverClienteView(){
-      RemoverClienteView rclv = new RemoverClienteView();
-      rclv.abrirTela();
+      RemoverClienteView removerClienteView = new RemoverClienteView();
+      removerClienteView.abrirTela();
   }
   public void abrirRemoverProdutoView(){
-      RemoverProdutoView rpv = new RemoverProdutoView();
-      rpv.abrirTela();
+      RemoverProdutoView removerProdutoView = new RemoverProdutoView();
+      removerProdutoView.exibirTela();
   }
 //  public void abrirVendaView(){
 //      VendaView vv = new VendaView();
 //      vv.abrirTela();
 //  }
   
-  public void abrirTela(){
-      telaInicial.abrirTela();
+  public void exibirTela(){
+      telaInicial.exibirTela();
   }
 }

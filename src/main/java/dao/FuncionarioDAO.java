@@ -20,8 +20,8 @@ public class FuncionarioDAO implements FuncionarioRepository {
     public static List<Funcionario> funcionarios = new ArrayList<>();
 
     public FuncionarioDAO() {
-        this.populateAdmin();
-        this.populateVendedor();
+        this.popularAdmin();
+        this.popularVendedor();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class FuncionarioDAO implements FuncionarioRepository {
         return funcionarios;
     }
      
-    public Funcionario findFuncionario(String cpf, String senha) {
+    public Funcionario buscaFuncionario(String cpf, String senha) {
         for (Funcionario funcionario : funcionarios) {
             if(cpf.equals(funcionario.getCPF()) && funcionario.checarSenha(senha)){
                 return funcionario;
@@ -43,7 +43,7 @@ public class FuncionarioDAO implements FuncionarioRepository {
         return null;
     }    
   
-    private void populateAdmin() {
+    private void popularAdmin() {
         Admin[] admins = {
             new Admin("Gustavo", "01", "123"),
             new Admin("Luiz", "02", "123"),
@@ -54,7 +54,7 @@ public class FuncionarioDAO implements FuncionarioRepository {
         }
     }
     
-    private void populateVendedor() {
+    private void popularVendedor() {
         Vendedor[] vendors = {
             new Vendedor("Josias", "11", "123"),
             new Vendedor("Geroncia", "12", "123"),
