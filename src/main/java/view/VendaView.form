@@ -282,9 +282,6 @@
     <Component class="javax.swing.JTextField" name="tfNomeProduto">
     </Component>
     <Component class="javax.swing.JTextField" name="tfCodigo">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfCodigoActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -321,9 +318,6 @@
           <Font name="Segoe UI" size="14" style="1"/>
         </Property>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfTotalActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
@@ -552,9 +546,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfCPF">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfCPFActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfNomeCliente">
     </Component>

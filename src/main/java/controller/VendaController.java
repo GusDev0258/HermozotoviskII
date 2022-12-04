@@ -38,7 +38,7 @@ public class VendaController implements Controller{
     private List<ItemProduto> pedido = new ArrayList<>();
     
     public VendaController(Funcionario vendedor) {
-        this.tela = new VendaView(vendedor);
+        this.tela = new VendaView();
         this.vendedor = vendedor;
         
         mostrarNomeVendedor();
@@ -272,20 +272,21 @@ public class VendaController implements Controller{
         if (pedido.isEmpty()) {
             mensagem("nenhum pedido feito");
         } else {
-            int cancelar = JOptionPane.showConfirmDialog(null, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int cancelar = JOptionPane.showConfirmDialog
+        (tela, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (cancelar == JOptionPane.YES_OPTION) {
                 devolverProdutos();
                 pedido = new ArrayList<>();
                 limparTodosOsCampos();
             } else {
-                JOptionPane.showMessageDialog(null, "Operação Cancelada", "Action: Operação Cancelada", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(tela, "Operação Cancelada", "Action: Operação Cancelada", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
     
     private Venda gerarVenda(List<ItemProduto> pedido){
         if (pedido == null) {
-            JOptionPane.showMessageDialog(null, "Compra inválida!"
+            JOptionPane.showMessageDialog(tela, "Compra inválida!"
                     + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
             return null;
         }
@@ -298,17 +299,17 @@ public class VendaController implements Controller{
     
     private void finalizarVenda(){
         if (tela.getLtClientes().getSelectedValue() == null) {
-            JOptionPane.showMessageDialog(null, "Compra inválida!"
+            JOptionPane.showMessageDialog(tela, "Compra inválida!"
                     + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
         } else if (tela.getBgFormasDePagamento().getSelection() == null) {
-            JOptionPane.showMessageDialog(null, "Compra inválida!"
+            JOptionPane.showMessageDialog(tela, "Compra inválida!"
                     + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
         } else {
             
             try {
                 Venda venda = gerarVenda(pedido);
                 vendaDao.addVenda(venda);
-                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso!", "Compra Concluida", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(tela, "Compra Realizada com Sucesso!", "Compra Concluida", JOptionPane.WARNING_MESSAGE);
                 System.out.println("Foi");
                 
             } catch (NullPointerException ex) {
@@ -467,43 +468,3 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //  
 //---------------------------------------------------------------------------------------------------------------------------------------//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//--------------------                                             Bloco                                             --------------------//
-
-
-
-
-//-------------------------                                         end                                         -------------------------//
-//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
-//-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
