@@ -17,9 +17,11 @@ import repository.ClienteRepository;
 public class ClienteDAO implements ClienteRepository{
     public static List<Cliente> clientes = new ArrayList<>();   
 
-    public ClienteDAO(){
-//        populateCliente();
+    public ClienteDAO() {
+        
     }
+    
+    
     
     @Override
     public void addCliente(Cliente cliente) {

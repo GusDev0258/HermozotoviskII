@@ -23,9 +23,6 @@ import model.Funcionario;
  */
 public class AdminView extends javax.swing.JFrame implements Controller {
     
-    private List<Categoria> categorias;
-    private ProdutoDAO produtoDAO = new ProdutoDAO();
-    private ClienteDAO clienteDAO = new ClienteDAO();
     private Admin adm;
     /**    
     /**
@@ -41,14 +38,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     
     public void abrirTela(){
         this.setVisible(true);
-    }
-    
-    
-    public List<Categoria> getCategorias(){
-        return this.categorias;
-    }  
-    public ProdutoDAO getProdutoDAO() {
-        return this.produtoDAO;
     }
     @Override
     public void limpaCampo(JTextField textField){
@@ -147,11 +136,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         mRelatorio.add(miRelatorioCliente);
 
         miRelatorioProdutos.setText("Relatório de Produtos");
-        miRelatorioProdutos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRelatorioProdutosActionPerformed(evt);
-            }
-        });
         mRelatorio.add(miRelatorioProdutos);
 
         mbMain.add(mRelatorio);
@@ -208,12 +192,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void miRelatorioProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRelatorioProdutosActionPerformed
-        // TODO add your handling code here:
-        RelatorioProdutoView relProd = new RelatorioProdutoView(this);
-        relProd.setVisible(true);
-    }//GEN-LAST:event_miRelatorioProdutosActionPerformed
-
     private void miRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRemoverProdutoActionPerformed
         // TODO add your handling code here:
 
@@ -259,11 +237,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
 
     @Override
     public Produto buscarProdutoPorNome(String nome) {
-        for(Produto p: this.produtoDAO.getProdutos()){
-            if(p.getNome().contains(nome)){
-                return p;
-            }
-        }
         return null;
     }
 
@@ -276,19 +249,19 @@ public class AdminView extends javax.swing.JFrame implements Controller {
 
     @Override
     public Cliente buscarClientePorNome(String nome) {
-        for (Cliente c : clienteDAO.getClientes()) {
-            if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
-                return c;
-        }
+//        for (Cliente c : clienteDAO.getClientes()) {
+//            if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
+//                return c;
+//        }
         return null;
     }
 
     @Override
     public Cliente buscarClientePorCPF(String CPF) {
-        for (Cliente c : clienteDAO.getClientes()) {
-            if(CPF.equals(c.getCPF()))
-                return c;
-        }
+//        for (Cliente c : clienteDAO.getClientes()) {
+//            if(CPF.equals(c.getCPF()))
+//                return c;
+//        }
         return null;
     }
 

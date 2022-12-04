@@ -41,6 +41,9 @@ public class AdminController {
      telaInicial.adicionarAcaoAoItemMenuRelatorioCliente(e -> {
      new RelatorioClienteController(new RelatorioClienteView()).abrirTela();
      });
+     telaInicial.adicionarAcaoAoItemMenuRelatorioProduto(e ->{
+     new RelatorioProdutoController(new RelatorioProdutoView()).exibirTela();
+     });
   }
   
   public void abrirCadastroDeCliente(){

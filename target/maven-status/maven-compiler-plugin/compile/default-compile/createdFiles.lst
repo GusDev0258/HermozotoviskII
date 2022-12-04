@@ -1,0 +1,6 @@
+repository/ProdutoRepository.class
+dao/ProdutoDAO.class
+view/RemoverProdutoView$1.class
+view/RemoverProdutoView.class
+model/App.class
+view/CadastroProdutoView.class

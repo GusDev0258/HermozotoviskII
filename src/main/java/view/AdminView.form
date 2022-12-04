@@ -43,9 +43,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Produtos"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miRelatorioProdutosActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
