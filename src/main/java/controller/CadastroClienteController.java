@@ -15,20 +15,15 @@ import view.CadClienteView;
  */
 public class CadastroClienteController {
     CadClienteView ccv;
-    Cliente c;
 
-    public CadastroClienteController(CadClienteView ccv, Cliente c) {
-        this.ccv = ccv;
-        this.c = c;
+    public CadastroClienteController() {
+        this.ccv = new CadClienteView();
         iniciaBotoes();
     }
-    
-    
     
     public void iniciaBotoes(){
         ccv.adicionarAcaoAoBotaoCadastrar(e -> cadastrarCliente());
     }
-    
     
     public void cadastrarCliente(){
         String nome = ccv.getNome();
