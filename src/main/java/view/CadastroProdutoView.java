@@ -1,12 +1,15 @@
 package view;
 
+import dao.CategoriaDAO;
 import dao.ProdutoDAO;
 import exceptions.CadastroException;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import model.Categoria;
 import model.Produto;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import repository.ProdutoRepository;
 
 /**
  *
@@ -14,29 +17,65 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CadastroProdutoView extends javax.swing.JFrame {
 
-    private AdminView main;
-    private ProdutoDAO produtoDAO;
 
     /**
      * Creates new form ViewCadastroProduto
      *
      * @param main
      */
-    public CadastroProdutoView(AdminView main) {
-        this.main = main;
-        this.produtoDAO = main.getProdutoDAO();
+    public CadastroProdutoView() {
         initComponents();
         decoracao();
         this.setTitle("Cadastrar Produtos");
-        for (Categoria cat : this.main.getCategorias()) {
-            cbCategoria.addItem(cat.getNome());
-        }
-        
+        this.populaComboBox();
         this.generateList();
     }
-
+    public void abrirTela(){
+        this.setVisible(true);
+    }
+    
+    public void populaComboBox(){
+        for(Categoria cat: CategoriaDAO.categorias){
+            cbCategoria.addItem(cat);
+        }
+    }
+    
+    public void adicionarAcaoAoBotaoCadastrar(ActionListener acao){
+        btCadastro.addActionListener(acao);
+    }
+    public String getNomeProduto(){
+        return tfNomeProduto.getText();
+    }
+    
+    public Categoria getCategoriaProduto(){
+        return (Categoria) cbCategoria.getSelectedItem();
+    }
+    
+    public Double getPrecoProduto(){
+        return Double.parseDouble(tfPrecoProduto.getText());
+    }
+    
+    public String getDescricaoProduto(){
+        return tfDescricaoProduto.getText();
+    }
+    
+    public int getQuantidadeProduto(){
+        return Integer.parseInt(tfQuantidade.getText());
+    }
+    public void limpaCampos(){
+        tfDescricaoProduto.setText("");
+        tfNomeProduto.setText("");
+        tfPrecoProduto.setText("");
+        tfQuantidade.setText("");
+    }
+    public void exibeMensagem(String mensagem){
+        JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
     public void generateList() {
-        for (Produto pDAO : this.produtoDAO.getProdutos()) {
+        ProdutoRepository prodDAO = new ProdutoDAO();
+        
+        for (Produto pDAO : prodDAO.getProdutos()) {
             DefaultTableModel model = (DefaultTableModel) tbListaProdutos.getModel();
             Object data[] = {
                 pDAO.getNome(), pDAO.getCategoria(), pDAO.getPreco(), pDAO.getDescricao()
@@ -44,7 +83,10 @@ public class CadastroProdutoView extends javax.swing.JFrame {
             model.addRow(data);
         }
     }
-
+    public void geraModel(){
+        DefaultTableModel model = (DefaultTableModel) tbListaProdutos.getModel();
+        model.setNumRows(0);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,11 +152,6 @@ public class CadastroProdutoView extends javax.swing.JFrame {
         lbDesc.setText("Descrição do Produto");
 
         btCadastro.setText("Cadastrar");
-        btCadastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCadastroActionPerformed(evt);
-            }
-        });
 
         tfDescricaoProduto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -210,43 +247,6 @@ public class CadastroProdutoView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroActionPerformed
-        // TODO add your handling code here:
-        String nome = tfNomeProduto.getText();
-        String descricao = tfDescricaoProduto.getText();
-        String preco = tfPrecoProduto.getText();
-        String categoria = (String) cbCategoria.getSelectedItem();
-        String quantidade = tfQuantidade.getText();
-        
-        Produto aux = null;
-        for(int i = 0; i < produtoDAO.getProdutos().size(); i++){
-            if(produtoDAO.getProdutos().get(i).getNome().equals(nome)){
-                aux = produtoDAO.getProdutos().get(i);
-            }
-        }
-        if(aux != null){
-        JOptionPane.showMessageDialog(null, "Produto já existe!");
-        main.limpaCampo(tfNomeProduto);
-        }else{
-        Produto prod;
-        if (quantidade.isBlank())
-            prod = new Produto(nome, Double.parseDouble(preco), descricao, categoria);
-        else
-            prod = new Produto(nome, Double.parseDouble(preco), descricao, categoria, Integer.parseInt(quantidade));
-        this.produtoDAO.addProduto(prod);
-        
-        DefaultTableModel model = (DefaultTableModel) tbListaProdutos.getModel();
-        model.setNumRows(0);
-        JOptionPane.showMessageDialog(null, "Produto Criado com Sucesso!");
-        main.limpaCampo(tfNomeProduto);
-        main.limpaCampo(tfPrecoProduto);
-        main.limpaCampo(tfDescricaoProduto);
-        main.limpaCampo(tfQuantidade);
-        this.generateList();
-        }
-        
-    }//GEN-LAST:event_btCadastroActionPerformed
     private void decoracao(){
         getContentPane().setBackground(Color.decode("#3f3f46"));
         btCadastro.setBackground(Color.decode("#38bdf8"));
@@ -276,7 +276,7 @@ public class CadastroProdutoView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastro;
-    private javax.swing.JComboBox<String> cbCategoria;
+    private javax.swing.JComboBox<Categoria> cbCategoria;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

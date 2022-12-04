@@ -13,17 +13,11 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cadastrar Produtos"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miCadastrarProdutoActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="miCadastrarCategoria">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cadastrar Categorias"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="miCadastrarCategoriaActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

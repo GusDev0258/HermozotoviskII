@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package repository;
+package controller;
 
 /**
  *
- * @author luizportel4
+ * @author gusdev0258
  */
-public interface IFuncionario extends IPessoa {
-    public boolean checarSenha(String senha);
+public class RelatorioClienteController {
+    
 }

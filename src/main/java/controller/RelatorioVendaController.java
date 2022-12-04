@@ -4,13 +4,10 @@
  */
 package controller;
 
-import view.AdminView;
-
 /**
  *
  * @author gusdev0258
  */
-public class AdminViewController {
-  AdminView telaInicial;
-  
+public class RelatorioVendaController {
+    
 }

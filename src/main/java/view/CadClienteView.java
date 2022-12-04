@@ -2,6 +2,7 @@ package view;
 
 import dao.ClienteDAO;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.Cliente;
 
@@ -20,7 +21,36 @@ public class CadClienteView extends javax.swing.JFrame {
         this.setTitle("Cadastrar Cliente");
         decoracao();
     }
-
+    public void abrirTela(){
+        this.setVisible(true);
+    }
+    
+    public String getNome(){
+        return tfNome.getText();
+    }
+    
+    public String getCPF(){
+        return tfCPF.getText();
+    }
+    
+    public String getEndereco(){
+        return tfEndereco.getText();
+    }
+    
+    public void adicionarAcaoAoBotaoCadastrar(ActionListener acao){
+        btSalvar.addActionListener(acao);
+    }
+    
+    public void limpaCampos(){
+        tfNome.setText("");
+        tfCPF.setText("");
+        tfEndereco.setText("");
+    }
+    
+    public void exibirMensagem(String mensagem){
+        JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

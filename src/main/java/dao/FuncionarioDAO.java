@@ -10,13 +10,13 @@ import model.Admin;
 import model.Funcionario;
 import model.Pessoa;
 import model.Vendedor;
-import repository.IFuncionarioDAO;
+import repository.FuncionarioRepository;
 
 /**
  *
  * @author luizportel4
  */
-public class FuncionarioDAO implements IFuncionarioDAO {
+public class FuncionarioDAO implements FuncionarioRepository {
     public static List<Funcionario> funcionarios = new ArrayList<>();
 
     public FuncionarioDAO() {

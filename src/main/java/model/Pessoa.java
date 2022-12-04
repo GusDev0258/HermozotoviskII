@@ -3,13 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-import repository.IPessoa;
+import repository.PessoaRepository;
 
 /**
  *
  * @author luizportel4
  */
-public abstract class Pessoa implements IPessoa {
+public abstract class Pessoa implements PessoaRepository {
     protected String nome;
     protected String cpf;
     protected String senha;

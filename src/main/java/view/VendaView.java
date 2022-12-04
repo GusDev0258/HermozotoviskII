@@ -83,6 +83,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         btConcluir.addActionListener(acao);
     }
 
+
     //---------------------------Metodos que só a tela retorna---------------------------//
     
     
@@ -152,7 +153,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
     
     
     //---------------------------Metodos que só a tela retorna---------------------------//
-    
     private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));
         rbBoletoBancario.setBackground(Color.decode("#3f3f46"));

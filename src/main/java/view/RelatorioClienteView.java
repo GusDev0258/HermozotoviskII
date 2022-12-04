@@ -26,6 +26,9 @@ public class RelatorioClienteView extends javax.swing.JFrame {
         }
         
     }
+    public void abrirTela(){
+        this.setVisible(true);
+    }
     private void decoracao(){
         getContentPane().setBackground(Color.decode("#3f3f46"));
         jLabel1.setForeground(Color.decode("#fafaf9"));
