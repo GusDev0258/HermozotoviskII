@@ -99,6 +99,24 @@ public class VendaViewController {
         }
     }
     
+    private void pesquisarClientePorNome(String nome) {
+        for (Cliente c : clienteDao.getClientes()) {
+            if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
+                mostrarResultado(c);
+        }
+    }
+
+    private void pesquisarClientePorCPF(String CPF) {
+        Set<Cliente> clientes = new HashSet<>();
+        clientes.addAll(clienteDao.getClientes());
+
+        for (Cliente c : clientes) {
+            if (c.getCPF().contains(CPF)) {
+                mostrarResultado(c);
+            }
+        }
+    }
+    
     private void pesquisarProduto(){
         
         if(!campoNomeProdutoVazio() && campoCodigoVazio()){
@@ -110,34 +128,27 @@ public class VendaViewController {
         else if(!campoNomeProdutoVazio() && !campoCodigoVazio()){
             pesquisarProdutoPorCodigo(tela.getCodigoProduto());
             if(tela.getLtProdutos().getFirstVisibleIndex() == -1)
-            pesquisarProdutoPorNome(tela.getNomeProduto());
+                pesquisarProdutoPorNome(tela.getNomeProduto());
         }
-        
         else
             mensagem("Nenhum valor inserido!");
     }
     
-    private void pesquisarClientePorNome(String nome) {
-        for (Cliente c : clienteDao.getClientes()) {
-            if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
-                mostrarResultado(c);
-        }
-    }
-
- 
-    private void pesquisarClientePorCPF(String CPF) {
-        Set<Cliente> clientes = new HashSet<>();
-        clientes.addAll(clienteDao.getClientes());
-
-        for (Cliente c : clientes) {
-            if (c.getCPF().contains(CPF)) {
-                mostrarResultado(c);
-            }
-        }
-    }
-
     private void pesquisarCliente(){
         
+         if(!campoNomeClienteVazio() && campoCPFVazio()){
+            pesquisarClientePorNome(tela.getNomeCliente());
+        }
+        else if (campoNomeClienteVazio() && !campoCPFVazio()){
+            pesquisarClientePorCPF(tela.getCPF());
+        }
+        else if(!campoNomeClienteVazio() && !campoCPFVazio()){
+             pesquisarClientePorCPF(tela.getCPF());
+            if(tela.getLtClientes().getFirstVisibleIndex() == -1)
+                pesquisarClientePorNome(tela.getNomeCliente());
+        }
+        else
+            mensagem("Nenhum valor inserido!");
     }
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
