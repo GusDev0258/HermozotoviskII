@@ -15,10 +15,10 @@ import javax.swing.JTable;
  *
  * @author Nicolas Debacher
  */
+
 public class VendaView extends javax.swing.JFrame{
     
     public VendaView() {
-        
         initComponents();
         decoracao();
     }
@@ -607,3 +607,4 @@ public class VendaView extends javax.swing.JFrame{
     // End of variables declaration//GEN-END:variables
 
 }
+

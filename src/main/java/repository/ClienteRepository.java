@@ -4,6 +4,7 @@
  */
 package repository;
 
+import exceptions.ClienteException;
 import java.util.List;
 import model.Cliente;
 
@@ -12,8 +13,8 @@ import model.Cliente;
  * @author luizportel4
  */
 public interface ClienteRepository {
-    public void addCliente(Cliente cliente);
+    public void adicionarCliente(Cliente cliente);
     public List<Cliente> getClientes();
     public Cliente getClienteCPF(String cpf);
-    public void removeClient(int i);
+    public void removerCliente(Cliente cliente) throws ClienteException;
 }

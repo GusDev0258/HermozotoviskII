@@ -20,6 +20,7 @@ import model.ItemProduto;
 import model.Produto;
 import model.Venda;
 import model.Vendedor;
+import view.CadClienteView;
 import view.VendaView;
 
 /**
@@ -50,11 +51,13 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
 //-------------------------                                     INICIALIZAÇÃO                                   -------------------------//
     
+    @Override
     public void exibirTela(){
         tela.exibirTela();
     }
     
-    private void inicializarBotoes(){
+    @Override
+    public void inicializarBotoes(){
         
         //Botoes
         tela.addActionBotaoFecharPedido     (e -> {fecharPedido();});
@@ -371,7 +374,8 @@ public class VendaController implements Controller{
     }
     
     private void abrirTelaCadastroCliente(){
-        new CadastroClienteController().ccv.abrirTela();
+        CadClienteView cadClienteView = new CadClienteView();
+        new CadastroClienteController(cadClienteView, null).exibirTela();
     }
     
     private void disableCb(){
@@ -388,17 +392,14 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //       
 //-------------------------                                      UTILIDADES                                     -------------------------//
     
-    @Override
     public void mensagem(String mensagem) {
         JOptionPane.showMessageDialog(tela, mensagem);
     }
     
-    @Override
     public void limpaCampo(JTextField textField) {
         textField.setText("");
     }
 
-    @Override
     public void limpaCampo(JTextArea textArea) {
         textArea.setText("");
     }
@@ -426,7 +427,6 @@ public class VendaController implements Controller{
         tela.getTfNomeProduto().setText("");
     }
     
-    @Override
     public Produto buscarProdutoPorNome(String nome){
         for (Produto p : produtoDao.getProdutos()) {
             if(p.getNome().equals(nome))
@@ -435,7 +435,6 @@ public class VendaController implements Controller{
         return null;
     }
     
-    @Override
     public Produto buscarProdutoPorCodigo(int codigo){
         for (Produto p : produtoDao.getProdutos()) {
             if(p.getCodigo() == codigo)
@@ -444,8 +443,6 @@ public class VendaController implements Controller{
         return null;
     }
 
-
-    @Override
     public Cliente buscarClientePorNome(String nome) {
         for (Cliente c : clienteDao.getClientes()){
             if(c.getNome().equals(nome))
@@ -454,7 +451,6 @@ public class VendaController implements Controller{
         return null;
     }
 
-    @Override
     public Cliente buscarClientePorCPF(String CPF) {
         for (Cliente c : clienteDao.getClientes()) {
             if(c.getCPF().equals(CPF))

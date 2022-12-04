@@ -4,10 +4,10 @@
  */
 package dao;
 
+import exceptions.ClienteException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Cliente;
-import model.Pessoa;
 import repository.ClienteRepository;
 
 /**
@@ -20,11 +20,9 @@ public class ClienteDAO implements ClienteRepository{
     public ClienteDAO() {
         
     }
-    
-    
-    
+       
     @Override
-    public void addCliente(Cliente cliente) {
+    public void adicionarCliente(Cliente cliente) {
         clientes.add(cliente);
     }
 
@@ -44,11 +42,11 @@ public class ClienteDAO implements ClienteRepository{
     }
     
     @Override
-    public void removeClient(int i) {
-        clientes.remove(i);
+    public void removerCliente(Cliente cliente){
+        clientes.remove(cliente);
     }
     
-    private void populateCliente() {
+    public void populateCliente() {
         Cliente[] clientesS = {
             new Cliente("João Silva", "2112", "Rua IX"),
             new Cliente("João Silva", "2223", "Rua X"),
