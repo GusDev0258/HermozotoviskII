@@ -20,7 +20,12 @@ import controller.Controller;
 import dao.VendaDAO;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.ActionListener;
 import java.util.stream.Collectors;
+import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTable;
 import model.Venda;
 import model.Vendedor;
 
@@ -38,18 +43,116 @@ public class VendaView extends javax.swing.JFrame implements Controller {
     List<ItemProduto> pedido = new ArrayList<>();
 
     public VendaView(Funcionario vendedor) {
+        this.vendedor = (Vendedor) vendedor;
         initComponents();
         decoracao();
-        this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-        lbClienteNovo.setText("<HTML><U>Clique aqui</U></HTML>");
-        lbClienteNovo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        this.vendedor = (Vendedor) vendedor;
-        this.setTitle("Realizar Venda");
-        lbVendedorAtual.setText("Vendedor(a): " + vendedor.getNome());
-        
         atualizarTotal();
     }
+    
+    public void exibirTela(){
+        this.setVisible(true);
+    }
+    
+    //---------------------------Metodos pra adicionar ações nos botões---------------------------//
+    
+    public void addActionBotaoPesquisarProduto(ActionListener acao){
+        btPesquisarProduto.addActionListener(acao);
+    }
+    
+    public void addActionBotaoAdicionarProduto(ActionListener acao){
+        btAdicionar.addActionListener(acao);
+    }
+    
+    public void addActionBotaoRemoverProduto(ActionListener acao){
+        btRemover.addActionListener(acao);
+    }
+    
+    public void addActionBotaoFecharPedido(ActionListener acao){
+        btFecharPedido.addActionListener(acao);
+    }
+    
+    public void addActionBotaoPesquisarCliente(ActionListener acao){
+        btPesquisarCliente.addActionListener(acao);
+    }
+    
+    public void addActionBotaoCancelarPedido(ActionListener acao){
+        btCancelar.addActionListener(acao);
+    }
+    
+    public void addActionBotaoFinalizarVenda(ActionListener acao){
+        btConcluir.addActionListener(acao);
+    }
 
+    //---------------------------Metodos que só a tela retorna---------------------------//
+    
+    
+    public ButtonGroup getBgFormasDePagamento() {
+        return bgFormasDePagamento;
+    }
+
+    public String getCbParcelas() {
+        return cbParcelas.getSelectedItem().toString();
+    }
+
+    public JLabel getLbVendedorAtual() {
+        return lbVendedorAtual;
+    }
+
+    public JList<Cliente> getLtClientes() {
+        return ltClientes;
+    }
+
+    public JList<Produto> getLtProdutos() {
+        return ltProdutos;
+    }
+    
+    public boolean boletoBancarioSelecionado() {
+        return rbBoletoBancario.isSelected();
+    }
+
+    public boolean creditoSelecionado() {
+        return rbCredito.isSelected();
+    }
+
+    public boolean debitoSelecionado() {
+        return rbDebito.isSelected();
+    }
+
+    public boolean dinheiroSelecionado() {
+        return rbDinheiro.isSelected();
+    }
+
+    public int getQuantidadeProduto() {
+        return Integer.parseInt(spQuantidade.getValue().toString());
+    }
+
+    public JTable getTbProdutos() {
+        return tbProdutos;
+    }
+
+    public String getCPF() {
+        return tfCPF.getText();
+    }
+
+    public String getCodigoProduto() {
+        return tfCodigo.getText();
+    }
+
+    public String getNomeCliente() {
+        return tfNomeCliente.getText();
+    }
+
+    public String getNomeProduto() {
+        return tfNomeProduto.getText();
+    }
+
+    public double getValorTotal() {
+        return Double.parseDouble(tfTotal.getText());
+    }
+    
+    
+    //---------------------------Metodos que só a tela retorna---------------------------//
+    
     private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));
         rbBoletoBancario.setBackground(Color.decode("#3f3f46"));
@@ -108,6 +211,12 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         spQuantidade.setForeground(Color.decode("#18181b"));
         cbParcelas.setBackground(Color.decode("#f3f4f6"));
         cbParcelas.setForeground(Color.decode("#18181b"));
+        
+        this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        this.lbClienteNovo.setText("<HTML><U>Clique aqui</U></HTML>");
+        this.lbClienteNovo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        this.setTitle("Realizar Venda");
+        this.lbVendedorAtual.setText("Vendedor(a): " + vendedor.getNome());
     }
 
     /**
