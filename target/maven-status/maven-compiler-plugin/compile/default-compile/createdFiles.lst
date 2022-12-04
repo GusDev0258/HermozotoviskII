@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-repository/ProdutoRepository.class
-dao/ProdutoDAO.class
-view/RemoverProdutoView$1.class
-view/RemoverProdutoView.class
-model/App.class
-view/CadastroProdutoView.class
-=======
 repository/ChecarFuncionarioRepository.class
 repository/ProdutoRepository.class
 view/LoginView.class
@@ -23,7 +15,6 @@ model/Cliente.class
 model/Produto.class
 view/VendaView$7.class
 view/VendaView$10.class
-view/RelatorioProdutoView$2.class
 controller/CadastroCategoriaController.class
 controller/CadastroProdutoController.class
 view/RemoverClienteView$1.class
@@ -31,7 +22,6 @@ repository/CategoriaRepository.class
 model/Categoria.class
 view/VendaView$3.class
 view/VendaView$11.class
-view/AdminView$5.class
 dao/ClienteDAO.class
 exceptions/CadastroException.class
 repository/ClienteRepository.class
@@ -68,14 +58,12 @@ controller/RelatorioClienteController.class
 model/Venda.class
 model/Pessoa.class
 view/AdminView.class
-view/RelatorioProdutoView$1.class
 exceptions/RelatorioException.class
 utils/Mensagem.class
 view/VendaView$8.class
 view/VendaView$13.class
 view/RemoverProdutoView.class
 view/VendaView$1.class
-controller/VendaViewController.class
 controller/RelatorioVendaController.class
 model/Admin.class
 view/VendaView$16.class
@@ -84,6 +72,4 @@ model/App.class
 utils/Limpador.class
 view/VendaView.class
 controller/CadastroClienteController.class
-view/AdminView$4.class
 model/ItemProduto.class
->>>>>>> origin/develop

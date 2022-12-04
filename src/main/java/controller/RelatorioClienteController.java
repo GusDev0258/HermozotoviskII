@@ -12,19 +12,19 @@ import view.RelatorioClienteView;
  * @author gusdev0258
  */
 public class RelatorioClienteController {
-    RelatorioClienteView rcl;
+    RelatorioClienteView relatorioClienteView;
     Cliente cliente;
 
-    public RelatorioClienteController(RelatorioClienteView rcl) {
-        this.rcl = rcl;
+    public RelatorioClienteController(RelatorioClienteView relatorioClienteView) {
+        this.relatorioClienteView = relatorioClienteView;
         iniciaLista();
     }
     
     public void iniciaLista(){
-        rcl.populaListaDeClientes();
+        relatorioClienteView.populaListaDeClientes();
     }
     
     public void abrirTela(){
-        rcl.abrirTela();
+        relatorioClienteView.abrirTela();
     }
 }

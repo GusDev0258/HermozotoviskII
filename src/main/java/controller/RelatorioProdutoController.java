@@ -17,72 +17,72 @@ import view.RelatorioProdutoView;
  * @author gusdev0258
  */
 public class RelatorioProdutoController {
-    RelatorioProdutoView relatorioDeProdutos;
+    RelatorioProdutoView relatorioProdutoView;
 
-    public RelatorioProdutoController(RelatorioProdutoView relatorioDeProdutos) {
-        this.relatorioDeProdutos = relatorioDeProdutos;
+    public RelatorioProdutoController(RelatorioProdutoView relatorioProdutoView) {
+        this.relatorioProdutoView = relatorioProdutoView;
         iniciaBotoes();
     }
     
     public void iniciaBotoes(){
-        relatorioDeProdutos.adicionarAcaoAoBotaoBuscarCategoria(e -> buscarProdutosPorCategoria());
-        relatorioDeProdutos.adicionarAcaoAoBotaoBuscarNome(e -> buscarProdutosPorNome());
+        relatorioProdutoView.adicionarAcaoAoBotaoBuscarCategoria(e -> buscarProdutosPorCategoria());
+        relatorioProdutoView.adicionarAcaoAoBotaoBuscarNome(e -> buscarProdutosPorNome());
     }
     
     public void buscarProdutosPorNome(){
             try{
-            String nomeBuscado = relatorioDeProdutos.getProdutoBuscado();
+            String nomeBuscado = relatorioProdutoView.getProdutoBuscado();
             List<Produto> prods = buscarProdutos(nomeBuscado);
             if(prods != null){
-            relatorioDeProdutos.limpaResultado();
+            relatorioProdutoView.limpaResultado();
             for(Produto p: prods){
-               relatorioDeProdutos.atribuirValorAoTextAreaProdutos(p.toString() + "\n"); 
+               relatorioProdutoView.atribuirValorAoTextAreaProdutos(p.toString() + "\n"); 
             }
-            relatorioDeProdutos.limpaBusca();
+            relatorioProdutoView.limpaBusca();
         }
         }catch(NullPointerException ex){
-            relatorioDeProdutos.exibirMensagem("Produto não consta no sistema");
+            relatorioProdutoView.exibirMensagem("Produto não consta no sistema");
         }
     }
     
     public List<Produto> buscarProdutos(String produtoNome){
-        List<Produto> produtinhos = new ArrayList<>();
-        for(Produto prod: ProdutoDAO.produtos){
-            if(prod.getNome().contains(produtoNome)){
-                produtinhos.add(prod);
+        List<Produto> produtos = new ArrayList<>();
+        for(Produto produto: ProdutoDAO.produtos){
+            if(produto.getNome().contains(produtoNome)){
+                produtos.add(produto);
             }
         }
-        return produtinhos;
+        return produtos;
     }
     
     public void buscarProdutosPorCategoria(){
         getCategoriaBuscada();
-        for(Produto prod: ProdutoDAO.produtos){
+        for(Produto produto: ProdutoDAO.produtos){
             try{
-            if(prod.getCategoria() == getCategoriaBuscada()){
-                relatorioDeProdutos.atribuirValorAoTextAreaCategorias(prod.toString() + "\n");
+            if(produto.getCategoria() == getCategoriaBuscada()){
+                relatorioProdutoView.atribuirValorAoTextAreaCategorias(produto.toString() + "\n");
                 }
             }catch(NullPointerException ex){
-                relatorioDeProdutos.exibirMensagem("Categoria não encontrada!");
+                relatorioProdutoView.exibirMensagem("Categoria não encontrada!");
             }
         }
-        relatorioDeProdutos.limpaResultado();
+        relatorioProdutoView.limpaResultado();
     }
      public Categoria getCategoriaBuscada(){
-        for(Categoria cat: CategoriaDAO.categorias){
+        for(Categoria categoria: CategoriaDAO.categorias){
             try{
-            if(cat.getNome().equals(relatorioDeProdutos.getCategoria())){
-                return cat;
+            if(categoria.getNome().equals(relatorioProdutoView.getCategoria())){
+                return categoria;
                 }
             }catch(NullPointerException ex){
-                relatorioDeProdutos.exibirMensagem("Categoria não encontrada!");
+                relatorioProdutoView.exibirMensagem("Categoria não encontrada!");
             }
         }
         return null;
     }
      
      public void exibirTela(){
-         relatorioDeProdutos.abrirTela();
+         relatorioProdutoView.abrirTela();
      }
   }
 

@@ -6,6 +6,7 @@ package view;
 
 import dao.ClienteDAO;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,7 +14,9 @@ import javax.swing.JOptionPane;
  * @author sonho
  */
 public class RemoverClienteView extends javax.swing.JFrame {
+
     ClienteDAO cliDAO = new ClienteDAO();
+
     /**
      * Creates new form RemoverProdutoView
      */
@@ -22,12 +25,12 @@ public class RemoverClienteView extends javax.swing.JFrame {
         this.setTitle("Remover Cliente");
         decoracao();
     }
-    
-    public void abrirTela(){
+
+    public void exibirTela() {
         this.setVisible(true);
     }
-    
-    private void decoracao(){
+
+    private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));
         lbInserirCodigo.setForeground(Color.decode("#fafaf9"));
         lbTitulo.setForeground(Color.decode("#fafaf9"));
@@ -35,8 +38,9 @@ public class RemoverClienteView extends javax.swing.JFrame {
         tfCPF.setForeground(Color.decode("#18181b"));
         btRemover.setBackground(Color.decode("#38bdf8"));
         btRemover.setForeground(Color.decode("#fafaf9"));
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,11 +64,6 @@ public class RemoverClienteView extends javax.swing.JFrame {
         lbInserirCodigo.setText("Insira o CPF do cliente");
 
         btRemover.setText("Remover");
-        btRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRemoverActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,23 +99,30 @@ public class RemoverClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
-        // TODO add your handling code here:
-        int confirmar = JOptionPane.showConfirmDialog(null, "Deseja excluir este cliente do banco de dados??", "Apagar Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(confirmar == JOptionPane.YES_OPTION){
-        String cpf = tfCPF.getText();
-        
-        for(int i = 0; i < cliDAO.getClientes().size(); i++){
-            if(cliDAO.getClientes().get(i).getCPF().equals(cpf)){
-                cliDAO.removeClient(i);
-            }
-        }
-        JOptionPane.showMessageDialog(null, "Cliente removido do banco de dados","Cliente Removido",JOptionPane.WARNING_MESSAGE); 
-     }else{
-            JOptionPane.showMessageDialog(null, "Operação cancelada", "Operação cancelada", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btRemoverActionPerformed
+    public void adicionarAcaoRemover(ActionListener action) {
+        btRemover.addActionListener(action);
+    }
+    
+    public String getCPF() {
+        return tfCPF.getText();
+    }
+    
+    public boolean confirmarRemocao() {
+        int confirmar =  mostrarMensagemConfirmacao();
+        return confirmar == JOptionPane.YES_OPTION;
+    }
+    
+    private int mostrarMensagemConfirmacao() {
+        return JOptionPane.showConfirmDialog(null,
+                "Deseja excluir este cliente do banco de dados?",
+                "Apagar Cliente",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+    }
 
+    public void mostrarAviso(String mensagem, String tituloAviso) {
+        JOptionPane.showMessageDialog(null, mensagem, tituloAviso, JOptionPane.WARNING_MESSAGE);
+    }
     /**
      * @param args the command line arguments
      */

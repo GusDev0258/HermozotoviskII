@@ -14,32 +14,29 @@ import view.CadClienteView;
  * @author gusdev0258
  */
 public class CadastroClienteController {
-    CadClienteView ccv;
-    Cliente c;
+    CadClienteView cadClienteView;
+    Cliente clienteModel;
 
-    public CadastroClienteController(CadClienteView ccv, Cliente c) {
-        this.ccv = ccv;
-        this.c = c;
+    public CadastroClienteController(CadClienteView cadClienteView, Cliente clienteModel) {
+        this.cadClienteView = cadClienteView;
+        this.clienteModel = clienteModel;
         iniciaBotoes();
     }
     
     
     
     public void iniciaBotoes(){
-        ccv.adicionarAcaoAoBotaoCadastrar(e -> cadastrarCliente());
+        cadClienteView.adicionarAcaoAoBotaoCadastrar(e -> cadastrarCliente());
     }
     
     
     public void cadastrarCliente(){
-        String nome = ccv.getNome();
-        String cpf = ccv.getCPF();
-        String endereco = ccv.getEndereco();
-        Cliente c = new Cliente(nome, cpf, endereco);
+        Cliente cliente = cadClienteView.getDadosCliente();
         
         ClienteRepository clienteDAO = new ClienteDAO();
-        clienteDAO.addCliente(c);
-        ccv.limpaCampos();
-        ccv.exibirMensagem("Cliente cadastrado com sucesso");
+        clienteDAO.adicionarCliente(cliente);
+        cadClienteView.limpaCampos();
+        cadClienteView.exibirMensagem("Cliente cadastrado com sucesso");
         
     }
 }

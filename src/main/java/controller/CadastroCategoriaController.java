@@ -15,37 +15,39 @@ import view.CadastroCategoriaView;
  *
  * @author gusdev0258
  */
-public class CadastroCategoriaController {
-    CadastroCategoriaView ccv;
+public class CadastroCategoriaController implements Controller {
+    CadastroCategoriaView cadCategoriaView;
     Categoria categoria;
 
     public CadastroCategoriaController(CadastroCategoriaView ccv, Categoria categoria) {
-        this.ccv = ccv;
+        this.cadCategoriaView = ccv;
         this.categoria = categoria;
-        iniciaBotoes();
+        inicializarBotoes();
     }
     
-    public void iniciaBotoes(){
-        ccv.adicionarAcaoAoBotaoCadastrar(e -> CadastrarCategoria());
+    @Override
+    public void inicializarBotoes(){
+        cadCategoriaView.adicionarAcaoAoBotaoCadastrar(e -> CadastrarCategoria());
     }
     
     public void CadastrarCategoria(){
           try {
-            int codigo = ccv.getCodigo();
-            String nome = ccv.getNome();
+            int codigo = cadCategoriaView.getCodigo();
+            String nome = cadCategoriaView.getNome();
             Categoria cat = new Categoria(codigo, nome);
             CategoriaRepository categoriaDAO = new CategoriaDAO();
             categoriaDAO.adicionarCategoria(cat);
-            ccv.limpaCampos();
-            ccv.exibirMensagem("Categoria Cadastrada Com Sucesso!");
+            cadCategoriaView.limpaCampos();
+            cadCategoriaView.exibirMensagem("Categoria Cadastrada Com Sucesso!");
 
         } catch (NumberFormatException err) {
-            ccv.limpaCampos();
-            ccv.exibirMensagem("Informe apenas números ao cadastrar a categoria");
+            cadCategoriaView.limpaCampos();
+            cadCategoriaView.exibirMensagem("Informe apenas números ao cadastrar a categoria");
         }
     }
     
-    public void abrirTelaCadastroCategoria(){
-        ccv.abrirTela();
+    @Override
+    public void exibirTela(){
+        cadCategoriaView.abrirTela();
     }
 }

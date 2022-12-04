@@ -33,7 +33,7 @@ import model.Vendedor;
  *
  * @author Nicolas Debacher
  */
-public class VendaView extends javax.swing.JFrame implements Controller {
+public class VendaView extends javax.swing.JFrame {
 
     private ProdutoDAO produtoDAO = new ProdutoDAO();
     private ClienteDAO clienteDAO = new ClienteDAO();
@@ -1029,7 +1029,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         return false;
     }
 
-    @Override //Funciona em plenitude (List)
+    //Funciona em plenitude (List)
     public Produto buscarProdutoPorNome(String nome) { //todos precisam ser implementados
         for (Produto p : produtoDAO.getProdutos()) {
             if (p.getNome().toLowerCase().contains(nome.toLowerCase())) {
@@ -1039,7 +1039,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         return null;
     }
 
-    @Override //Funciona em plenitude (Map)
+    //Funciona em plenitude (Map)
     public Produto buscarProdutoPorCodigo(int codigo) {
         Map<Integer, Produto> produtos = produtoDAO.getProdutos().stream()
                 .collect(Collectors.toMap(Produto::getCodigo, produto -> produto));
@@ -1047,7 +1047,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         return produtos.get(codigo);
     }
 
-    @Override //Funciona em plenitude
+    //Funciona em plenitude
     public Cliente buscarClientePorNome(String nome) {
 
         for (Cliente c : clienteDAO.getClientes()) {
@@ -1059,7 +1059,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
 
     }
 
-    @Override //Funciona em plenitude (Set)
+    //Funciona em plenitude (Set)
     public Cliente buscarClientePorCPF(String CPF) {
         Set<Cliente> clientes = new HashSet<>();
         clientes.addAll(clienteDAO.getClientes());
@@ -1073,17 +1073,14 @@ public class VendaView extends javax.swing.JFrame implements Controller {
 
     }
 
-    @Override
     public void mensagem(String mensagem) {
         JOptionPane.showMessageDialog(null, mensagem);
     }
 
-    @Override
     public void limpaCampo(JTextField textField) {
         textField.setText("");
     }
 
-    @Override
     public void limpaCampo(JTextArea textArea) {
         textArea.setText("");
     }

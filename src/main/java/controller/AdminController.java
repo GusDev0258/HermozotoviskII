@@ -11,15 +11,14 @@ import view.CadastroProdutoView;
 import view.RelatorioClienteView;
 import view.RelatorioProdutoView;
 import view.RelatorioVendasView;
-import view.RemoverClienteView;
+import dao.ClienteDAO;
 import view.RemoverProdutoView;
-import view.VendaView;
 
 /**
  *
  * @author gusdev0258
  */
-public class AdminController {
+public class AdminController implements Controller {
   AdminView telaInicial;
   CadastroCategoriaController cadCategoriaController;
   CadastroProdutoController cadProdutoController;
@@ -29,12 +28,18 @@ public class AdminController {
             telaInicial = new AdminView();
         this.cadCategoriaController = cadCategoriaController;
         this.cadProdutoController = cadProdutoController;
-        iniciaBotoes();
+        inicializarBotoes();
+        popularClientes();
     }
+    
+       private void popularClientes() {
+           ClienteDAO clienteDAO = new ClienteDAO();
+           clienteDAO.populateCliente();
+       }
 
-  public void iniciaBotoes(){
+  public void inicializarBotoes(){
      telaInicial.adicionarAcaoAoItemMenuCadastrarCategoria(e -> {
-     new CadastroCategoriaController(new CadastroCategoriaView(), null).abrirTelaCadastroCategoria();
+     new CadastroCategoriaController(new CadastroCategoriaView(), null).exibirTela();
      });
      telaInicial.adicionarAcaoAoItemMenuCadastrarProduto(e ->{
      new CadastroProdutoController(new CadastroProdutoView(), null).abrirTela();
@@ -44,6 +49,9 @@ public class AdminController {
      });
      telaInicial.adicionarAcaoAoItemMenuRelatorioProduto(e ->{
      new RelatorioProdutoController(new RelatorioProdutoView()).exibirTela();
+     });
+     telaInicial.adicionarAcaoAoItemMenuRemoverCliente(e -> {
+         new RemoverClienteController().exibirTela();
      });
   }
   
@@ -59,10 +67,7 @@ public class AdminController {
       RelatorioVendasView relatorioVendasView = new RelatorioVendasView();
       relatorioVendasView.abrirTela();
   }
-  public void abrirRemoverClienteView(){
-      RemoverClienteView removerClienteView = new RemoverClienteView();
-      removerClienteView.abrirTela();
-  }
+
   public void abrirRemoverProdutoView(){
       RemoverProdutoView removerProdutoView = new RemoverProdutoView();
       removerProdutoView.exibirTela();

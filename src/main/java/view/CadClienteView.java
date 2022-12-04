@@ -25,6 +25,13 @@ public class CadClienteView extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    public Cliente getDadosCliente() {
+        String nome = getNome();
+        String CPF = getCPF();
+        String endereco = getEndereco();
+        return new Cliente(nome, CPF, endereco);
+    }
+    
     public String getNome(){
         return tfNome.getText();
     }
@@ -148,7 +155,7 @@ public class CadClienteView extends javax.swing.JFrame {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         // TODO add your handling code here:
         Cliente cliente = new Cliente(tfNome.getText(), tfCPF.getText(), tfEndereco.getText());
-        clienteDAO.addCliente(cliente);
+        clienteDAO.adicionarCliente(cliente);
         JOptionPane.showMessageDialog(null, "Cliente Cadastrado!","Cadastro de cliente",JOptionPane.WARNING_MESSAGE);
         dispose();
     }//GEN-LAST:event_btSalvarActionPerformed
