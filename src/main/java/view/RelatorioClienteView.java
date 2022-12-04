@@ -7,13 +7,13 @@ package view;
 import dao.ClienteDAO;
 import java.awt.Color;
 import model.Cliente;
+import repository.ClienteRepository;
 
 /**
  *
  * @author sonho
  */
 public class RelatorioClienteView extends javax.swing.JFrame {
-    ClienteDAO clienteDAO = new ClienteDAO();
     /**
      * Creates new form RelatorioClienteView
      */
@@ -21,11 +21,14 @@ public class RelatorioClienteView extends javax.swing.JFrame {
         this.setTitle("Relatório de Clientes");
         initComponents();
         decoracao();
-        for(Cliente c : clienteDAO.getClientes()){
-            taListaClientes.append(c.toString());
-        }
-        
+        populaListaDeClientes();
     }
+    public void populaListaDeClientes(){
+        for(Cliente cliente: ClienteDAO.clientes){
+            taListaClientes.append(cliente.toString());
+        }
+    }
+    
     public void abrirTela(){
         this.setVisible(true);
     }

@@ -144,11 +144,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         mRelatorio.add(miRelatorioVenda);
 
         miRelatorioCliente.setText("Relatório de Clientes");
-        miRelatorioCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRelatorioClienteActionPerformed(evt);
-            }
-        });
         mRelatorio.add(miRelatorioCliente);
 
         miRelatorioProdutos.setText("Relatório de Produtos");
@@ -212,12 +207,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void miRelatorioClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRelatorioClienteActionPerformed
-        // TODO add your handling code here:
-        RelatorioClienteView relCliente = new RelatorioClienteView();
-        relCliente.setVisible(true);
-    }//GEN-LAST:event_miRelatorioClienteActionPerformed
 
     private void miRelatorioProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRelatorioProdutosActionPerformed
         // TODO add your handling code here:
