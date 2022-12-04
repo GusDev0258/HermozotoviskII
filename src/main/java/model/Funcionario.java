@@ -4,13 +4,13 @@
  */
 package model;
 
-import repository.IFuncionario;
+import repository.ChecarFuncionarioRepository;
 
 /**
  *
  * @author luizportel4
  */
-public class Funcionario extends Pessoa implements IFuncionario {
+public class Funcionario extends Pessoa implements ChecarFuncionarioRepository {
 
     private String senha;
     public Funcionario(String nome, String cpf, String senha) {

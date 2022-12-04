@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Cliente;
 import model.Pessoa;
-import repository.IClienteDAO;
+import repository.ClienteRepository;
 
 /**
  *
  * @author luizportel4
  */
-public class ClienteDAO implements IClienteDAO{
+public class ClienteDAO implements ClienteRepository{
     public static List<Cliente> clientes = new ArrayList<>();   
 
     public ClienteDAO(){

@@ -12,8 +12,7 @@ import dao.ClienteDAO;
 import model.Cliente;
 import controller.Controller;
 import java.awt.Color;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
 import model.Admin;
 import model.Funcionario;
 
@@ -32,13 +31,18 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     /**
      * Creates new form MainView
      */
-    public AdminView(Funcionario adm){
-        this.categorias = new ArrayList<>();
+    public AdminView(){
+//        this.categorias = new ArrayList<>();
         initComponents();
-        this.adm = (Admin) adm; 
+//        this.adm = (Admin) adm; 
         this.setTitle("LGC - HermosoStovisk");
         decoracao();
     }
+    
+    public void abrirTela(){
+        this.setVisible(true);
+    }
+    
     
     public List<Categoria> getCategorias(){
         return this.categorias;
@@ -55,6 +59,28 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     public void limpaCampo(JTextArea textArea){
         textArea.setText("");
     }
+    public void adicionarAcaoAoItemMenuCadastrarProduto(ActionListener acao){
+        miCadastrarProduto.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuCadastrarCategoria(ActionListener acao){
+        miCadastrarCategoria.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRelatorioCliente(ActionListener acao){
+        miRelatorioCliente.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRelatorioProduto(ActionListener acao){
+        miRelatorioProdutos.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRelatorioVenda(ActionListener acao){
+        miRelatorioVenda.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRemoverProduto(ActionListener acao){
+        miRemoverProduto.addActionListener(acao);
+    }
+    public void adicionarAcaoAoItemMenuRemoverCliente(ActionListener acao){
+        miRelatorioCliente.addActionListener(acao);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,19 +126,9 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         mCadastro.setText("Cadastrar");
 
         miCadastrarProduto.setText("Cadastrar Produtos");
-        miCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miCadastrarProdutoActionPerformed(evt);
-            }
-        });
         mCadastro.add(miCadastrarProduto);
 
         miCadastrarCategoria.setText("Cadastrar Categorias");
-        miCadastrarCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miCadastrarCategoriaActionPerformed(evt);
-            }
-        });
         mCadastro.add(miCadastrarCategoria);
 
         mbMain.add(mCadastro);
@@ -197,23 +213,11 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void miCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadastrarProdutoActionPerformed
-        // TODO add your handling code here:
-        CadastroProdutoView novoProduto = new CadastroProdutoView(this);
-        novoProduto.setVisible(true);
-    }//GEN-LAST:event_miCadastrarProdutoActionPerformed
-
     private void miRelatorioClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRelatorioClienteActionPerformed
         // TODO add your handling code here:
         RelatorioClienteView relCliente = new RelatorioClienteView();
         relCliente.setVisible(true);
     }//GEN-LAST:event_miRelatorioClienteActionPerformed
-
-    private void miCadastrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadastrarCategoriaActionPerformed
-        // TODO add your handling code here:
-        CadastroCategoriaView novaCategoria = new CadastroCategoriaView(this);
-        novaCategoria.setVisible(true);
-    }//GEN-LAST:event_miCadastrarCategoriaActionPerformed
 
     private void miRelatorioProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRelatorioProdutosActionPerformed
         // TODO add your handling code here:
@@ -306,7 +310,7 @@ public class AdminView extends javax.swing.JFrame implements Controller {
     
     private void decoracao(){
         getContentPane().setBackground(getBackground());
-        lbBoasVindas.setText("Olá " + adm.getNome() + ", Boa noite");
+//        lbBoasVindas.setText("Olá " + adm.getNome() + ", Boa noite");
         lbBoasVindas.setForeground(Color.decode("#fafaf9"));
         mbMain.setBackground(Color.decode("#71717a"));
         mCadastro.setForeground(Color.decode("#fafaf9"));

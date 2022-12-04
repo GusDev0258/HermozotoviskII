@@ -10,7 +10,7 @@ public class Produto implements Comparable<Produto> {
     protected String nome;
     protected int codigo;
     protected double preco;
-    private String categoria;
+    private Categoria categoria;
     private String descricao;
     protected static int codigoProduto = 1;
     public int quantidade;
@@ -26,7 +26,7 @@ public class Produto implements Comparable<Produto> {
         }
     }
 
-    public Produto(String nome, double preco, String descricao, String categoria) {
+    public Produto(String nome, double preco, String descricao, Categoria categoria) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
@@ -35,7 +35,7 @@ public class Produto implements Comparable<Produto> {
         Produto.codigoProduto += 1;
     }
 
-    public Produto(String nome, double preco, String descricao, String categoria, int quantidade) {
+    public Produto(String nome, double preco, String descricao, Categoria categoria, int quantidade) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
@@ -74,7 +74,7 @@ public class Produto implements Comparable<Produto> {
         this.preco = preco;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 

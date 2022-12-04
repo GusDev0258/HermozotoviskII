@@ -22,6 +22,11 @@ public class RemoverClienteView extends javax.swing.JFrame {
         this.setTitle("Remover Cliente");
         decoracao();
     }
+    
+    public void abrirTela(){
+        this.setVisible(true);
+    }
+    
     private void decoracao(){
         getContentPane().setBackground(Color.decode("#3f3f46"));
         lbInserirCodigo.setForeground(Color.decode("#fafaf9"));

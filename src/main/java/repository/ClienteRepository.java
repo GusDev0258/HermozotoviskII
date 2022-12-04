@@ -4,12 +4,16 @@
  */
 package repository;
 
+import java.util.List;
+import model.Cliente;
+
 /**
  *
  * @author luizportel4
  */
-public interface IPessoa {
-    public String getNome();
-    public String getCPF();
-    public void setNome(String nome);
+public interface ClienteRepository {
+    public void addCliente(Cliente cliente);
+    public List<Cliente> getClientes();
+    public Cliente getClienteCPF(String cpf);
+    public void removeClient(int i);
 }

@@ -8,18 +8,9 @@ import model.Produto;
  *
  * @author luizportel4
  */
-public class ProdutoRepository {
-    List<Produto> produtos;
-
-    public ProdutoRepository() {
-        this.produtos = new ArrayList<>();
-    }
+public interface ProdutoRepository {
     
-    public void addProduct(Produto produto) {
-        this.produtos.add(produto);
-    }
+    public void addProduto(Produto produto);
     
-    public List<Produto> getProdutos() {
-        return (this.produtos);
-    }
+    public List<Produto> getProdutos();
 }
