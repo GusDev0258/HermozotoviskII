@@ -1,12 +1,16 @@
 package view;
 
+import dao.CategoriaDAO;
 import dao.ProdutoDAO;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
+import model.Categoria;
 import model.Produto;
+import repository.ProdutoRepository;
 
 /**
  *
@@ -14,29 +18,71 @@ import model.Produto;
  */
 
 public class RelatorioProdutoView extends javax.swing.JFrame{
-    private AdminView main;
-    private ProdutoDAO produtoDAO = new ProdutoDAO();
     /**
      * Creates new form RelatorioProdutosView
      */
-    public RelatorioProdutoView(AdminView main) {
-        this.main = main;
-        
+    ProdutoDAO pDAO = new ProdutoDAO();
+    public RelatorioProdutoView() {
         initComponents();
         this.setTitle("Relatório de Produtos");
         decoracao();
-        List<Produto> produtos = this.produtoDAO.getProdutos();
-        Collections.sort(produtos);
-        for(Produto prod : produtos){
-            
-            taNome.append("| COD : " + prod.getCodigo() + " | NOME: " + prod.getNome() + " | PRECO: R$" + prod.getPreco());
-            taNome.append("\n");
-            
+        Collections.sort(pDAO.produtos); 
+        populaLista();  
+    }
+    public void populaLista(){
+        for(Produto prod: pDAO.produtos){
+            taProdutos.append("| COD : " + prod.getCodigo() + " | NOME: " + prod.getNome() + " | PRECO: R$" + prod.getPreco());
+            taProdutos.append("\n");
         }
-        
     }
     public void abrirTela(){
         this.setVisible(true);
+    }
+    
+    public String getCategoria(){
+        return tfBuscaCategoria.getText();
+    }
+    
+    public String getProdutoBuscado(){
+        return tfBuscarNome.getText();
+    }
+    
+    public void atribuirValorAoTextAreaCategorias(String valor){
+        taBuscaCat.append(valor);
+    }
+    
+    public void exibirMensagem(String mensagem){
+        JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public void atribuirValorAoTextAreaProdutos(String valor){
+        taBusca.append(valor);
+    }
+    
+    public void adicionarAcaoAoBotaoBuscarNome(ActionListener acao){
+        btBuscar.addActionListener(acao);
+    }
+    
+    public void adicionarAcaoAoBotaoBuscarCategoria(ActionListener acao){
+        btnBuscaCategoria.addActionListener(acao);
+    }
+    
+    public Categoria getCategoriaBuscada(){
+        for(Categoria cat: CategoriaDAO.categorias){
+            if(cat.getNome().equals(tfBuscaCategoria.getText())){
+                return cat;
+            }
+        }
+        return null;
+    }
+    
+    public void limpaBusca(){
+        tfBuscaCategoria.setText("");
+        tfBuscarNome.setText("");
+    }
+    public void limpaResultado(){
+        taBusca.setText("");
+        taBuscaCat.setText("");
     }
     
     private void decoracao(){
@@ -57,19 +103,9 @@ public class RelatorioProdutoView extends javax.swing.JFrame{
         taBuscaCat.setForeground(Color.decode("#18181b"));
         taBusca.setBackground(Color.decode("#f3f4f6"));
         taBusca.setForeground(Color.decode("#18181b"));
-        taNome.setBackground(Color.decode("#f3f4f6"));
-        taNome.setForeground(Color.decode("#18181b"));
+        taProdutos.setBackground(Color.decode("#f3f4f6"));
+        taProdutos.setForeground(Color.decode("#18181b"));
        
-    }
-    public String listaProdutos(){
-        String buscarCat = tfBuscaCategoria.getText();
-        String text = "";
-            for(Produto prod : this.produtoDAO.getProdutos()){
-            if(prod.getCategoria().equals(buscarCat) && !buscarCat.isBlank()){
-                text += prod.getNome() + "\n";
-            }
-        }
-        return text;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,7 +118,7 @@ public class RelatorioProdutoView extends javax.swing.JFrame{
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        taNome = new javax.swing.JTextArea();
+        taProdutos = new javax.swing.JTextArea();
         lbTitulo2 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         taBusca = new javax.swing.JTextArea();
@@ -99,12 +135,12 @@ public class RelatorioProdutoView extends javax.swing.JFrame{
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(63, 63, 70));
 
-        taNome.setEditable(false);
-        taNome.setColumns(20);
-        taNome.setLineWrap(true);
-        taNome.setRows(5);
-        taNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jScrollPane1.setViewportView(taNome);
+        taProdutos.setEditable(false);
+        taProdutos.setColumns(20);
+        taProdutos.setLineWrap(true);
+        taProdutos.setRows(5);
+        taProdutos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane1.setViewportView(taProdutos);
 
         lbTitulo2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbTitulo2.setText("Lista de Produtos no Sistema");
@@ -115,11 +151,6 @@ public class RelatorioProdutoView extends javax.swing.JFrame{
         jScrollPane5.setViewportView(taBusca);
 
         btBuscar.setText("Buscar");
-        btBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBuscarActionPerformed(evt);
-            }
-        });
 
         lbBuscanome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbBuscanome.setText("Nome do Produto");
@@ -128,11 +159,6 @@ public class RelatorioProdutoView extends javax.swing.JFrame{
         lbBuscaCat.setText("Buscar por Categoria");
 
         btnBuscaCategoria.setText("Buscar");
-        btnBuscaCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscaCategoriaActionPerformed(evt);
-            }
-        });
 
         taBuscaCat.setEditable(false);
         taBuscaCat.setColumns(20);
@@ -208,29 +234,6 @@ public class RelatorioProdutoView extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        try{
-            String buscar = tfBuscarNome.getText();
-            Produto p = main.buscarProdutoPorNome(buscar);
-            if(p != null){
-            main.limpaCampo(taBusca);
-            taBusca.append(p.relatoBusca());
-            main.limpaCampo(tfBuscarNome);
-        }
-        }catch(NullPointerException ex){
-            JOptionPane.showMessageDialog(null, "Produto não consta no sistema", "Erro: Produto não encontrado", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btBuscarActionPerformed
-
-    private void btnBuscaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaCategoriaActionPerformed
-        // TODO add your handling code here:
-        try{
-            taBuscaCat.append(listaProdutos());
-        }catch(NullPointerException ex){
-                JOptionPane.showMessageDialog(null, "Categoria não encontrada no sistema!","Error: Categoria não existente", JOptionPane.ERROR_MESSAGE);
-         }
-    }//GEN-LAST:event_btnBuscaCategoriaActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -247,7 +250,7 @@ public class RelatorioProdutoView extends javax.swing.JFrame{
     private javax.swing.JLabel lbTitulo2;
     private javax.swing.JTextArea taBusca;
     private javax.swing.JTextArea taBuscaCat;
-    private javax.swing.JTextArea taNome;
+    private javax.swing.JTextArea taProdutos;
     private javax.swing.JTextField tfBuscaCategoria;
     private javax.swing.JTextField tfBuscarNome;
     // End of variables declaration//GEN-END:variables

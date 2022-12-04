@@ -38,22 +38,17 @@ public class AdminController {
      telaInicial.adicionarAcaoAoItemMenuCadastrarProduto(e ->{
      new CadastroProdutoController(new CadastroProdutoView(), null).abrirTela();
      });
+     telaInicial.adicionarAcaoAoItemMenuRelatorioCliente(e -> {
+     new RelatorioClienteController(new RelatorioClienteView()).abrirTela();
+     });
+     telaInicial.adicionarAcaoAoItemMenuRelatorioProduto(e ->{
+     new RelatorioProdutoController(new RelatorioProdutoView()).exibirTela();
+     });
   }
   
-//  public void abrirCadastroDeCategoria(){
-//      new CadastroCategoriaController(new CadastroCategoriaView(), null).abrirTelaCadastroCategoria();
-//  }
-//  public void abrirCadastroDeProduto(){
-//      CadastroProdutoView cpv = new CadastroProdutoView();
-//      cpv.abrirTela();
-//  }
   public void abrirCadastroDeCliente(){
       CadClienteView cclv= new CadClienteView();
       cclv.abrirTela();
-  }
-  public void abrirRelatorioClienteView(){
-      RelatorioClienteView rcv = new RelatorioClienteView();
-      rcv.abrirTela();
   }
 //  public void abrirRelatorioProdutoView(){
 //      RelatorioProdutoView rpv = new RelatorioProdutoView();

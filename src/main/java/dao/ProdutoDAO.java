@@ -11,10 +11,10 @@ import repository.ProdutoRepository;
  */
 public class ProdutoDAO implements ProdutoRepository{
     public static List<Produto> produtos = new ArrayList<>();
-    
-    public ProdutoDAO(){
-//        populateProdutos();
+
+    public ProdutoDAO() {
     }
+    
     @Override
     public void addProduto(Produto produto) {
         produtos.add(produto);
