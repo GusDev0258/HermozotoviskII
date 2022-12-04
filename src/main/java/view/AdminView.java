@@ -126,11 +126,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
         mCadastro.setText("Cadastrar");
 
         miCadastrarProduto.setText("Cadastrar Produtos");
-        miCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miCadastrarProdutoActionPerformed(evt);
-            }
-        });
         mCadastro.add(miCadastrarProduto);
 
         miCadastrarCategoria.setText("Cadastrar Categorias");
@@ -217,12 +212,6 @@ public class AdminView extends javax.swing.JFrame implements Controller {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void miCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadastrarProdutoActionPerformed
-        // TODO add your handling code here:
-        CadastroProdutoView novoProduto = new CadastroProdutoView(this);
-        novoProduto.setVisible(true);
-    }//GEN-LAST:event_miCadastrarProdutoActionPerformed
 
     private void miRelatorioClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRelatorioClienteActionPerformed
         // TODO add your handling code here:

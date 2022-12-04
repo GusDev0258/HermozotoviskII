@@ -17,7 +17,7 @@ public class App {
 //        LoginView login = new LoginView();
 //        login.setVisible(true);
 
-            AdminController telaInicial = new AdminController(new AdminView(), new CadastroCategoriaController(new CadastroCategoriaView(), null));
+            AdminController telaInicial = new AdminController(new AdminView());
             telaInicial.abrirTela();
     }
 }

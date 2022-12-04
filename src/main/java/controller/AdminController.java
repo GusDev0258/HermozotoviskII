@@ -22,16 +22,21 @@ import view.VendaView;
 public class AdminController {
   AdminView telaInicial;
   CadastroCategoriaController ccc;
+  CadastroProdutoController cpc;
 
-    public AdminController(AdminView telaInicial, CadastroCategoriaController ccc) {
+    public AdminController(AdminView telaInicial) {
         this.telaInicial = telaInicial;
         this.ccc = ccc;
+        this.cpc = cpc;
         iniciaBotoes();
     }
 
   public void iniciaBotoes(){
      telaInicial.adicionarAcaoAoItemMenuCadastrarCategoria(e -> {
      new CadastroCategoriaController(new CadastroCategoriaView(), null).abrirTelaCadastroCategoria();
+     });
+     telaInicial.adicionarAcaoAoItemMenuCadastrarProduto(e ->{
+     new CadastroProdutoController(new CadastroProdutoView(), null).abrirTela();
      });
   }
   
