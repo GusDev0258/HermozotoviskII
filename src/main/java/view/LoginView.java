@@ -148,7 +148,7 @@ public class LoginView extends javax.swing.JFrame {
             VendaView vendaView = new VendaView(usuario);
             vendaView.setVisible(true);
         } else if (usuario instanceof Admin) {
-            AdminView adminView = new AdminView(usuario);
+            AdminView adminView = new AdminView();
             adminView.setVisible(true);
         }
         else {

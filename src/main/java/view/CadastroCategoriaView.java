@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import model.Categoria;
 import utils.Mensagem;
 import utils.Limpador;
@@ -12,22 +13,43 @@ import javax.swing.JOptionPane;
  */
 public class CadastroCategoriaView extends javax.swing.JFrame {
 
-    private AdminView main;
 
     /**
      * Creates new form CadastroCategoriaView
      *
      * @param main
      */
-    public CadastroCategoriaView(AdminView main) {
-        this.main = main;
+    public CadastroCategoriaView() {
         initComponents();
         this.setTitle("Cadastrar Categoria");
         decoracao();
     }
+    
     public void abrirTela(){
-        this.setVisible(true);
+        setVisible(true);
     }
+    
+    public void adicionarAcaoAoBotaoCadastrar(ActionListener acao){
+        btCadastrar.addActionListener(acao);
+    }
+    
+    public void limpaCampos(){
+        tfCodigoCategoria.setText("");
+        tfNomeCategoria.setText("");
+    }
+    
+    public void exibirMensagem(String mensagem){
+        JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+    public String getNome(){
+        return tfNomeCategoria.getText();
+    }
+    
+    public int getCodigo(){
+        return Integer.parseInt(tfCodigoCategoria.getText());
+    }
+    
     private void decoracao(){
         getContentPane().setBackground(Color.decode("#3f3f46"));
         lbTitulo.setForeground(Color.decode("#fafaf9"));
@@ -69,11 +91,6 @@ public class CadastroCategoriaView extends javax.swing.JFrame {
         lbCodigo.setText("Código da Categoria");
 
         btCadastrar.setText("Cadastrar");
-        btCadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCadastrarActionPerformed(evt);
-            }
-        });
 
         lbTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbTitulo.setText("Cadastro de Categoria");
@@ -89,11 +106,11 @@ public class CadastroCategoriaView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfNomeCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                     .addComponent(lbCodigo)
                     .addComponent(lbNome)
-                    .addComponent(tfCodigoCategoria))
+                    .addComponent(tfCodigoCategoria)
+                    .addComponent(btCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
@@ -116,24 +133,7 @@ public class CadastroCategoriaView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
-        try {
-            int codigo = Integer.parseInt(tfCodigoCategoria.getText());
-            String nome = tfNomeCategoria.getText();
-            Categoria cat = new Categoria(codigo, nome);
-            this.main.getCategorias().add(cat);
-            new Mensagem().mensagem("Categoria Cadastrada!");
-            main.limpaCampo(tfNomeCategoria);
-            main.limpaCampo(tfCodigoCategoria);
-
-        } catch (NumberFormatException err) {
-            new Limpador().limpaCampo(tfCodigoCategoria);
-            new Mensagem().mensagem("Informe apenas números ao cadastrar a categoria");
-        }
-
-    }//GEN-LAST:event_btCadastrarActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
