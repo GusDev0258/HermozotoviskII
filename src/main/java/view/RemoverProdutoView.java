@@ -25,7 +25,7 @@ public class RemoverProdutoView extends javax.swing.JFrame {
         decoracao();
     }
     
-    public void abrirTela(){
+    public void exibirTela(){
         this.setVisible(true);
     }
     

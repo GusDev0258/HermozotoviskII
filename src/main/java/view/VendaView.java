@@ -23,6 +23,7 @@ import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import java.util.stream.Collectors;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
@@ -83,7 +84,25 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         btConcluir.addActionListener(acao);
     }
 
-
+    public void addActionBotaoClienteNovo(ActionListener acao){
+        btClienteNovo.addActionListener(acao);
+    }
+    
+    public void addActionRbDinheiro(ActionListener acao){
+        rbDinheiro.addActionListener(acao);
+    }
+    
+    public void addActionRbCredito(ActionListener acao){
+        rbCredito.addActionListener(acao);
+    }
+    
+    public void addActionRbDebito(ActionListener acao){
+        rbDebito.addActionListener(acao);
+    }
+    
+    public void addActionRbBoleto(ActionListener acao){
+        rbBoletoBancario.addActionListener(acao);
+    }
     //---------------------------Metodos que só a tela retorna---------------------------//
     
     
@@ -91,14 +110,14 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         return bgFormasDePagamento;
     }
 
-    public String getCbParcelas() {
-        return cbParcelas.getSelectedItem().toString();
+    public JComboBox getCbParcelas() {
+        return cbParcelas;
     }
 
     public JLabel getLbVendedorAtual() {
         return lbVendedorAtual;
     }
-
+    
     public JList<Cliente> getLtClientes() {
         return ltClientes;
     }
@@ -147,11 +166,33 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         return tfNomeProduto.getText();
     }
 
+    public JTextField getTfTotal(){
+        return this.tfTotal;
+    }
+    
     public double getValorTotal() {
         return Double.parseDouble(tfTotal.getText());
     }
+
+    public JTextField getTfCPF() {
+        return tfCPF;
+    }
+
+    public JTextField getTfCodigo() {
+        return tfCodigo;
+    }
+
+    public JTextField getTfNomeCliente() {
+        return tfNomeCliente;
+    }
+
+    public JTextField getTfNomeProduto() {
+        return tfNomeProduto;
+    }
     
-    
+    public String getParcelas(){
+        return (String) cbParcelas.getSelectedItem();
+    }
     //---------------------------Metodos que só a tela retorna---------------------------//
     private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));
@@ -177,7 +218,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         btPesquisarProduto.setForeground(Color.decode("#fafaf9"));
         btRemover.setBackground(Color.decode("#38bdf8"));
         btRemover.setForeground(Color.decode("#fafaf9"));
-        lbClienteNovo.setForeground(Color.decode("#2563eb"));
         lbVendedorAtual.setForeground(Color.decode("#fafaf9"));
         jLabel1.setForeground(Color.decode("#fafaf9"));
         jLabel10.setForeground(Color.decode("#fafaf9"));
@@ -203,7 +243,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         tfCodigo.setForeground(Color.decode("#18181b"));
         tfCPF.setForeground(Color.decode("#18181b"));
         tfNomeCliente.setForeground(Color.decode("#18181b"));
-        lbClienteNovo.setForeground(Color.decode("#fafaf9"));
         lbVendedorAtual.setForeground(Color.decode("#fafaf9"));
         tbProdutos.setBackground(Color.decode("#f3f4f6"));
         tbProdutos.setForeground(Color.decode("#18181b"));
@@ -213,8 +252,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         cbParcelas.setForeground(Color.decode("#18181b"));
         
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-        this.lbClienteNovo.setText("<HTML><U>Clique aqui</U></HTML>");
-        this.lbClienteNovo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         this.setTitle("Realizar Venda");
         this.lbVendedorAtual.setText("Vendedor(a): " + vendedor.getNome());
     }
@@ -250,7 +287,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         jScrollPane4 = new javax.swing.JScrollPane();
         ltProdutos = new javax.swing.JList<>();
         btRemover = new javax.swing.JButton();
-        lbClienteNovo = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbProdutos = new javax.swing.JTable();
         rbDinheiro = new javax.swing.JRadioButton();
@@ -269,6 +305,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        btClienteNovo = new javax.swing.JButton();
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -292,9 +329,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        jLabel2.setText("AL Informática");
-
+        jLabel2.setText("Al Informática");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Pesquisar produtos");
@@ -303,11 +338,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         jLabel4.setText("Nome:");
 
         btPesquisarProduto.setText("Pesquisar");
-        btPesquisarProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarProdutoActionPerformed(evt);
-            }
-        });
 
         tfTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         tfTotal.addActionListener(new java.awt.event.ActionListener() {
@@ -320,11 +350,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         jLabel5.setText("Total :");
 
         btAdicionar.setText("Adicionar");
-        btAdicionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAdicionarActionPerformed(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Carrinho");
@@ -343,18 +368,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         jScrollPane4.setViewportView(ltProdutos);
 
         btRemover.setText("Remover");
-        btRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRemoverActionPerformed(evt);
-            }
-        });
-
-        lbClienteNovo.setText("Clique aqui");
-        lbClienteNovo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbClienteNovoMouseClicked(evt);
-            }
-        });
 
         tbProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -383,70 +396,30 @@ public class VendaView extends javax.swing.JFrame implements Controller {
 
         bgFormasDePagamento.add(rbDinheiro);
         rbDinheiro.setText("Dinheiro (à vista)");
-        rbDinheiro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbDinheiroActionPerformed(evt);
-            }
-        });
 
         btFecharPedido.setText("Fechar pedido");
-        btFecharPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btFecharPedidoActionPerformed(evt);
-            }
-        });
 
         bgFormasDePagamento.add(rbCredito);
         rbCredito.setText("Cartão de Crédito");
-        rbCredito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbCreditoActionPerformed(evt);
-            }
-        });
 
         bgFormasDePagamento.add(rbDebito);
         rbDebito.setText("Cartão Débito");
-        rbDebito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbDebitoActionPerformed(evt);
-            }
-        });
 
         spQuantidade.setValue(1);
 
         bgFormasDePagamento.add(rbBoletoBancario);
         rbBoletoBancario.setText("Boleto Bancário");
-        rbBoletoBancario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbBoletoBancarioActionPerformed(evt);
-            }
-        });
 
         btConcluir.setText("FINALIZAR VENDA");
-        btConcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btConcluirActionPerformed(evt);
-            }
-        });
 
         cbParcelas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1x (à vista)", "2x", "3x", "4x", "5x", "6x", "7x", "8x", "9x", "10x", "11x", "12x" }));
 
         btPesquisarCliente.setText("Pesquisar");
-        btPesquisarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarClienteActionPerformed(evt);
-            }
-        });
 
         lbVendedorAtual.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbVendedorAtual.setText("Vendedor(a): null");
 
         btCancelar.setText("CANCELAR VENDA");
-        btCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCancelarActionPerformed(evt);
-            }
-        });
 
         tfCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -462,6 +435,11 @@ public class VendaView extends javax.swing.JFrame implements Controller {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("Método de Pagamento");
+
+        btClienteNovo.setBackground(new java.awt.Color(102, 102, 102));
+        btClienteNovo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btClienteNovo.setForeground(new java.awt.Color(51, 51, 51));
+        btClienteNovo.setText("+");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -483,7 +461,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                                             .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel1))
                                         .addGap(32, 32, 32)
@@ -507,14 +484,19 @@ public class VendaView extends javax.swing.JFrame implements Controller {
                                                 .addComponent(jLabel8)
                                                 .addComponent(tfCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGap(274, 274, 274)
+                                            .addComponent(btPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel9)
+                                                    .addComponent(tfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(18, 18, 18)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(btPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(layout.createSequentialGroup()
                                                     .addGap(6, 6, 6)
-                                                    .addComponent(lbClienteNovo))))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(458, 458, 458)
-                                            .addComponent(jLabel10)))
+                                                    .addComponent(btClienteNovo))
+                                                .addComponent(jLabel10))))
                                     .addGap(29, 29, 29)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -524,11 +506,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
                                             .addComponent(rbDinheiro, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jLabel11)
                                         .addComponent(cbParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel9)
-                                        .addComponent(tfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel12)
@@ -537,7 +514,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(64, Short.MAX_VALUE))
+                        .addContainerGap(60, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btConcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -569,9 +546,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-
                         .addComponent(spQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                         .addGap(8, 8, 8)
                         .addComponent(btAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8)
@@ -591,11 +566,13 @@ public class VendaView extends javax.swing.JFrame implements Controller {
                 .addGap(8, 8, 8)
                 .addComponent(jLabel7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btClienteNovo))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -606,10 +583,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
                                     .addComponent(jLabel9))
                                 .addGap(8, 8, 8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(30, 30, 30)
-                                        .addComponent(lbClienteNovo))
+                                    .addComponent(btPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(tfCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(tfNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -634,172 +608,8 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         );
 
         setSize(new java.awt.Dimension(906, 982));
-
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-        try {
-            Produto item = ltProdutos.getSelectedValue();
-            int quantidade = (int) spQuantidade.getValue();
-            if (quantidade <= 0 || quantidade > item.getQuantidade()) {
-                mensagem("Quantidade invalida ou excedente");
-                System.out.println("Quantidade invalida ou excedente");
-            } else {
-                inserirItemTabela(item, quantidade);
-                atualizarTotal();
-
-                limpaCampo(tfNomeProduto);
-                limpaCampo(tfCodigo);
-            }
-        } catch (NullPointerException ex) {
-            mensagem("Selecione um Produto");
-        }
-    }//GEN-LAST:event_btAdicionarActionPerformed
-
-    private void btPesquisarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarProdutoActionPerformed
-
-        Produto resultadoPorNome = buscarProdutoPorNome(tfNomeProduto.getText());
-
-        if (campoCodigoVazio() && !campoNomeProdutoVazio()) {
-            verificarEMostrar(resultadoPorNome);
-            limpaCampo(tfNomeProduto);
-        } else {
-            try {
-                int codigoProduto = Integer.parseInt(tfCodigo.getText());
-                Produto resultadoPorCodigo = buscarProdutoPorCodigo(codigoProduto);
-                if (campoNomeProdutoVazio() && !campoCodigoVazio()) {
-                    verificarEMostrar(resultadoPorCodigo);
-                    limpaCampo(tfCodigo);
-                } else if (!campoNomeProdutoVazio() && !campoCodigoVazio()) {
-                    if (resultadoPorNome.equals(resultadoPorCodigo)) {
-                        verificarEMostrar(resultadoPorNome);
-                        limpaCampo(tfNomeProduto);
-                        limpaCampo(tfCodigo);
-                    } else {
-                        mensagem("Não encotrado");
-                        limpaCampo(tfNomeProduto);
-                        limpaCampo(tfCodigo);
-                    }
-                }
-            } catch (NumberFormatException err) {
-                limpaCampo(tfCodigo);
-                mensagem("Por favor, informe apenas números na busca por código");
-            }
-        }
-
-    }//GEN-LAST:event_btPesquisarProdutoActionPerformed
-
-    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
-
-        removerItemTabela();
-    }//GEN-LAST:event_btRemoverActionPerformed
-
-    private void btFecharPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFecharPedidoActionPerformed
-
-        try{
-        devolverProdutos();
-        }
-        catch(NullPointerException e){}
-        
-        finally{
-            pedido = gerarPedido();
-            
-            try{
-            if (pedido.isEmpty()) {
-                mensagem("Nenhum produto Selecionado!");
-    
-            } else {
-                mensagem("Pedido gerado com sucesso");
-            }
-            }catch(NullPointerException e){
-                mensagem("Algum produto excede a capacidade disponível, verifique a disponibilidade e refaça o pedido.");
-            }
-            try {
-                verificarEMostrar(buscarProdutoPorNome(ltProdutos.getSelectedValue().getNome()));
-            } catch (NullPointerException e) {
-            }
-        }
-
-    }//GEN-LAST:event_btFecharPedidoActionPerformed
-
-    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-
-        if (pedido.isEmpty()) {
-            mensagem("nenhum pedido feito");
-        } else {
-            int cancelar = JOptionPane.showConfirmDialog(null, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (cancelar == JOptionPane.YES_OPTION) {
-                devolverProdutos();
-                pedido = new ArrayList<>();
-                limparTodosOsCampos();
-            } else {
-                JOptionPane.showMessageDialog(null, "Operação Cancelada", "Action: Operação Cancelada", JOptionPane.WARNING_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_btCancelarActionPerformed
-
-    private void btPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarClienteActionPerformed
-
-        Cliente resultadoPorNome = buscarClientePorNome(tfNomeCliente.getText());
-        Cliente resultadoPorCPF = buscarClientePorCPF(tfCPF.getText());
-
-        if (campoCPFVazio() && !campoNomeClienteVazio()) {
-            verificarEMostrar(resultadoPorNome);
-        } else if (campoNomeClienteVazio() && !campoCPFVazio()) {
-            verificarEMostrar(resultadoPorCPF);
-        } else if (!campoNomeClienteVazio() && !campoCPFVazio()) {
-            if (resultadoPorNome.equals(resultadoPorCPF)) {
-                verificarEMostrar(resultadoPorNome);
-            } else {
-                mensagem("Não encotrado");
-                limpaCampo(tfNomeProduto);
-                limpaCampo(tfCodigo);
-            }
-        }
-
-    }//GEN-LAST:event_btPesquisarClienteActionPerformed
-
-    private void btConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConcluirActionPerformed
-
-        if (ltClientes.getSelectedValue() == null) {
-            JOptionPane.showMessageDialog(null, "Compra inválida!"
-                    + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
-        } else if (bgFormasDePagamento.getSelection() == null) {
-            JOptionPane.showMessageDialog(null, "Compra inválida!"
-                    + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
-        } else {
-            try {
-                Venda venda = gerarVenda(pedido);
-                vendaDAO.getVendas().add(venda);
-                JOptionPane.showMessageDialog(null, "Compra Realizada com Sucesso!", "Compra Concluida", JOptionPane.WARNING_MESSAGE);
-                System.out.println("Foi");
-            } catch (NullPointerException ex) {
-                mensagem("Operacao falhou");
-                System.out.println("falhou");
-            }
-        }
-    }//GEN-LAST:event_btConcluirActionPerformed
-
-    private void rbDinheiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDinheiroActionPerformed
-        if (rbDinheiro.isSelected()) {
-            cbParcelas.setSelectedIndex(0);
-        }
-        cbParcelas.setEnabled(false);
-
-    }//GEN-LAST:event_rbDinheiroActionPerformed
-
-    private void rbCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCreditoActionPerformed
-        cbParcelas.setEnabled(true);
-    }//GEN-LAST:event_rbCreditoActionPerformed
-
-    private void rbDebitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDebitoActionPerformed
-        cbParcelas.setEnabled(true);
-    }//GEN-LAST:event_rbDebitoActionPerformed
-
-    private void rbBoletoBancarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbBoletoBancarioActionPerformed
-        cbParcelas.setEnabled(true);
-    }//GEN-LAST:event_rbBoletoBancarioActionPerformed
 
     private void tfCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCodigoActionPerformed
         // TODO add your handling code here:
@@ -813,12 +623,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfCPFActionPerformed
 
-    private void lbClienteNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbClienteNovoMouseClicked
-        // TODO add your handling code here:
-        CadClienteView cadastroClienteView = new CadClienteView();
-        cadastroClienteView.setVisible(true);
-    }//GEN-LAST:event_lbClienteNovoMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -827,6 +631,7 @@ public class VendaView extends javax.swing.JFrame implements Controller {
     private javax.swing.ButtonGroup bgFormasDePagamento;
     private javax.swing.JButton btAdicionar;
     private javax.swing.JButton btCancelar;
+    private javax.swing.JButton btClienteNovo;
     private javax.swing.JButton btConcluir;
     private javax.swing.JButton btFecharPedido;
     private javax.swing.JButton btPesquisarCliente;
@@ -850,9 +655,6 @@ public class VendaView extends javax.swing.JFrame implements Controller {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-
-    private javax.swing.JLabel lbClienteNovo;
-
     private javax.swing.JLabel lbVendedorAtual;
     private javax.swing.JList<Cliente> ltClientes;
     private javax.swing.JList<Produto> ltProdutos;

@@ -23,20 +23,17 @@ import model.Funcionario;
  */
 public class AdminView extends javax.swing.JFrame implements Controller {
     
-    private Admin adm;
     /**    
     /**
      * Creates new form MainView
      */
     public AdminView(){
-//        this.categorias = new ArrayList<>();
         initComponents();
-//        this.adm = (Admin) adm; 
         this.setTitle("LGC - HermosoStovisk");
         decoracao();
     }
     
-    public void abrirTela(){
+    public void exibirTela(){
         this.setVisible(true);
     }
     @Override
