@@ -3,6 +3,7 @@ package controller;
 import dao.ClienteDAO;
 import dao.ProdutoDAO;
 import dao.VendaDAO;
+import exceptions.NaoSelecionadoException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -180,7 +181,8 @@ public class VendaController implements Controller{
     
     private void adicionarProdutoTabela(){
         try {
-            Produto item = tela.getLtProdutos().getSelectedValue();
+            Produto item = getProdutoTabela();
+
             int quantidade = tela.getQuantidadeProduto();
             if (quantidade <= 0 || quantidade > item.getQuantidade()) {
                 mensagem("Quantidade invalida ou excedente");
@@ -192,10 +194,17 @@ public class VendaController implements Controller{
                 limpaCampo(tela.getTfNomeProduto());
                 limpaCampo(tela.getTfCodigo());
             }
-        } catch (NullPointerException ex) {
-            mensagem("Selecione um Produto");
+        } catch (NaoSelecionadoException ex) {
+            mensagem(ex.getMessage());
         }
-    }    
+    }
+    
+    private Produto getProdutoTabela() throws NaoSelecionadoException {
+        if (tela.getLtProdutos().isSelectionEmpty()) {
+            throw new NaoSelecionadoException("lista produto");
+        }
+        return tela.getLtProdutos().getSelectedValue();
+    }
     
     private void removerProdutoTabela(){
         try {
