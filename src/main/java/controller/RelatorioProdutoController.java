@@ -41,7 +41,7 @@ public class RelatorioProdutoController {
             relatorioProdutoView.limpaBusca();
         }
         }catch(NullPointerException ex){
-            relatorioProdutoView.exibirMensagem("Produto não consta no sistema");
+            relatorioProdutoView.mostrarAviso("Produto não consta no sistema", "Produto não encontrado");
         }
     }
     
@@ -63,7 +63,7 @@ public class RelatorioProdutoController {
                 relatorioProdutoView.atribuirValorAoTextAreaCategorias(produto.toString() + "\n");
                 }
             }catch(NullPointerException ex){
-                relatorioProdutoView.exibirMensagem("Categoria não encontrada!");
+                relatorioProdutoView.mostrarAviso("Categoria não encontrada!", "Categoria não encontrada");
             }
         }
         relatorioProdutoView.limpaResultado();
@@ -75,7 +75,7 @@ public class RelatorioProdutoController {
                 return categoria;
                 }
             }catch(NullPointerException ex){
-                relatorioProdutoView.exibirMensagem("Categoria não encontrada!");
+                relatorioProdutoView.mostrarAviso("Categoria não encontrada!", "Categoria não encontrada");
             }
         }
         return null;

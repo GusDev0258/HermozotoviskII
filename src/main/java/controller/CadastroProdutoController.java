@@ -28,7 +28,7 @@ public class CadastroProdutoController {
             cadProdutoView.adicionarAcaoAoBotaoCadastrar(e -> cadastraProduto());
         }
     
-        public void cadastraProduto(){
+        private void cadastraProduto(){
         String nome = cadProdutoView.getNomeProduto();
         int quantidade = cadProdutoView.getQuantidadeProduto();
         String descricao = cadProdutoView.getDescricaoProduto();
@@ -44,7 +44,7 @@ public class CadastroProdutoController {
         }
         
         if(aux != null){
-        cadProdutoView.exibeMensagem("Produto já existe!");
+        cadProdutoView.mostrarAviso("Produto já existe!","Produto repetido");
         cadProdutoView.limpaCampos();
         }else{
         Produto produto;
@@ -55,7 +55,7 @@ public class CadastroProdutoController {
         produtoDAO.addProduto(produto);
         
         cadProdutoView.geraModel();
-        cadProdutoView.exibeMensagem("Produto Criado com Sucesso!");
+        cadProdutoView.mostrarAviso("Produto Criado com Sucesso!","Produto cadastrado");
         cadProdutoView.limpaCampos();
         cadProdutoView.generateList();
         }

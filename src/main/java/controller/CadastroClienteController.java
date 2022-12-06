@@ -33,13 +33,12 @@ public class CadastroClienteController implements Controller {
         cadClienteView.exibirTela();
     }
     
-    public void cadastrarCliente(){
+    private void cadastrarCliente(){
         Cliente cliente = cadClienteView.getDadosCliente();
-        
         ClienteRepository clienteDAO = new ClienteDAO();
         clienteDAO.adicionarCliente(cliente);
         cadClienteView.limpaCampos();
-        cadClienteView.exibirMensagem("Cliente cadastrado com sucesso");
+        cadClienteView.mostrarAviso("Cliente cadastrado com sucesso","Cliente cadastrado");
         
     }
 

@@ -38,44 +38,48 @@ public class AdminController implements Controller {
        }
 
   public void inicializarBotoes(){
-     telaInicial.adicionarAcaoAoItemMenuCadastrarCategoria(e -> {
-     new CadastroCategoriaController(new CadastroCategoriaView(), null).exibirTela();
-     });
-     telaInicial.adicionarAcaoAoItemMenuCadastrarProduto(e ->{
-     new CadastroProdutoController(new CadastroProdutoView(), null).abrirTela();
-     });
-     telaInicial.adicionarAcaoAoItemMenuRelatorioCliente(e -> {
-     new RelatorioClienteController(new RelatorioClienteView()).abrirTela();
-     });
-     telaInicial.adicionarAcaoAoItemMenuRelatorioProduto(e ->{
-     new RelatorioProdutoController(new RelatorioProdutoView()).exibirTela();
-     });
-     telaInicial.adicionarAcaoAoItemMenuRemoverCliente(e -> {
-         new RemoverClienteController().exibirTela();
-     });
+     telaInicial.adicionarAcaoAoItemMenuCadastrarCategoria(e -> abrirCadastroCategoria());
+     
+     telaInicial.adicionarAcaoAoItemMenuCadastrarProduto(e -> abrirCadastroProduto());
+     
+     telaInicial.adicionarAcaoAoItemMenuRelatorioCliente(e -> abrirRelatorioCliente());
+     
+     telaInicial.adicionarAcaoAoItemMenuRelatorioProduto(e -> abrirRelatorioProduto());
+     
+     telaInicial.adicionarAcaoAoItemMenuRemoverCliente(e -> abrirRemoverCliente());
+     
+     telaInicial.adicionarAcaoAoItemMenuRelatorioVenda(e -> abrirRelatorioVendas());
+     
+     telaInicial.adicionarAcaoAoItemMenuRemoverProduto(e -> abrirRemoverProduto());
   }
   
-  public void abrirCadastroDeCliente(){
-      CadClienteView cadClienteView= new CadClienteView();
-      cadClienteView.exibirTela();
+  public void abrirCadastroCategoria(){
+      new CadastroCategoriaController(new CadastroCategoriaView(), null).exibirTela();
   }
-//  public void abrirRelatorioProdutoView(){
-//      RelatorioProdutoView rpv = new RelatorioProdutoView();
-//      rpv.abrirTela();
-//  }
-  public void abrirRelatorioVendasView(){
-      RelatorioVendasView relatorioVendasView = new RelatorioVendasView();
-      relatorioVendasView.abrirTela();
+  
+  public void abrirCadastroProduto(){
+      new CadastroProdutoController(new CadastroProdutoView(), null).abrirTela();
   }
-
-  public void abrirRemoverProdutoView(){
-      RemoverProdutoView removerProdutoView = new RemoverProdutoView();
-      removerProdutoView.exibirTela();
+  
+  public void abrirRelatorioCliente(){
+      new RelatorioClienteController(new RelatorioClienteView()).abrirTela();
   }
-//  public void abrirVendaView(){
-//      VendaView vv = new VendaView();
-//      vv.abrirTela();
-//  }
+  
+  public void abrirRelatorioProduto(){
+      new RelatorioProdutoController(new RelatorioProdutoView()).exibirTela();
+  }
+  
+  public void abrirRemoverCliente(){
+      new RemoverClienteController().exibirTela();
+  }
+  
+  public void abrirRelatorioVendas(){
+      new RelatorioVendaController(new RelatorioVendasView()).exibirTela();
+  }
+  
+  public void abrirRemoverProduto(){
+      new RemoverProdutoController(new RemoverProdutoView()).exibirTela();
+  }
   
   public void exibirTela(){
       telaInicial.exibirTela();
