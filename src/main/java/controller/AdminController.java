@@ -74,7 +74,7 @@ public class AdminController implements Controller {
   }
   
   public void abrirRelatorioVendas(){
-      new RelatorioVendaController(new RelatorioVendasView()).exibirTela();
+      new RelatorioVendaController().exibirTela();
   }
   
   public void abrirRemoverProduto(){
