@@ -4,7 +4,6 @@
  */
 package dao;
 
-import exceptions.ClienteException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Cliente;

@@ -68,8 +68,9 @@ public class CadastroProdutoView extends javax.swing.JFrame {
         tfPrecoProduto.setText("");
         tfQuantidade.setText("");
     }
-    public void exibeMensagem(String mensagem){
-        JOptionPane.showMessageDialog(null, mensagem);
+    
+    public void mostrarAviso(String mensagem, String tituloAviso) {
+        JOptionPane.showMessageDialog(null, mensagem, tituloAviso, JOptionPane.WARNING_MESSAGE);
     }
     
     public void generateList() {
