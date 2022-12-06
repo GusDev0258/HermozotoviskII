@@ -102,10 +102,8 @@ public class VendaController implements Controller{
         }
     }
     
-    private void pesquisarProdutoPorCodigo(String codigo) throws ValorInvalidoException{
-        if(codigo.matches("[0-9]+"))
-            throw new ValorInvalidoException();
-        else{
+    private void pesquisarProdutoPorCodigo(String codigo){
+        try{
             Integer pCodigo = Integer.parseInt(codigo);
             
             Map<Integer, Produto> produtos = produtoDao.getProdutos().stream()
@@ -116,6 +114,8 @@ public class VendaController implements Controller{
                 if(p.getCodigo() == pCodigo)
                     mostrarResultado(p);
             }
+        }catch(NumberFormatException e){
+            mensagem("Insira somente numeros na pesquisa por codigo");
         }
     }
     
@@ -138,7 +138,7 @@ public class VendaController implements Controller{
     }
     
     private void pesquisarProduto(){
-        try{
+    
             if(!campoNomeProdutoVazio() && campoCodigoVazio()){
                 pesquisarProdutoPorNome(tela.getNomeProduto());
             }
@@ -151,10 +151,7 @@ public class VendaController implements Controller{
                     pesquisarProdutoPorNome(tela.getNomeProduto());
             }
             else 
-                mensagem("Nenhum valor inserido!"); 
-        }catch(ValorInvalidoException ex){
-          mensagem(ex.getMessage());
-        }
+                mensagem("Nenhum valor inserido!");
     }
     
     private void pesquisarCliente(){
