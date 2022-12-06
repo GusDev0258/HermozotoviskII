@@ -4,13 +4,10 @@ import dao.CategoriaDAO;
 import dao.ProdutoDAO;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import javax.swing.JOptionPane;
 import model.Categoria;
 import model.Produto;
-import repository.ProdutoRepository;
 
 /**
  *
@@ -18,9 +15,6 @@ import repository.ProdutoRepository;
  */
 
 public class RelatorioProdutoView extends javax.swing.JFrame{
-    /**
-     * Creates new form RelatorioProdutosView
-     */
     ProdutoDAO pDAO = new ProdutoDAO();
     public RelatorioProdutoView() {
         initComponents();

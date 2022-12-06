@@ -5,7 +5,6 @@
 package controller;
 
 import view.AdminView;
-import view.CadClienteView;
 import view.CadastroCategoriaView;
 import view.CadastroProdutoView;
 import view.RelatorioClienteView;

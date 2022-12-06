@@ -1,6 +1,5 @@
 package model;
 
-import javax.swing.JOptionPane;
 
 /**
  *

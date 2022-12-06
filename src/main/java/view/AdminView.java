@@ -1,20 +1,13 @@
 package view;
 
-import dao.ProdutoDAO;
-import model.Categoria;
 import model.Produto;
-import java.util.List;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import dao.ClienteDAO;
 import model.Cliente;
-import controller.Controller;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import model.Admin;
-import model.Funcionario;
+
 
 
 /**
@@ -122,11 +115,6 @@ public class AdminView extends javax.swing.JFrame {
         mRelatorio.setText("Relatórios");
 
         miRelatorioVenda.setText("Relatório de Vendas");
-        miRelatorioVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRelatorioVendaActionPerformed(evt);
-            }
-        });
         mRelatorio.add(miRelatorioVenda);
 
         miRelatorioCliente.setText("Relatório de Clientes");
@@ -208,34 +196,6 @@ public class AdminView extends javax.swing.JFrame {
     private javax.swing.JMenuItem miRemoverProduto;
     // End of variables declaration//GEN-END:variables
 
-    public Produto buscarProdutoPorNome(String nome) {
-        return null;
-    }
-
-    public Produto buscarProdutoPorCodigo(int codigo) {
-        throw new UnsupportedOperationException("Not supported."); 
-    }
-
-    public Cliente buscarClientePorNome(String nome) {
-//        for (Cliente c : clienteDAO.getClientes()) {
-//            if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
-//                return c;
-//        }
-        return null;
-    }
-
-    public Cliente buscarClientePorCPF(String CPF) {
-//        for (Cliente c : clienteDAO.getClientes()) {
-//            if(CPF.equals(c.getCPF()))
-//                return c;
-//        }
-        return null;
-    }
-
-    public void mensagem(String mensagem) {
-          JOptionPane.showMessageDialog(null, mensagem);
-    }
-    
     private void decoracao(){
         getContentPane().setBackground(getBackground());
 //        lbBoasVindas.setText("Olá " + adm.getNome() + ", Boa noite");
