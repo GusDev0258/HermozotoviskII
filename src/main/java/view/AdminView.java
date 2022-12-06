@@ -143,11 +143,6 @@ public class AdminView extends javax.swing.JFrame {
         mRemover.add(miRemoverCliente);
 
         miRemoverProduto.setText("Remover Produto");
-        miRemoverProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miRemoverProdutoActionPerformed(evt);
-            }
-        });
         mRemover.add(miRemoverProduto);
 
         mbMain.add(mRemover);
@@ -183,14 +178,6 @@ public class AdminView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void miRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRemoverProdutoActionPerformed
-        // TODO add your handling code here:
-
-      RemoverProdutoView remProd = new RemoverProdutoView();
-      remProd.setVisible(true);
-
-    }//GEN-LAST:event_miRemoverProdutoActionPerformed
 
     private void miRelatorioVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRelatorioVendaActionPerformed
         // TODO add your handling code here:

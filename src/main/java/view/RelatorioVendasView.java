@@ -6,8 +6,10 @@ package view;
 
 import dao.VendaDAO;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.Venda;
 
 /**
@@ -15,8 +17,6 @@ import model.Venda;
  * @author sonho
  */
 public class RelatorioVendasView extends javax.swing.JFrame {
-    VendaDAO vendinha = new VendaDAO();
-    Venda venda;
     /**
      * Creates new form RelatorioVendasView
      */
@@ -24,17 +24,33 @@ public class RelatorioVendasView extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Relatório de Vendas");
         decoracao();
-        List<Venda> vendas = this.vendinha.getVendas();
-        Collections.sort(vendas, venda);
-        double total = 0;
-        for(Venda v : vendinha.getVendas()){
-            taMostraVenda.append(v.toString() + "\n");
-            total += v.getValorTotal();
-        }
-        taTotalVendas.append("R$"+Double.toString(total));
     }
     public void abrirTela(){
         this.setVisible(true);
+    }
+    
+    public void atribuirValorAListaDeVendas(String valor){
+        taMostraVenda.append(valor);
+    }
+    
+    public void atribuirValorAListaDeVendasPesquisada(String valor){
+        taListaVenda.append(valor);
+    }
+    
+    public void atribuirValorAoTotalDeVendas(String valor){
+        taTotalVendas.append(valor);
+    }
+    
+    public int getCodigoPesquisado(){
+        return Integer.parseInt(tfBuscaCodigo.getText());
+    }
+    
+    public void adicionarAcaoAoBotaoPesquisar(ActionListener acao){
+        btPesquisar.addActionListener(acao);
+    }
+    
+    public void showWarnMessage(String message, String title){
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
     }
     
     private void decoracao(){
@@ -103,11 +119,6 @@ public class RelatorioVendasView extends javax.swing.JFrame {
         jScrollPane2.setViewportView(taListaVenda);
 
         btPesquisar.setText("Pesquisar");
-        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarActionPerformed(evt);
-            }
-        });
 
         taTotalVendas.setEditable(false);
         taTotalVendas.setColumns(20);
@@ -181,16 +192,6 @@ public class RelatorioVendasView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
-        // TODO add your handling code here:
-        int codigo = Integer.parseInt(tfBuscaCodigo.getText());
-        for(Venda v : vendinha.getVendas()){
-            if(codigo == v.getCodigo()){
-                taListaVenda.append(v.toString());
-            }
-        }
-    }//GEN-LAST:event_btPesquisarActionPerformed
 
     private void tfBuscaCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfBuscaCodigoActionPerformed
         // TODO add your handling code here:

@@ -51,8 +51,8 @@ public class RelatorioProdutoView extends javax.swing.JFrame{
         taBuscaCat.append(valor);
     }
     
-    public void exibirMensagem(String mensagem){
-        JOptionPane.showMessageDialog(null, mensagem);
+    public void mostrarAviso(String mensagem, String tituloAviso) {
+        JOptionPane.showMessageDialog(null, mensagem, tituloAviso, JOptionPane.WARNING_MESSAGE);
     }
     
     public void atribuirValorAoTextAreaProdutos(String valor){

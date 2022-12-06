@@ -7,8 +7,6 @@ package controller;
 import dao.CategoriaDAO;
 import model.Categoria;
 import repository.CategoriaRepository;
-import utils.Limpador;
-import utils.Mensagem;
 import view.CadastroCategoriaView;
 
 /**
@@ -38,11 +36,11 @@ public class CadastroCategoriaController implements Controller {
             CategoriaRepository categoriaDAO = new CategoriaDAO();
             categoriaDAO.adicionarCategoria(cat);
             cadCategoriaView.limpaCampos();
-            cadCategoriaView.exibirMensagem("Categoria Cadastrada Com Sucesso!");
+            cadCategoriaView.mostrarAviso("Categoria Cadastrada Com Sucesso!","Categoria cadastrada");
 
         } catch (NumberFormatException err) {
             cadCategoriaView.limpaCampos();
-            cadCategoriaView.exibirMensagem("Informe apenas números ao cadastrar a categoria");
+            cadCategoriaView.mostrarAviso("Informe apenas números ao cadastrar a categoria","Informe números");
         }
     }
     

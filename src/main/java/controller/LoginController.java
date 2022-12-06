@@ -30,11 +30,10 @@ public class LoginController {
     }
     
     public void carregarBotoes() {
-        acaoLogin();
+        loginView.adicionarAcaoLogin(e -> acaoLogin());
     }
     
     public void acaoLogin() {
-        loginView.adicionarAcaoLogin(e -> {
         Funcionario funcionario = buscaFuncionario();
         if (funcionario == null) {
             loginView.mostrarMensagem("CPF e/ou senha incorrentos ou o funcionário não existe.");
@@ -48,7 +47,6 @@ public class LoginController {
         else {
             loginView.mostrarMensagem("Usuário nâo encontrado");
         }
-        });
     }
     
     public Funcionario buscaFuncionario() {
