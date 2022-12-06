@@ -4,6 +4,7 @@ import dao.ClienteDAO;
 import dao.ProdutoDAO;
 import dao.VendaDAO;
 import exceptions.NaoSelecionadoException;
+import exceptions.ValorInvalidoException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -101,8 +102,10 @@ public class VendaController implements Controller{
         }
     }
     
-    private void pesquisarProdutoPorCodigo(String codigo) {
-        try {
+    private void pesquisarProdutoPorCodigo(String codigo) throws ValorInvalidoException{
+        if(codigo.matches("[0-9]+"))
+            throw new ValorInvalidoException();
+        else{
             Integer pCodigo = Integer.parseInt(codigo);
             
             Map<Integer, Produto> produtos = produtoDao.getProdutos().stream()
@@ -113,9 +116,6 @@ public class VendaController implements Controller{
                 if(p.getCodigo() == pCodigo)
                     mostrarResultado(p);
             }
-            
-        }catch(NumberFormatException e){
-           mensagem("Utilize números na sua pesquisa!");
         }
     }
     
@@ -138,7 +138,7 @@ public class VendaController implements Controller{
     }
     
     private void pesquisarProduto(){
-       try{
+        try{
             if(!campoNomeProdutoVazio() && campoCodigoVazio()){
                 pesquisarProdutoPorNome(tela.getNomeProduto());
             }
@@ -151,11 +151,10 @@ public class VendaController implements Controller{
                     pesquisarProdutoPorNome(tela.getNomeProduto());
             }
             else 
-                mensagem("Nenhum valor inserido!");
-            
-       }catch(NullPointerException e){
-           mensagem("Nenhum valor inserido!");
-       }    
+                mensagem("Nenhum valor inserido!"); 
+        }catch(ValorInvalidoException ex){
+          mensagem(ex.getMessage());
+        }
     }
     
     private void pesquisarCliente(){
@@ -207,20 +206,29 @@ public class VendaController implements Controller{
     }
     
     private void removerProdutoTabela(){
-        try {
-            ((DefaultTableModel) tela.getTbProdutos().getModel()).removeRow(tela.getTbProdutos().getSelectedRow());
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            mensagem("Selecione o produto a ser removido");
-        }
+        try{
+            acaoRemover();
+        }catch(NaoSelecionadoException ex){
+            mensagem(ex.getMessage());
         atualizarTotal();
+        }
     }
     
     private void atualizarTotal() {
+        
         Double valorTotalDaCompra = 0.0;
         for (int i = 0; i < tela.getTbProdutos().getRowCount(); i++) {
             valorTotalDaCompra += Double.parseDouble(tela.getTbProdutos().getValueAt(i, 3).toString());
         }
         tela.getTfTotal().setText("R$" + valorTotalDaCompra);
+    }
+    
+    private void acaoRemover() throws NaoSelecionadoException{
+        
+        if(tela.getTbProdutos().getSelectedRow() == -1)
+            throw new NaoSelecionadoException("lista produto");
+        else 
+            ((DefaultTableModel) tela.getTbProdutos().getModel()).removeRow(tela.getTbProdutos().getSelectedRow());
     }
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   

@@ -10,7 +10,7 @@ package exceptions;
  */
 public class NaoSelecionadoException extends Exception {
     public NaoSelecionadoException(String campo) {
-        super("campo " + campo + " não foi selecionado!");
+        super(campo + " não foi selecionado!");
     }
     
 }
