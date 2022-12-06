@@ -20,7 +20,6 @@ exceptions/CadastroException.class
 repository/ClienteRepository.class
 controller/RelatorioProdutoController.class
 model/Funcionario.class
-view/AdminView$2.class
 dao/ProdutoDAO.class
 controller/RemoverProdutoController.class
 view/CadClienteView$1.class

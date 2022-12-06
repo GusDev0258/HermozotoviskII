@@ -4,13 +4,9 @@
  */
 package view;
 
-import dao.VendaDAO;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.List;
 import javax.swing.JOptionPane;
-import model.Venda;
 
 /**
  *
