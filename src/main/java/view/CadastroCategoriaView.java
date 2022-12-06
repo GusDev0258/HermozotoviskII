@@ -38,8 +38,8 @@ public class CadastroCategoriaView extends javax.swing.JFrame {
         tfNomeCategoria.setText("");
     }
     
-    public void exibirMensagem(String mensagem){
-        JOptionPane.showMessageDialog(null, mensagem);
+  public void mostrarAviso(String mensagem, String tituloAviso) {
+        JOptionPane.showMessageDialog(null, mensagem, tituloAviso, JOptionPane.WARNING_MESSAGE);
     }
     
     public String getNome(){

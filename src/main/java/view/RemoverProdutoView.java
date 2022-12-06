@@ -6,8 +6,8 @@ package view;
 
 import dao.ProdutoDAO;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import model.Produto;
 
 /**
  *
@@ -27,6 +27,35 @@ public class RemoverProdutoView extends javax.swing.JFrame {
     
     public void exibirTela(){
         this.setVisible(true);
+    }
+    
+    public int getCodigo(){
+        return Integer.parseInt(tfCodigoProduto.getText());
+    }
+    
+    public void adicionarAcaoAoBotaoRemover(ActionListener acao){
+        btRemover.addActionListener(acao);
+    }
+    
+    public boolean returnConfirmation(){
+        int confirmar = ShowConfirmationMessage();
+        return confirmar == JOptionPane.YES_OPTION;
+    }
+    
+    public int ShowConfirmationMessage(){
+        return JOptionPane.showConfirmDialog(null, 
+                "Deseja remover o produto do estoque?", 
+                "Remover Produto", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
+    }
+    
+    public void showMessage(String message, String title){
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void showWarnMessage(String message, String title){
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
     }
     
     private void decoracao(){
@@ -62,11 +91,6 @@ public class RemoverProdutoView extends javax.swing.JFrame {
         lbInserirCodigo.setText("Insira o código do produto");
 
         btRemover.setText("Remover");
-        btRemover.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRemoverActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,23 +124,6 @@ public class RemoverProdutoView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverActionPerformed
-        // TODO add your handling code here:
-        int confirmar = JOptionPane.showConfirmDialog(null, "Deseja remover o produto do estoque?", "Remover Produto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(confirmar == JOptionPane.YES_OPTION){
-           int codigo = Integer.parseInt(tfCodigoProduto.getText());
-        for(int i = 0; i < produtoDAO.getProdutos().size(); i++){
-            if(produtoDAO.getProdutos().get(i).getCodigo() == codigo){
-                produtoDAO.removeProduto(i);
-            }
-        }
-        JOptionPane.showMessageDialog(null, "Produto removido do estoque","Produto Removido",JOptionPane.WARNING_MESSAGE); 
-        }else{
-            JOptionPane.showMessageDialog(null, "Operação cancelada", "Operação cancelada", JOptionPane.WARNING_MESSAGE);
-        }
-        
-    }//GEN-LAST:event_btRemoverActionPerformed
 
     /**
      * @param args the command line arguments

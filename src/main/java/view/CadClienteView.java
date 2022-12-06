@@ -54,8 +54,8 @@ public class CadClienteView extends javax.swing.JFrame {
         tfEndereco.setText("");
     }
     
-    public void exibirMensagem(String mensagem){
-        JOptionPane.showMessageDialog(null, mensagem);
+    public void mostrarAviso(String mensagem, String tituloAviso) {
+        JOptionPane.showMessageDialog(null, mensagem, tituloAviso, JOptionPane.WARNING_MESSAGE);
     }
     
     /**
