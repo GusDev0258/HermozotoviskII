@@ -115,7 +115,7 @@ public class VendaController implements Controller{
                     mostrarResultado(p);
             }
         }catch(NumberFormatException e){
-            mensagem("Insira somente numeros na pesquisa por codigo");
+            tela.exibirMensagem("Insira somente numeros na pesquisa por codigo");
         }
     }
     
@@ -151,7 +151,7 @@ public class VendaController implements Controller{
                     pesquisarProdutoPorNome(tela.getNomeProduto());
             }
             else 
-                mensagem("Nenhum valor inserido!");
+                tela.exibirMensagem("Nenhum valor inserido!");
     }
     
     private void pesquisarCliente(){
@@ -168,7 +168,7 @@ public class VendaController implements Controller{
                 pesquisarClientePorNome(tela.getNomeCliente());
         }
         else
-            mensagem("Nenhum valor inserido!");
+            tela.exibirMensagem("Nenhum valor inserido!");
     }
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
@@ -181,17 +181,17 @@ public class VendaController implements Controller{
 
             int quantidade = tela.getQuantidadeProduto();
             if (quantidade <= 0 || quantidade > item.getQuantidade()) {
-                mensagem("Quantidade invalida ou excedente");
+                tela.exibirMensagem("Quantidade invalida ou excedente");
                 System.out.println("Quantidade invalida ou excedente");
             } else {
-                validarItemSelecionado(item, quantidade);
+                tela.validarItemSelecionado(item,quantidade);
                 atualizarTotal();
 
                 limpaCampo(tela.getTfNomeProduto());
                 limpaCampo(tela.getTfCodigo());
             }
         } catch (NaoSelecionadoException ex) {
-            mensagem(ex.getMessage());
+            tela.exibirMensagem(ex.getMessage());
         }
     }
     
@@ -206,7 +206,7 @@ public class VendaController implements Controller{
         try{
             acaoRemover();
         }catch(NaoSelecionadoException ex){
-            mensagem(ex.getMessage());
+            tela.exibirMensagem(ex.getMessage());
         atualizarTotal();
         }
     }
@@ -268,13 +268,13 @@ public class VendaController implements Controller{
             
             try{
             if (pedido.isEmpty()) {
-                mensagem("Nenhum produto Selecionado!");
+                tela.exibirMensagem("Nenhum produto Selecionado!");
     
             } else {
-                mensagem("Pedido gerado com sucesso");
+                tela.exibirMensagem("Pedido gerado com sucesso");
             }
             }catch(NullPointerException e){
-                mensagem("Algum produto excede a capacidade disponível, verifique a disponibilidade e refaça o pedido.");
+                tela.exibirMensagem("Algum produto excede a capacidade disponível, verifique a disponibilidade e refaça o pedido.");
             }
         }
     }
@@ -282,7 +282,7 @@ public class VendaController implements Controller{
     private void cancelarVenda(){
         
         if (pedido.isEmpty()) {
-            mensagem("nenhum pedido feito");
+            tela.exibirMensagem("nenhum pedido feito");
         } else {
             int cancelar = JOptionPane.showConfirmDialog
         (tela, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -325,7 +325,7 @@ public class VendaController implements Controller{
                 System.out.println("Foi");
                 
             } catch (NullPointerException ex) {
-                mensagem("Operacao falhou");
+                tela.exibirMensagem("Operacao falhou");
                 System.out.println("falhou");
             }
         }
@@ -357,6 +357,7 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- // 
 //-------------------------                                      VALIDAÇÕES                                     -------------------------//
 
+<<<<<<< HEAD
  private boolean validarItemSelecionado(Produto item, int quantidade){
      DefaultTableModel model = (DefaultTableModel) tela.getTbProdutos().getModel();
         for (int i = 0; i < tela.getLinhasTotal(); i++) {
@@ -377,6 +378,28 @@ public class VendaController implements Controller{
         model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
         return true;
     }
+=======
+// private boolean validarItemSelecionado(Produto item, int quantidade){
+//     DefaultTableModel model = (DefaultTableModel) tela.getTbProdutos().getModel();
+//        for (int i = 0; i < tela.getTbProdutos().getRowCount(); i++) {
+//            if (item.getNome().equals(tela.getTbProdutos().getValueAt(i, 0))) {
+//                Integer quantidadeAnterior = Integer.parseInt(tela.getTbProdutos().getValueAt(i, 2).toString());
+//                if (quantidadeAnterior + tela.getQuantidadeProduto() > item.getQuantidade()) {
+//                    mensagem("Produto excedente da quantidade em estoque");
+//                    return false;
+// 
+//                } else {
+//                    tela.getTbProdutos().setValueAt(quantidadeAnterior + quantidade, i, 2);
+//                    Double novoPreco = item.getPreco() * Integer.parseInt(tela.getTbProdutos().getValueAt(i, 2).toString());
+//                    tela.getTbProdutos().setValueAt(novoPreco, i, 3);
+//                    return false;
+//                }
+//            }
+//        }
+//        model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
+//        return true;
+//    }
+>>>>>>> 7aed5cf0f0ceb405448166aff8b733ea460ff02e
  
     private void mostrarNomeVendedor(){
         tela.getLbVendedorAtual().setText(vendedor.getNome());  
@@ -400,10 +423,6 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //       
 //-------------------------                                      UTILIDADES                                     -------------------------//
-    
-    public void mensagem(String mensagem) {
-        JOptionPane.showMessageDialog(tela, mensagem);
-    }
     
     public void limpaCampo(JTextField textField) {
         textField.setText("");
