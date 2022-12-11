@@ -88,7 +88,6 @@ public class VendaView extends javax.swing.JFrame {
         lbVendedorAtual.setText(vendedorNome);
     }
     
-
     public Cliente getClienteSelecionado() {
         return ltClientes.getSelectedValue();
     }
