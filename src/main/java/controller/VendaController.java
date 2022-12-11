@@ -214,18 +214,18 @@ public class VendaController implements Controller{
     private void atualizarTotal() {
         
         Double valorTotalDaCompra = 0.0;
-        for (int i = 0; i < tela.getTbProdutos().getRowCount(); i++) {
-            valorTotalDaCompra += Double.parseDouble(tela.getTbProdutos().getValueAt(i, 3).toString());
+        for (int linha = 0; linha < tela.getLinhasTotal(); linha++) {
+            valorTotalDaCompra += Double.parseDouble(tela.getValorTotalCompra(linha));
         }
-        tela.getTfTotal().setText("R$" + valorTotalDaCompra);
+        tela.setValorTotal(valorTotalDaCompra);
     }
     
     private void acaoRemover() throws NaoSelecionadoException{
         
-        if(tela.getTbProdutos().getSelectedRow() == -1)
+        if(tela.getLinhaSelecionada() == -1)
             throw new NaoSelecionadoException("lista produto");
         else 
-            ((DefaultTableModel) tela.getTbProdutos().getModel()).removeRow(tela.getTbProdutos().getSelectedRow());
+            tela.removerLinhaSelecionada();
     }
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
@@ -235,17 +235,12 @@ public class VendaController implements Controller{
     private List<ItemProduto> gerarPedido() {
         List<ItemProduto> pedidoGerado = new ArrayList<>();
 
-        byte colunaNome = 0;
-        byte colunaCodigo = 1;
-        byte colunaQuantidade = 2;
-        byte colunaPreco = 3;
+        for (int linhaAtual = 0; linhaAtual < tela.getLinhasTotal(); linhaAtual++) {
 
-        for (int linhaAtual = 0; linhaAtual < tela.getTbProdutos().getRowCount(); linhaAtual++) {
-
-            String nome = (String) tela.getTbProdutos().getValueAt(linhaAtual, colunaNome);
-            Integer codigo = (int) tela.getTbProdutos().getValueAt(linhaAtual, colunaCodigo);
-            Double preco = (Double) tela.getTbProdutos().getValueAt(linhaAtual, colunaPreco);
-            int quantidade = (int) tela.getTbProdutos().getValueAt(linhaAtual, colunaQuantidade);
+            String nome = tela.getColunaNome(linhaAtual);
+            Integer codigo = tela.getColunaCodigo(linhaAtual);
+            int quantidade = tela.getColunaQuantidade(linhaAtual);
+            Double preco = (Double) tela.getColunaPreco(linhaAtual);
 
             ItemProduto item = new ItemProduto(nome, codigo, preco, quantidade);
 
@@ -364,7 +359,7 @@ public class VendaController implements Controller{
 
  private boolean validarItemSelecionado(Produto item, int quantidade){
      DefaultTableModel model = (DefaultTableModel) tela.getTbProdutos().getModel();
-        for (int i = 0; i < tela.getTbProdutos().getRowCount(); i++) {
+        for (int i = 0; i < tela.getLinhasTotal(); i++) {
             if (item.getNome().equals(tela.getTbProdutos().getValueAt(i, 0))) {
                 Integer quantidadeAnterior = Integer.parseInt(tela.getTbProdutos().getValueAt(i, 2).toString());
                 if (quantidadeAnterior + tela.getQuantidadeProduto() > item.getQuantidade()) {

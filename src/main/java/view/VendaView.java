@@ -10,76 +10,73 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Nicolas Debacher
  */
+public class VendaView extends javax.swing.JFrame {
 
-public class VendaView extends javax.swing.JFrame{
-    
     public VendaView() {
         initComponents();
         decoracao();
     }
-    
-    public void exibirTela(){
+
+    public void exibirTela() {
         this.setVisible(true);
     }
-    
+
     //---------------------------Metodos pra adicionar ações nos botões---------------------------//
-    
-    public void addActionBotaoPesquisarProduto(ActionListener acao){
+    public void addActionBotaoPesquisarProduto(ActionListener acao) {
         btPesquisarProduto.addActionListener(acao);
     }
-    
-    public void addActionBotaoAdicionarProduto(ActionListener acao){
+
+    public void addActionBotaoAdicionarProduto(ActionListener acao) {
         btAdicionar.addActionListener(acao);
     }
-    
-    public void addActionBotaoRemoverProduto(ActionListener acao){
+
+    public void addActionBotaoRemoverProduto(ActionListener acao) {
         btRemover.addActionListener(acao);
     }
-    
-    public void addActionBotaoFecharPedido(ActionListener acao){
+
+    public void addActionBotaoFecharPedido(ActionListener acao) {
         btFecharPedido.addActionListener(acao);
     }
-    
-    public void addActionBotaoPesquisarCliente(ActionListener acao){
+
+    public void addActionBotaoPesquisarCliente(ActionListener acao) {
         btPesquisarCliente.addActionListener(acao);
     }
-    
-    public void addActionBotaoCancelarPedido(ActionListener acao){
+
+    public void addActionBotaoCancelarPedido(ActionListener acao) {
         btCancelar.addActionListener(acao);
     }
-    
-    public void addActionBotaoFinalizarVenda(ActionListener acao){
+
+    public void addActionBotaoFinalizarVenda(ActionListener acao) {
         btConcluir.addActionListener(acao);
     }
 
-    public void addActionBotaoClienteNovo(ActionListener acao){
+    public void addActionBotaoClienteNovo(ActionListener acao) {
         btClienteNovo.addActionListener(acao);
     }
-    
-    public void addActionRbDinheiro(ActionListener acao){
+
+    public void addActionRbDinheiro(ActionListener acao) {
         rbDinheiro.addActionListener(acao);
     }
-    
-    public void addActionRbCredito(ActionListener acao){
+
+    public void addActionRbCredito(ActionListener acao) {
         rbCredito.addActionListener(acao);
     }
-    
-    public void addActionRbDebito(ActionListener acao){
+
+    public void addActionRbDebito(ActionListener acao) {
         rbDebito.addActionListener(acao);
     }
-    
-    public void addActionRbBoleto(ActionListener acao){
+
+    public void addActionRbBoleto(ActionListener acao) {
         rbBoletoBancario.addActionListener(acao);
     }
-    
+
     //---------------------------Metodos que só a tela retorna---------------------------//
-    
-    
     public ButtonGroup getBgFormasDePagamento() {
         return bgFormasDePagamento;
     }
@@ -91,7 +88,7 @@ public class VendaView extends javax.swing.JFrame{
     public JLabel getLbVendedorAtual() {
         return lbVendedorAtual;
     }
-    
+
     public JList<Cliente> getLtClientes() {
         return ltClientes;
     }
@@ -99,7 +96,7 @@ public class VendaView extends javax.swing.JFrame{
     public JList<Produto> getLtProdutos() {
         return ltProdutos;
     }
-    
+
     public boolean boletoBancarioSelecionado() {
         return rbBoletoBancario.isSelected();
     }
@@ -120,8 +117,16 @@ public class VendaView extends javax.swing.JFrame{
         return Integer.parseInt(spQuantidade.getValue().toString());
     }
 
-    public JTable getTbProdutos() {
+    private JTable getTbProdutos() {
         return tbProdutos;
+    }
+
+    public int getLinhasTotal() {
+        return getTbProdutos().getRowCount();
+    }
+
+    public String getValorTotalCompra(int linha) {
+        return getTbProdutos().getValueAt(linha, 3).toString();
     }
 
     public String getCPF() {
@@ -140,33 +145,68 @@ public class VendaView extends javax.swing.JFrame{
         return tfNomeProduto.getText();
     }
 
-    public JTextField getTfTotal(){
+    private JTextField getTfTotal() {
         return this.tfTotal;
     }
-    
+
+    public void removerLinhaSelecionada() {
+        ((DefaultTableModel) getTbProdutos().getModel()).removeRow(tela.getTbProdutos().getSelectedRow());
+    }
+
+    public void setValorTotal(double valorTotalDaCompra) {
+        getTfTotal().setText("R$" + valorTotalDaCompra);
+    }
+
+    public int getLinhaSelecionada() {
+        return getTbProdutos().getSelectedRow();
+    }
+
     public double getValorTotal() {
         return Double.parseDouble(tfTotal.getText());
     }
 
-    public JTextField getTfCPF() {
+    private JTextField getTfCPF() {
         return tfCPF;
     }
 
-    public JTextField getTfCodigo() {
+    private JTextField getTfCodigo() {
         return tfCodigo;
     }
 
-    public JTextField getTfNomeCliente() {
+    private JTextField getTfNomeCliente() {
         return tfNomeCliente;
     }
 
-    public JTextField getTfNomeProduto() {
+    private JTextField getTfNomeProduto() {
         return tfNomeProduto;
     }
+
+    public String getColunaNome(int linhaAtual) {
+        byte colunaNome = 0;
+        return (String) getTbProdutos().getValueAt(linhaAtual, colunaNome);
+    }
+
+    public int getColunaCodigo(int linhaAtual) {
+        byte colunaCodigo = 1;
+        return (int) getTbProdutos().getValueAt(linhaAtual, colunaCodigo);
+    }
     
-    public String getParcelas(){
+      public int getColunaQuantidade(int linhaAtual) {
+        byte colunaQuantidade = 2;
+        return  (int) getTbProdutos().getValueAt(linhaAtual, colunaQuantidade);
+    }
+    
+    public Double getColunaPreco(int linhaAtual) {
+        byte colunaPreco = 3;
+        return (Double) getTbProdutos().getValueAt(linhaAtual, colunaPreco);
+    }
+    
+  
+
+    public String getParcelas() {
         return (String) cbParcelas.getSelectedItem();
     }
+
     //--------------------------------------------------------------------------------------------//
     private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));
@@ -224,11 +264,11 @@ public class VendaView extends javax.swing.JFrame{
         spQuantidade.setForeground(Color.decode("#18181b"));
         cbParcelas.setBackground(Color.decode("#f3f4f6"));
         cbParcelas.setForeground(Color.decode("#18181b"));
-        
+
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         this.setTitle("Realizar Venda");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -607,4 +647,3 @@ public class VendaView extends javax.swing.JFrame{
     // End of variables declaration//GEN-END:variables
 
 }
-
