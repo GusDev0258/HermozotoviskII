@@ -4,7 +4,6 @@ import dao.ClienteDAO;
 import dao.ProdutoDAO;
 import dao.VendaDAO;
 import exceptions.NaoSelecionadoException;
-import exceptions.ValorInvalidoException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,10 +11,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 import model.Cliente;
 import model.Funcionario;
 import model.ItemProduto;
@@ -284,22 +279,20 @@ public class VendaController implements Controller{
         if (pedido.isEmpty()) {
             tela.exibirMensagem("nenhum pedido feito", "Falha na Operação");
         } else {
-            int cancelar = JOptionPane.showConfirmDialog
-        (tela, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (cancelar == JOptionPane.YES_OPTION) {
+            if (tela.retornaOpcao()) {
                 devolverProdutos();
                 pedido = new ArrayList<>();
                 tela.limparTodosOsCampos();
             } else {
-                JOptionPane.showMessageDialog(tela, "Operação Cancelada", "Action: Operação Cancelada", JOptionPane.WARNING_MESSAGE);
+                tela.exibirMensagem("Operação Cancelada", "Action: Operação Cancelada");
             }
         }
     }
     
     private Venda gerarVenda(List<ItemProduto> pedido){
         if (pedido == null) {
-            JOptionPane.showMessageDialog(tela, "Compra inválida!"
-                    + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
+            tela.exibirMensagem("Compra inválida!"
+                    + "\nPreencha corretamente todos os campos!", "Compra inválida");
             return null;
         }
 
@@ -310,23 +303,21 @@ public class VendaController implements Controller{
     }
     
     private void finalizarVenda(){
-        if (tela.getLtClientes().getSelectedValue() == null) {
-            JOptionPane.showMessageDialog(tela, "Compra inválida!"
-                    + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
-        } else if (tela.getBgFormasDePagamento().getSelection() == null) {
-            JOptionPane.showMessageDialog(tela, "Compra inválida!"
-                    + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
+        if (tela.retornaClienteSelecionado() == null) {
+            tela.exibirError("Compra inválida!"
+                    + "\nPreencha corretamente todos os campos!", "Compra inválida");
+        } else if (tela.retornaFormaDePagamentoSelecionada() == null) {
+            tela.exibirError("Compra inválida!"
+                    + "\nPreencha corretamente todos os campos!", "Compra inválida");
         } else {
             
             try {
                 Venda venda = gerarVenda(pedido);
                 vendaDao.addVenda(venda);
-                JOptionPane.showMessageDialog(tela, "Compra Realizada com Sucesso!", "Compra Concluida", JOptionPane.WARNING_MESSAGE);
-                System.out.println("Foi");
+                tela.exibirMensagem("Compra Realizada com Sucesso!", "Compra Concluida");
                 
             } catch (NullPointerException ex) {
                 tela.exibirMensagem("Operacao falhou", "Falha na Operação");
-                System.out.println("falhou");
             }
         }
         
@@ -357,26 +348,6 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- // 
 //-------------------------                                      VALIDAÇÕES                                     -------------------------//
 
-// private boolean validarItemSelecionado(Produto item, int quantidade){
-//     DefaultTableModel model = (DefaultTableModel) tela.getTbProdutos().getModel();
-//        for (int i = 0; i < tela.getTbProdutos().getRowCount(); i++) {
-//            if (item.getNome().equals(tela.getTbProdutos().getValueAt(i, 0))) {
-//                Integer quantidadeAnterior = Integer.parseInt(tela.getTbProdutos().getValueAt(i, 2).toString());
-//                if (quantidadeAnterior + tela.getQuantidadeProduto() > item.getQuantidade()) {
-//                    mensagem("Produto excedente da quantidade em estoque");
-//                    return false;
-// 
-//                } else {
-//                    tela.getTbProdutos().setValueAt(quantidadeAnterior + quantidade, i, 2);
-//                    Double novoPreco = item.getPreco() * Integer.parseInt(tela.getTbProdutos().getValueAt(i, 2).toString());
-//                    tela.getTbProdutos().setValueAt(novoPreco, i, 3);
-//                    return false;
-//                }
-//            }
-//        }
-//        model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
-//        return true;
-//    }
  
     private void mostrarNomeVendedor(){
         tela.getLbVendedorAtual().setText(vendedor.getNome());  
