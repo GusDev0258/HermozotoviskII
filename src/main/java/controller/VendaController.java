@@ -78,36 +78,26 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
 //-------------------------                                 METODOS DE PESQUISA                                 -------------------------//
     
-    private void mostrarResultado(Produto p){
-        DefaultListModel<Produto> listaProdutos = new DefaultListModel();
-        listaProdutos.addElement(p);
-        tela.getLtProdutos().setModel(listaProdutos);
-    }
 
-    private void mostrarResultado(Cliente c) {
-        DefaultListModel<Cliente> listaClientes = new DefaultListModel();
-        listaClientes.addElement(c);
-        tela.getLtClientes().setModel(listaClientes);
-    }
     
     private void pesquisarProdutoPorNome(String nome) {
-        for (Produto p : produtoDao.getProdutos()) {
-            if(p.getNome().toLowerCase().contains(nome.toLowerCase()))
-                mostrarResultado(p);
+        for (Produto produto : produtoDao.getProdutos()) {
+            if(produto.getNome().toLowerCase().contains(nome.toLowerCase()))
+              tela.mostrarResultado(produto);
         }
     }
     
     private void pesquisarProdutoPorCodigo(String codigo){
         try{
-            Integer pCodigo = Integer.parseInt(codigo);
+            Integer codigoProduto = Integer.parseInt(codigo);
             
             Map<Integer, Produto> produtos = produtoDao.getProdutos().stream()
                 .collect(Collectors.toMap(Produto::getCodigo, produto -> produto));
             
             for(Integer cod : produtos.keySet()){
-               Produto p = produtos.get(cod);
-                if(p.getCodigo() == pCodigo)
-                    mostrarResultado(p);
+               Produto produto = produtos.get(cod);
+                if(produto.getCodigo() == codigoProduto)
+                    tela.mostrarResultado(produto);
             }
         }catch(NumberFormatException e){
             tela.exibirMensagem("Insira somente numeros na pesquisa por codigo", "Falha na Operação");
@@ -115,9 +105,9 @@ public class VendaController implements Controller{
     }
     
     private void pesquisarClientePorNome(String nome) {
-        for (Cliente c : clienteDao.getClientes()) {
-            if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
-                mostrarResultado(c);
+        for (Cliente cliente : clienteDao.getClientes()) {
+            if(cliente.getNome().toLowerCase().contains(nome.toLowerCase()))
+                tela.mostrarResultado(cliente);
         }
     }
 
@@ -125,9 +115,9 @@ public class VendaController implements Controller{
         Set<Cliente> clientes = new HashSet<>();
         clientes.addAll(clienteDao.getClientes());
 
-        for (Cliente c : clientes) {
-            if (c.getCPF().contains(CPF)) {
-                mostrarResultado(c);
+        for (Cliente cliente : clientes) {
+            if (cliente.getCPF().contains(CPF)) {
+                tela.mostrarResultado(cliente);
             }
         }
     }

@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -89,19 +90,23 @@ public class VendaView extends javax.swing.JFrame {
         return lbVendedorAtual;
     }
 
-    public JList<Cliente> getLtClientes() {
-        return ltClientes;
+    public void mostrarResultado(Produto p) {
+        DefaultListModel<Produto> listaProdutos = new DefaultListModel();
+        listaProdutos.addElement(p);
+        ltProdutos.setModel(listaProdutos);
     }
 
-    public JList<Produto> getLtProdutos() {
-        return ltProdutos;
+    public void mostrarResultado(Cliente c) {
+        DefaultListModel<Cliente> listaClientes = new DefaultListModel();
+        listaClientes.addElement(c);
+        ltClientes.setModel(listaClientes);
     }
-    
-    public void ChangeStateCBParcelas(boolean state){
+
+    public void ChangeStateCBParcelas(boolean state) {
         cbParcelas.setEnabled(state);
         cbParcelas.setSelectedIndex(0);
     }
-    
+
     public boolean boletoBancarioSelecionado() {
         return rbBoletoBancario.isSelected();
     }
@@ -146,7 +151,6 @@ public class VendaView extends javax.swing.JFrame {
         return tfNomeProduto.getText();
     }
 
-
     private TableModel getModel() {
         return tbProdutos.getModel();
     }
@@ -162,15 +166,15 @@ public class VendaView extends javax.swing.JFrame {
     public int getLinhaSelecionada() {
         return tbProdutos.getSelectedRow();
     }
-    
-    public Cliente retornaClienteSelecionado(){
+
+    public Cliente retornaClienteSelecionado() {
         return ltClientes.getSelectedValue();
     }
-    
-    public ButtonModel retornaFormaDePagamentoSelecionada(){
+
+    public ButtonModel retornaFormaDePagamentoSelecionada() {
         return bgFormasDePagamento.getSelection();
     }
-    
+
     public double getValorTotal() {
         return Double.parseDouble(tfTotal.getText());
     }
@@ -234,8 +238,8 @@ public class VendaView extends javax.swing.JFrame {
                 Integer quantidadeAnterior = getColunaQuantidade(linhaAtual);
                 if (produtoExcedeEstoque(quantidadeAnterior, item)) {
                     exibirMensagem("Produto excedente da quantidade em estoque",
-                                    "Falha na Operação");
-                }else {
+                            "Falha na Operação");
+                } else {
                     setColunaQuantidade(quantidadeAnterior + quantidade, linhaAtual);
                     Double novoPreco = item.getPreco() * getColunaQuantidade(linhaAtual);
                     setColunaQuantidade(novoPreco, linhaAtual);
@@ -246,35 +250,35 @@ public class VendaView extends javax.swing.JFrame {
         model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
         return true;
     }
-     
-    public void exibirError(String mensagem, String titulo){
-        JOptionPane.showMessageDialog(null, mensagem,titulo, JOptionPane.ERROR_MESSAGE);
+
+    public void exibirError(String mensagem, String titulo) {
+        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.ERROR_MESSAGE);
     }
-        
-    public void setVendedorAtual(String nome){
+
+    public void setVendedorAtual(String nome) {
         lbVendedorAtual.setText(nome);
     }
-    
-    public void limparTodosOsCampos(){
+
+    public void limparTodosOsCampos() {
         tfCPF.setText("");
         tfCodigo.setText("");
         tfNomeCliente.setText("");
         tfNomeProduto.setText("");
     }
-    
-    public boolean retornaOpcao(){
-        if(mostraOpcao() == JOptionPane.YES_OPTION)
+
+    public boolean retornaOpcao() {
+        if (mostraOpcao() == JOptionPane.YES_OPTION) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
-    
-    public int mostraOpcao(){
-        int cancelar = JOptionPane.showConfirmDialog
-        (null, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+    public int mostraOpcao() {
+        int cancelar = JOptionPane.showConfirmDialog(null, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         return cancelar;
     }
-  
+
     private void limpaCampo(JTextField textField) {
         textField.setText("");
     }
