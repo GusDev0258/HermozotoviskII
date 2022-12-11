@@ -6,6 +6,7 @@ import model.Cliente;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -82,10 +83,6 @@ public class VendaView extends javax.swing.JFrame {
         return bgFormasDePagamento;
     }
 
-    public JComboBox getCbParcelas() {
-        return cbParcelas;
-    }
-
     public JLabel getLbVendedorAtual() {
         return lbVendedorAtual;
     }
@@ -97,7 +94,12 @@ public class VendaView extends javax.swing.JFrame {
     public JList<Produto> getLtProdutos() {
         return ltProdutos;
     }
-
+    
+    public void ChangeStateCBParcelas(boolean state){
+        cbParcelas.setEnabled(state);
+        cbParcelas.setSelectedIndex(0);
+    }
+    
     public boolean boletoBancarioSelecionado() {
         return rbBoletoBancario.isSelected();
     }
@@ -118,16 +120,13 @@ public class VendaView extends javax.swing.JFrame {
         return Integer.parseInt(spQuantidade.getValue().toString());
     }
 
-    private JTable getTbProdutos() {
-        return tbProdutos;
-    }
 
     public int getLinhasTotal() {
-        return getTbProdutos().getRowCount();
+        return tbProdutos.getRowCount();
     }
 
     public String getValorTotalCompra(int linha) {
-        return getTbProdutos().getValueAt(linha, 3).toString();
+        return tbProdutos.getValueAt(linha, 3).toString();
     }
 
     public String getCPF() {
@@ -146,60 +145,50 @@ public class VendaView extends javax.swing.JFrame {
         return tfNomeProduto.getText();
     }
 
-    private JTextField getTfTotal() {
-        return this.tfTotal;
-    }
 
     public void removerLinhaSelecionada() {
-        ((DefaultTableModel) getTbProdutos().getModel()).removeRow(tela.getTbProdutos().getSelectedRow());
+        ((DefaultTableModel) tbProdutos.getModel()).removeRow(tbProdutos.getSelectedRow());
     }
 
     public void setValorTotal(double valorTotalDaCompra) {
-        getTfTotal().setText("R$" + valorTotalDaCompra);
+        tfTotal.setText("R$" + valorTotalDaCompra);
     }
 
     public int getLinhaSelecionada() {
-        return getTbProdutos().getSelectedRow();
+        return tbProdutos.getSelectedRow();
     }
-
+    
+    public Cliente retornaClienteSelecionado(){
+        return ltClientes.getSelectedValue();
+    }
+    
+    public ButtonModel retornaFormaDePagamentoSelecionada(){
+        return bgFormasDePagamento.getSelection();
+    }
+    
     public double getValorTotal() {
         return Double.parseDouble(tfTotal.getText());
     }
 
-    private JTextField getTfCPF() {
-        return tfCPF;
-    }
-
-    private JTextField getTfCodigo() {
-        return tfCodigo;
-    }
-
-    private JTextField getTfNomeCliente() {
-        return tfNomeCliente;
-    }
-
-    private JTextField getTfNomeProduto() {
-        return tfNomeProduto;
-    }
 
     public String getColunaNome(int linhaAtual) {
         byte colunaNome = 0;
-        return (String) getTbProdutos().getValueAt(linhaAtual, colunaNome);
+        return (String) tbProdutos.getValueAt(linhaAtual, colunaNome);
     }
 
     public int getColunaCodigo(int linhaAtual) {
         byte colunaCodigo = 1;
-        return (int) getTbProdutos().getValueAt(linhaAtual, colunaCodigo);
+        return (int) tbProdutos.getValueAt(linhaAtual, colunaCodigo);
     }
     
       public int getColunaQuantidade(int linhaAtual) {
         byte colunaQuantidade = 2;
-        return  (int) getTbProdutos().getValueAt(linhaAtual, colunaQuantidade);
+        return  (int) tbProdutos.getValueAt(linhaAtual, colunaQuantidade);
     }
     
     public Double getColunaPreco(int linhaAtual) {
         byte colunaPreco = 3;
-        return (Double) getTbProdutos().getValueAt(linhaAtual, colunaPreco);
+        return (Double) tbProdutos.getValueAt(linhaAtual, colunaPreco);
     }
     
   
@@ -208,23 +197,56 @@ public class VendaView extends javax.swing.JFrame {
         return (String) cbParcelas.getSelectedItem();
     }
 
-    public void exibirMensagem(String mensagem){
-        JOptionPane.showMessageDialog(null, mensagem);
+    public void exibirMensagem(String mensagem, String titulo){
+        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.WARNING_MESSAGE);
+    }
+    
+    public void exibirError(String mensagem, String titulo){
+        JOptionPane.showMessageDialog(null, mensagem,titulo, JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void limpaCampo(){
+        tfNomeProduto.setText("");
+        tfCodigo.setText("");
+    }
+    
+    public void setVendedorAtual(String nome){
+        lbVendedorAtual.setText(nome);
+    }
+    
+    public void limparTodosOsCampos(){
+        tfCPF.setText("");
+        tfCodigo.setText("");
+        tfNomeCliente.setText("");
+        tfNomeProduto.setText("");
+    }
+    
+    public boolean retornaOpcao(){
+        if(mostraOpcao() == JOptionPane.YES_OPTION)
+            return true;
+        else
+            return false;
+    }
+    
+    public int mostraOpcao(){
+        int cancelar = JOptionPane.showConfirmDialog
+        (null, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return cancelar;
     }
     
      public boolean validarItemSelecionado(Produto item, int quantidade){
-     DefaultTableModel model = (DefaultTableModel) this.getTbProdutos().getModel();
-        for (int i = 0; i < this.getTbProdutos().getRowCount(); i++) {
-            if (item.getNome().equals(this.getTbProdutos().getValueAt(i, 0))) {
-                Integer quantidadeAnterior = Integer.parseInt(this.getTbProdutos().getValueAt(i, 2).toString());
+     DefaultTableModel model = (DefaultTableModel) tbProdutos.getModel();
+        for (int i = 0; i < tbProdutos.getRowCount(); i++) {
+            if (item.getNome().equals(tbProdutos.getValueAt(i, 0))) {
+                Integer quantidadeAnterior = Integer.parseInt(tbProdutos.getValueAt(i, 2).toString());
                 if (quantidadeAnterior + this.getQuantidadeProduto() > item.getQuantidade()) {
-                    this.exibirMensagem("Produto excedente da quantidade em estoque");
+                    exibirMensagem("Produto excedente da quantidade em estoque","Falha na operação");
                     return false;
  
                 } else {
-                    this.getTbProdutos().setValueAt(quantidadeAnterior + quantidade, i, 2);
-                    Double novoPreco = item.getPreco() * Integer.parseInt(this.getTbProdutos().getValueAt(i, 2).toString());
-                    this.getTbProdutos().setValueAt(novoPreco, i, 3);
+                    tbProdutos.setValueAt(quantidadeAnterior + quantidade, i, 2);
+                    Double novoPreco = item.getPreco() * Integer.parseInt(tbProdutos.getValueAt(i, 2).toString());
+                    this.tbProdutos.setValueAt(novoPreco, i, 3);
                     return false;
                 }
             }
