@@ -82,14 +82,15 @@ public class VendaView extends javax.swing.JFrame {
     }
 
     //---------------------------Metodos que só a tela retorna---------------------------//
-    public ButtonGroup getBgFormasDePagamento() {
-        return bgFormasDePagamento;
-    }
 
-    public JLabel getLbVendedorAtual() {
-        return lbVendedorAtual;
+    public void mostrarNomeVendedor(String vendedorNome) {
+        lbVendedorAtual.setText(vendedorNome);
     }
-
+    
+    public Cliente getClienteSelecionado() {
+        return ltClientes.getSelectedValue();
+    }
+    
     public void mostrarResultado(Produto p) {
         DefaultListModel<Produto> listaProdutos = new DefaultListModel();
         listaProdutos.addElement(p);

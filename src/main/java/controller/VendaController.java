@@ -39,7 +39,7 @@ public class VendaController implements Controller{
         this.tela = new VendaView();
         this.vendedor = vendedor;
         
-        mostrarNomeVendedor();
+        tela.mostrarNomeVendedor(vendedor.getNome());
         inicializarBotoes();
         atualizarTotal();
     }
@@ -286,7 +286,7 @@ public class VendaController implements Controller{
             return null;
         }
 
-        Cliente cliente = tela.getLtClientes().getSelectedValue();
+        Cliente cliente = tela.getClienteSelecionado();
         String formaDePagamento = getFormaDePagemento() + " - " + tela.getParcelas();
         Venda venda = new Venda((Vendedor) vendedor, cliente, pedido, formaDePagamento);
         return venda;
@@ -337,11 +337,6 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- // 
 //-------------------------                                      VALIDAÇÕES                                     -------------------------//
-
- 
-    private void mostrarNomeVendedor(){
-        tela.getLbVendedorAtual().setText(vendedor.getNome());  
-    }
     
     private void abrirTelaCadastroCliente(){
         CadClienteView cadClienteView = new CadClienteView();
