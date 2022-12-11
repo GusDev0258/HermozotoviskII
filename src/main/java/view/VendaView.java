@@ -9,7 +9,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -166,6 +168,30 @@ public class VendaView extends javax.swing.JFrame{
     
     public String getParcelas(){
         return (String) cbParcelas.getSelectedItem();
+    }
+    public void exibirMensagem(String mensagem){
+        JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
+     public boolean validarItemSelecionado(Produto item, int quantidade){
+     DefaultTableModel model = (DefaultTableModel) this.getTbProdutos().getModel();
+        for (int i = 0; i < this.getTbProdutos().getRowCount(); i++) {
+            if (item.getNome().equals(this.getTbProdutos().getValueAt(i, 0))) {
+                Integer quantidadeAnterior = Integer.parseInt(this.getTbProdutos().getValueAt(i, 2).toString());
+                if (quantidadeAnterior + this.getQuantidadeProduto() > item.getQuantidade()) {
+                    this.exibirMensagem("Produto excedente da quantidade em estoque");
+                    return false;
+ 
+                } else {
+                    this.getTbProdutos().setValueAt(quantidadeAnterior + quantidade, i, 2);
+                    Double novoPreco = item.getPreco() * Integer.parseInt(this.getTbProdutos().getValueAt(i, 2).toString());
+                    this.getTbProdutos().setValueAt(novoPreco, i, 3);
+                    return false;
+                }
+            }
+        }
+        model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
+        return true;
     }
     //--------------------------------------------------------------------------------------------//
     private void decoracao() {
