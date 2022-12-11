@@ -11,7 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -118,16 +120,12 @@ public class VendaView extends javax.swing.JFrame {
         return Integer.parseInt(spQuantidade.getValue().toString());
     }
 
-    private JTable getTbProdutos() {
-        return tbProdutos;
-    }
-
     public int getLinhasTotal() {
-        return getTbProdutos().getRowCount();
+        return tbProdutos.getRowCount();
     }
 
     public String getValorTotalCompra(int linha) {
-        return getTbProdutos().getValueAt(linha, 3).toString();
+        return tbProdutos.getValueAt(linha, 3).toString();
     }
 
     public String getCPF() {
@@ -150,8 +148,12 @@ public class VendaView extends javax.swing.JFrame {
         return this.tfTotal;
     }
 
+    private TableModel getModel() {
+        return tbProdutos.getModel();
+    }
+
     public void removerLinhaSelecionada() {
-        ((DefaultTableModel) getTbProdutos().getModel()).removeRow(tela.getTbProdutos().getSelectedRow());
+        ((DefaultTableModel) getModel()).removeRow(tbProdutos.getSelectedRow());
     }
 
     public void setValorTotal(double valorTotalDaCompra) {
@@ -159,7 +161,7 @@ public class VendaView extends javax.swing.JFrame {
     }
 
     public int getLinhaSelecionada() {
-        return getTbProdutos().getSelectedRow();
+        return tbProdutos.getSelectedRow();
     }
 
     public double getValorTotal() {
@@ -182,49 +184,71 @@ public class VendaView extends javax.swing.JFrame {
         return tfNomeProduto;
     }
 
+    public void limparTFNomeProduto() {
+        limpaCampo(tfNomeProduto);
+    }
+
+    public void limparTFCodigo() {
+        limpaCampo(tfCodigo);
+    }
+
     public String getColunaNome(int linhaAtual) {
         byte colunaNome = 0;
-        return (String) getTbProdutos().getValueAt(linhaAtual, colunaNome);
+        return (String) tbProdutos.getValueAt(linhaAtual, colunaNome);
     }
 
     public int getColunaCodigo(int linhaAtual) {
         byte colunaCodigo = 1;
-        return (int) getTbProdutos().getValueAt(linhaAtual, colunaCodigo);
+        return (int) tbProdutos.getValueAt(linhaAtual, colunaCodigo);
     }
-    
-      public int getColunaQuantidade(int linhaAtual) {
+
+    public int getColunaQuantidade(int linhaAtual) {
         byte colunaQuantidade = 2;
-        return  (int) getTbProdutos().getValueAt(linhaAtual, colunaQuantidade);
+        return (int) tbProdutos.getValueAt(linhaAtual, colunaQuantidade);
     }
-    
+
     public Double getColunaPreco(int linhaAtual) {
         byte colunaPreco = 3;
-        return (Double) getTbProdutos().getValueAt(linhaAtual, colunaPreco);
+        return (Double) tbProdutos.getValueAt(linhaAtual, colunaPreco);
     }
-    
-  
+
+    private void setColunaQuantidade(Object value, int linhaAtual) {
+        byte colunaQuantidade = 2;
+        tbProdutos.setValueAt(value, linhaAtual, colunaQuantidade);
+    }
+
+    private void setColunaPreco(Object value, int linhaAtual) {
+        byte colunaPreco = 3;
+        tbProdutos.setValueAt(value, linhaAtual, colunaPreco);
+    }
 
     public String getParcelas() {
         return (String) cbParcelas.getSelectedItem();
     }
 
-    public void exibirMensagem(String mensagem){
-        JOptionPane.showMessageDialog(null, mensagem);
+    public void exibirMensagem(String mensagem, String titulo) {
+        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.WARNING_MESSAGE);
     }
-    
-     public boolean validarItemSelecionado(Produto item, int quantidade){
-     DefaultTableModel model = (DefaultTableModel) this.getTbProdutos().getModel();
-        for (int i = 0; i < this.getTbProdutos().getRowCount(); i++) {
-            if (item.getNome().equals(this.getTbProdutos().getValueAt(i, 0))) {
-                Integer quantidadeAnterior = Integer.parseInt(this.getTbProdutos().getValueAt(i, 2).toString());
-                if (quantidadeAnterior + this.getQuantidadeProduto() > item.getQuantidade()) {
-                    this.exibirMensagem("Produto excedente da quantidade em estoque");
+
+    private boolean produtoExcedeEstoque(Integer quantidadeAnterior, Produto produto) {
+        return quantidadeAnterior + getQuantidadeProduto() > produto.getQuantidade();
+    }
+
+    public boolean validarItemSelecionado(Produto item, int quantidade) {
+        DefaultTableModel model = (DefaultTableModel) getModel();
+
+        for (int linhaAtual = 0; linhaAtual < getLinhasTotal(); linhaAtual++) {
+            if (item.getNome().equals(tbProdutos.getValueAt(linhaAtual, 0))) {
+                Integer quantidadeAnterior = getColunaQuantidade(linhaAtual);
+                if (produtoExcedeEstoque(quantidadeAnterior, item)) {
+                    exibirMensagem("Produto excedente da quantidade em estoque",
+                                    "Falha na Operação");
                     return false;
- 
+
                 } else {
-                    this.getTbProdutos().setValueAt(quantidadeAnterior + quantidade, i, 2);
-                    Double novoPreco = item.getPreco() * Integer.parseInt(this.getTbProdutos().getValueAt(i, 2).toString());
-                    this.getTbProdutos().setValueAt(novoPreco, i, 3);
+                    setColunaQuantidade(quantidadeAnterior + quantidade, linhaAtual);
+                    Double novoPreco = item.getPreco() * getColunaQuantidade(linhaAtual);
+                    setColunaQuantidade(novoPreco, linhaAtual);
                     return false;
                 }
             }
@@ -232,6 +256,15 @@ public class VendaView extends javax.swing.JFrame {
         model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
         return true;
     }
+
+    private void limpaCampo(JTextField textField) {
+        textField.setText("");
+    }
+
+    private void limpaCampo(JTextArea textArea) {
+        textArea.setText("");
+    }
+
     //--------------------------------------------------------------------------------------------//
     private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));

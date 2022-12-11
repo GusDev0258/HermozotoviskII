@@ -187,7 +187,7 @@ public class VendaController implements Controller{
                 tela.validarItemSelecionado(item,quantidade);
                 atualizarTotal();
 
-                limpaCampo(tela.getTfNomeProduto());
+                tela.limparTFNomeProduto();
                 limpaCampo(tela.getTfCodigo());
             }
         } catch (NaoSelecionadoException ex) {
@@ -240,7 +240,7 @@ public class VendaController implements Controller{
             String nome = tela.getColunaNome(linhaAtual);
             Integer codigo = tela.getColunaCodigo(linhaAtual);
             int quantidade = tela.getColunaQuantidade(linhaAtual);
-            Double preco = (Double) tela.getColunaPreco(linhaAtual);
+            Double preco = tela.getColunaPreco(linhaAtual);
 
             ItemProduto item = new ItemProduto(nome, codigo, preco, quantidade);
 
@@ -357,7 +357,6 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- // 
 //-------------------------                                      VALIDAÇÕES                                     -------------------------//
 
-<<<<<<< HEAD
  private boolean validarItemSelecionado(Produto item, int quantidade){
      DefaultTableModel model = (DefaultTableModel) tela.getTbProdutos().getModel();
         for (int i = 0; i < tela.getLinhasTotal(); i++) {
@@ -378,7 +377,7 @@ public class VendaController implements Controller{
         model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
         return true;
     }
-=======
+
 // private boolean validarItemSelecionado(Produto item, int quantidade){
 //     DefaultTableModel model = (DefaultTableModel) tela.getTbProdutos().getModel();
 //        for (int i = 0; i < tela.getTbProdutos().getRowCount(); i++) {
@@ -399,7 +398,6 @@ public class VendaController implements Controller{
 //        model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
 //        return true;
 //    }
->>>>>>> 7aed5cf0f0ceb405448166aff8b733ea460ff02e
  
     private void mostrarNomeVendedor(){
         tela.getLbVendedorAtual().setText(vendedor.getNome());  
@@ -424,13 +422,7 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //       
 //-------------------------                                      UTILIDADES                                     -------------------------//
     
-    public void limpaCampo(JTextField textField) {
-        textField.setText("");
-    }
-
-    public void limpaCampo(JTextArea textArea) {
-        textArea.setText("");
-    }
+    
     
     private boolean campoCodigoVazio() {
         return tela.getCodigoProduto().isBlank();
@@ -449,6 +441,7 @@ public class VendaController implements Controller{
     }
 
     private void limparTodosOsCampos(){
+
         tela.getTfNomeCliente().setText("");
         tela.getTfCPF().setText("");
         tela.getTfCodigo().setText("");
