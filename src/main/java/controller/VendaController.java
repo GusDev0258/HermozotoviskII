@@ -433,22 +433,6 @@ public class VendaController implements Controller{
         }
         return null;
     }
-
-    public Cliente buscarClientePorNome(String nome) {
-        for (Cliente c : clienteDao.getClientes()){
-            if(c.getNome().equals(nome))
-                return c;
-        }
-        return null;
-    }
-
-    public Cliente buscarClientePorCPF(String CPF) {
-        for (Cliente c : clienteDao.getClientes()) {
-            if(c.getCPF().equals(CPF))
-                return c;
-        }
-        return null;
-    }
     
  }  
 //-------------------------                                         end                                         -------------------------//
