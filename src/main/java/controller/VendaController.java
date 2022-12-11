@@ -132,7 +132,7 @@ public class VendaController implements Controller{
             }
             else if(!campoNomeProdutoVazio() && !campoCodigoVazio()){
                 pesquisarProdutoPorCodigo(tela.getCodigoProduto());
-                if(tela.getLtProdutos().getFirstVisibleIndex() == -1)
+                if(tela.retornaValorIndexListaProduto() == -1)
                     pesquisarProdutoPorNome(tela.getNomeProduto());
             }
             else 
@@ -149,7 +149,7 @@ public class VendaController implements Controller{
         }
         else if(!campoNomeClienteVazio() && !campoCPFVazio()){
              pesquisarClientePorCPF(tela.getCPF());
-            if(tela.getLtClientes().getFirstVisibleIndex() == -1)
+            if(tela.retornaValorIndexListaCliente() == -1)
                 pesquisarClientePorNome(tela.getNomeCliente());
         }
         else
@@ -162,7 +162,7 @@ public class VendaController implements Controller{
     
     private void adicionarProdutoTabela(){
         try {
-            Produto item = getProdutoTabela();
+            Produto item = tela.getProdutoTabela();
 
             int quantidade = tela.getQuantidadeProduto();
             if (quantidade <= 0 || quantidade > item.getQuantidade()) {
@@ -179,12 +179,7 @@ public class VendaController implements Controller{
         }
     }
     
-    private Produto getProdutoTabela() throws NaoSelecionadoException {
-        if (tela.getLtProdutos().isSelectionEmpty()) {
-            throw new NaoSelecionadoException("lista produto");
-        }
-        return tela.getLtProdutos().getSelectedValue();
-    }
+    
     
     private void removerProdutoTabela(){
         try{

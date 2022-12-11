@@ -1,5 +1,6 @@
 package view;
 
+import exceptions.NaoSelecionadoException;
 import model.Produto;
 import javax.swing.JTextField;
 import model.Cliente;
@@ -87,8 +88,24 @@ public class VendaView extends javax.swing.JFrame {
         lbVendedorAtual.setText(vendedorNome);
     }
     
+
     public Cliente getClienteSelecionado() {
         return ltClientes.getSelectedValue();
+    }
+    
+    public int retornaValorIndexListaProduto(){
+        return ltProdutos.getFirstVisibleIndex();
+    }
+    
+    public int retornaValorIndexListaCliente(){
+        return ltClientes.getFirstVisibleIndex();
+    }
+    
+    public Produto getProdutoTabela() throws NaoSelecionadoException {
+        if (ltProdutos.isSelectionEmpty()) {
+            throw new NaoSelecionadoException("lista produto");
+        }
+        return ltProdutos.getSelectedValue();
     }
     
     public void mostrarResultado(Produto p) {
