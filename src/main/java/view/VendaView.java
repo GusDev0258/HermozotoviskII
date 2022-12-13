@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import model.Cliente;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -102,18 +103,34 @@ public class VendaView extends javax.swing.JFrame {
         return ltProdutos.getSelectedValue();
     }
     
-    public void mostrarResultado(Produto p) {
-        DefaultListModel<Produto> listaProdutos = new DefaultListModel();
-        listaProdutos.addElement(p);
-        ltProdutos.setModel(listaProdutos);
+    public void mostrarResultado(List<Produto> produtos) {
+        DefaultListModel<Produto> prods= new DefaultListModel<>();
+        
+        for (Produto p : produtos) {
+            prods.addElement(p);
+        }
+        ltProdutos.setModel(prods);
     }
 
-    public void mostrarResultado(Cliente c) {
+    public void mostrarResultadoCliente(List<Cliente> clientes) {
         DefaultListModel<Cliente> listaClientes = new DefaultListModel();
-        listaClientes.addElement(c);
+        
+        for (Cliente c : clientes) {
+            listaClientes.addElement(c);
+        }
         ltClientes.setModel(listaClientes);
     }
 
+    public void limparResultadoProdutos(){
+        DefaultListModel<Produto> listaLimpa = new DefaultListModel();
+        ltProdutos.setModel(listaLimpa);
+    }
+    
+    public void limparResultadoClientes(){
+        DefaultListModel<Cliente> listaLimpa = new DefaultListModel();
+        ltClientes.setModel(listaLimpa);
+    }
+    
     public void ChangeStateCBParcelas(boolean state) {
         cbParcelas.setEnabled(state);
         cbParcelas.setSelectedIndex(0);
