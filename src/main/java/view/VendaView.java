@@ -6,14 +6,9 @@ import javax.swing.JTextField;
 import model.Cliente;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -259,7 +254,7 @@ public class VendaView extends javax.swing.JFrame {
                 } else {
                     setColunaQuantidade(quantidadeAnterior + quantidade, linhaAtual);
                     Double novoPreco = item.getPreco() * getColunaQuantidade(linhaAtual);
-                    setColunaQuantidade(novoPreco, linhaAtual);
+                    setColunaPreco(novoPreco, linhaAtual);
                     return false;
                 }
             }
@@ -303,7 +298,7 @@ public class VendaView extends javax.swing.JFrame {
     private void limpaCampo(JTextArea textArea) {
         textArea.setText("");
     }
-
+    
     //--------------------------------------------------------------------------------------------//
     private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));
