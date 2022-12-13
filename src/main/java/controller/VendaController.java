@@ -80,33 +80,42 @@ public class VendaController implements Controller{
 
     
     private void pesquisarProdutoPorNome(String nome) {
+        List<Produto> resultados = new ArrayList<>();
         for (Produto produto : produtoDao.getProdutos()) {
             if(produto.getNome().toLowerCase().contains(nome.toLowerCase()))
-              tela.mostrarResultado(produto);
+              resultados.add(produto);
         }
+        tela.mostrarResultado(resultados);
     }
     
     private void pesquisarProdutoPorCodigo(String codigo){
         try{
-            Integer codigoProduto = Integer.parseInt(codigo);
+            
             
             Map<Integer, Produto> produtos = produtoDao.getProdutos().stream()
                 .collect(Collectors.toMap(Produto::getCodigo, produto -> produto));
             
+            List<Produto> resultados = new ArrayList<>();
             for(Integer cod : produtos.keySet()){
                Produto produto = produtos.get(cod);
-                if(produto.getCodigo() == codigoProduto)
-                    tela.mostrarResultado(produto);
+               String codigoProduto = produto.getCodigo() + "";
+                if(codigoProduto.contains(codigo)){
+                    resultados.add(produto);
+                }
             }
+            tela.mostrarResultado(resultados);
         }catch(NumberFormatException e){
             tela.exibirMensagem("Insira somente numeros na pesquisa por codigo", "Falha na Operação");
         }
     }
     
     private void pesquisarClientePorNome(String nome) {
+        List<Cliente> resultados = new ArrayList<>();
         for (Cliente cliente : clienteDao.getClientes()) {
-            if(cliente.getNome().toLowerCase().contains(nome.toLowerCase()))
-                tela.mostrarResultado(cliente);
+            if (cliente.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                resultados.add(cliente);
+            }
+            tela.mostrarResultadoCliente(resultados);
         }
     }
 
@@ -114,15 +123,19 @@ public class VendaController implements Controller{
         Set<Cliente> clientes = new HashSet<>();
         clientes.addAll(clienteDao.getClientes());
 
+        List<Cliente> resultados = new ArrayList<>();
         for (Cliente cliente : clientes) {
             if (cliente.getCPF().contains(CPF)) {
-                tela.mostrarResultado(cliente);
+                resultados.add(cliente);
             }
+            tela.mostrarResultadoCliente(resultados);
         }
     }
     
     private void pesquisarProduto(){
     
+        tela.limparResultadoProdutos();
+        
             if(!campoNomeProdutoVazio() && campoCodigoVazio()){
                 pesquisarProdutoPorNome(tela.getNomeProduto());
             }
@@ -139,6 +152,8 @@ public class VendaController implements Controller{
     }
     
     private void pesquisarCliente(){
+        
+        tela.limparResultadoClientes();
         
          if(!campoNomeClienteVazio() && campoCPFVazio()){
             pesquisarClientePorNome(tela.getNomeCliente());
