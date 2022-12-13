@@ -22,8 +22,8 @@ public class RelatorioVendaController {
     VendaRepository vendaDAO = new VendaDAO();
     Venda venda;
 
-    public RelatorioVendaController(RelatorioVendasView relatorioDeVendas) {
-        this.relatorioDeVendas = relatorioDeVendas;
+    public RelatorioVendaController() {
+        this.relatorioDeVendas = new RelatorioVendasView();
         populaVendas();
         inicializarBotoes();
     }
@@ -34,14 +34,17 @@ public class RelatorioVendaController {
     
     
     private void populaVendas(){
+        double total = 0;
         String totalVendas = "";
         List<Venda> vendas = this.vendaDAO.getVendas();
         Collections.sort(vendas, venda);
         for(Venda vend : vendaDAO.getVendas()){
+            total += vend.getValorTotal();
             relatorioDeVendas.atribuirValorAListaDeVendas(vend.toString());
-            totalVendas += vend.getValorTotal();
         }
+        totalVendas = total + "";
         relatorioDeVendas.atribuirValorAoTotalDeVendas(totalVendas);
+        
     }
     private Venda retornaVendaPesquisada()throws VendaNaoEncontradaException{
          int codigo = relatorioDeVendas.getCodigoPesquisado();

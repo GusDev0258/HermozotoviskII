@@ -1,105 +1,124 @@
 package view;
 
+import exceptions.NaoSelecionadoException;
 import model.Produto;
 import javax.swing.JTextField;
 import model.Cliente;
 import java.awt.Color;
 import java.awt.event.ActionListener;
-import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTable;
+import javax.swing.ButtonModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author Nicolas Debacher
  */
+public class VendaView extends javax.swing.JFrame {
 
-public class VendaView extends javax.swing.JFrame{
-    
     public VendaView() {
         initComponents();
         decoracao();
     }
-    
-    public void exibirTela(){
+
+    public void exibirTela() {
         this.setVisible(true);
     }
-    
+
     //---------------------------Metodos pra adicionar ações nos botões---------------------------//
-    
-    public void addActionBotaoPesquisarProduto(ActionListener acao){
+    public void addActionBotaoPesquisarProduto(ActionListener acao) {
         btPesquisarProduto.addActionListener(acao);
     }
-    
-    public void addActionBotaoAdicionarProduto(ActionListener acao){
+
+    public void addActionBotaoAdicionarProduto(ActionListener acao) {
         btAdicionar.addActionListener(acao);
     }
-    
-    public void addActionBotaoRemoverProduto(ActionListener acao){
+
+    public void addActionBotaoRemoverProduto(ActionListener acao) {
         btRemover.addActionListener(acao);
     }
-    
-    public void addActionBotaoFecharPedido(ActionListener acao){
+
+    public void addActionBotaoFecharPedido(ActionListener acao) {
         btFecharPedido.addActionListener(acao);
     }
-    
-    public void addActionBotaoPesquisarCliente(ActionListener acao){
+
+    public void addActionBotaoPesquisarCliente(ActionListener acao) {
         btPesquisarCliente.addActionListener(acao);
     }
-    
-    public void addActionBotaoCancelarPedido(ActionListener acao){
+
+    public void addActionBotaoCancelarPedido(ActionListener acao) {
         btCancelar.addActionListener(acao);
     }
-    
-    public void addActionBotaoFinalizarVenda(ActionListener acao){
+
+    public void addActionBotaoFinalizarVenda(ActionListener acao) {
         btConcluir.addActionListener(acao);
     }
 
-    public void addActionBotaoClienteNovo(ActionListener acao){
+    public void addActionBotaoClienteNovo(ActionListener acao) {
         btClienteNovo.addActionListener(acao);
     }
-    
-    public void addActionRbDinheiro(ActionListener acao){
+
+    public void addActionRbDinheiro(ActionListener acao) {
         rbDinheiro.addActionListener(acao);
     }
-    
-    public void addActionRbCredito(ActionListener acao){
+
+    public void addActionRbCredito(ActionListener acao) {
         rbCredito.addActionListener(acao);
     }
-    
-    public void addActionRbDebito(ActionListener acao){
+
+    public void addActionRbDebito(ActionListener acao) {
         rbDebito.addActionListener(acao);
     }
-    
-    public void addActionRbBoleto(ActionListener acao){
+
+    public void addActionRbBoleto(ActionListener acao) {
         rbBoletoBancario.addActionListener(acao);
     }
-    
+
     //---------------------------Metodos que só a tela retorna---------------------------//
+
+    public void mostrarNomeVendedor(String vendedorNome) {
+        lbVendedorAtual.setText(vendedorNome);
+    }
     
+    public Cliente getClienteSelecionado() {
+        return ltClientes.getSelectedValue();
+    }
     
-    public ButtonGroup getBgFormasDePagamento() {
-        return bgFormasDePagamento;
+    public int retornaValorIndexListaProduto(){
+        return ltProdutos.getFirstVisibleIndex();
+    }
+    
+    public int retornaValorIndexListaCliente(){
+        return ltClientes.getFirstVisibleIndex();
+    }
+    
+    public Produto getProdutoTabela() throws NaoSelecionadoException {
+        if (ltProdutos.isSelectionEmpty()) {
+            throw new NaoSelecionadoException("lista produto");
+        }
+        return ltProdutos.getSelectedValue();
+    }
+    
+    public void mostrarResultado(Produto p) {
+        DefaultListModel<Produto> listaProdutos = new DefaultListModel();
+        listaProdutos.addElement(p);
+        ltProdutos.setModel(listaProdutos);
     }
 
-    public JComboBox getCbParcelas() {
-        return cbParcelas;
+    public void mostrarResultado(Cliente c) {
+        DefaultListModel<Cliente> listaClientes = new DefaultListModel();
+        listaClientes.addElement(c);
+        ltClientes.setModel(listaClientes);
     }
 
-    public JLabel getLbVendedorAtual() {
-        return lbVendedorAtual;
-    }
-    
-    public JList<Cliente> getLtClientes() {
-        return ltClientes;
+    public void ChangeStateCBParcelas(boolean state) {
+        cbParcelas.setEnabled(state);
+        cbParcelas.setSelectedIndex(0);
     }
 
-    public JList<Produto> getLtProdutos() {
-        return ltProdutos;
-    }
-    
     public boolean boletoBancarioSelecionado() {
         return rbBoletoBancario.isSelected();
     }
@@ -120,8 +139,12 @@ public class VendaView extends javax.swing.JFrame{
         return Integer.parseInt(spQuantidade.getValue().toString());
     }
 
-    public JTable getTbProdutos() {
-        return tbProdutos;
+    public int getLinhasTotal() {
+        return tbProdutos.getRowCount();
+    }
+
+    public String getValorTotalCompra(int linha) {
+        return tbProdutos.getValueAt(linha, 3).toString();
     }
 
     public String getCPF() {
@@ -140,33 +163,142 @@ public class VendaView extends javax.swing.JFrame{
         return tfNomeProduto.getText();
     }
 
-    public JTextField getTfTotal(){
-        return this.tfTotal;
+    private TableModel getModel() {
+        return tbProdutos.getModel();
     }
-    
+
+    public void removerLinhaSelecionada() {
+        ((DefaultTableModel) getModel()).removeRow(tbProdutos.getSelectedRow());
+    }
+
+    public void setValorTotal(double valorTotalDaCompra) {
+        tfTotal.setText("R$" + valorTotalDaCompra);
+    }
+
+    public int getLinhaSelecionada() {
+        return tbProdutos.getSelectedRow();
+    }
+
+    public Cliente retornaClienteSelecionado() {
+        return ltClientes.getSelectedValue();
+    }
+
+    public ButtonModel retornaFormaDePagamentoSelecionada() {
+        return bgFormasDePagamento.getSelection();
+    }
+
     public double getValorTotal() {
         return Double.parseDouble(tfTotal.getText());
     }
 
-    public JTextField getTfCPF() {
-        return tfCPF;
+    public void limparTFNomeProduto() {
+        limpaCampo(tfNomeProduto);
     }
 
-    public JTextField getTfCodigo() {
-        return tfCodigo;
+    public void limparTFCodigo() {
+        limpaCampo(tfCodigo);
     }
 
-    public JTextField getTfNomeCliente() {
-        return tfNomeCliente;
+    public String getColunaNome(int linhaAtual) {
+        byte colunaNome = 0;
+        return (String) tbProdutos.getValueAt(linhaAtual, colunaNome);
     }
 
-    public JTextField getTfNomeProduto() {
-        return tfNomeProduto;
+    public int getColunaCodigo(int linhaAtual) {
+        byte colunaCodigo = 1;
+        return (int) tbProdutos.getValueAt(linhaAtual, colunaCodigo);
     }
-    
-    public String getParcelas(){
+
+    public int getColunaQuantidade(int linhaAtual) {
+        byte colunaQuantidade = 2;
+        return (int) tbProdutos.getValueAt(linhaAtual, colunaQuantidade);
+
+    }
+
+    public Double getColunaPreco(int linhaAtual) {
+        byte colunaPreco = 3;
+        return (Double) tbProdutos.getValueAt(linhaAtual, colunaPreco);
+    }
+
+    private void setColunaQuantidade(Object value, int linhaAtual) {
+        byte colunaQuantidade = 2;
+        tbProdutos.setValueAt(value, linhaAtual, colunaQuantidade);
+    }
+
+    private void setColunaPreco(Object value, int linhaAtual) {
+        byte colunaPreco = 3;
+        tbProdutos.setValueAt(value, linhaAtual, colunaPreco);
+    }
+
+    public String getParcelas() {
         return (String) cbParcelas.getSelectedItem();
     }
+
+    public void exibirMensagem(String mensagem, String titulo) {
+        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.WARNING_MESSAGE);
+    }
+
+    private boolean produtoExcedeEstoque(Integer quantidadeAnterior, Produto produto) {
+        return quantidadeAnterior + getQuantidadeProduto() > produto.getQuantidade();
+    }
+
+    public boolean validarItemSelecionado(Produto item, int quantidade) {
+        DefaultTableModel model = (DefaultTableModel) getModel();
+
+        for (int linhaAtual = 0; linhaAtual < getLinhasTotal(); linhaAtual++) {
+            if (item.getNome().equals(tbProdutos.getValueAt(linhaAtual, 0))) {
+                Integer quantidadeAnterior = getColunaQuantidade(linhaAtual);
+                if (produtoExcedeEstoque(quantidadeAnterior, item)) {
+                    exibirMensagem("Produto excedente da quantidade em estoque",
+                            "Falha na Operação");
+                } else {
+                    setColunaQuantidade(quantidadeAnterior + quantidade, linhaAtual);
+                    Double novoPreco = item.getPreco() * getColunaQuantidade(linhaAtual);
+                    setColunaPreco(novoPreco, linhaAtual);
+                    return false;
+                }
+            }
+        }
+        model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
+        return true;
+    }
+
+    public void exibirError(String mensagem, String titulo) {
+        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void setVendedorAtual(String nome) {
+        lbVendedorAtual.setText(nome);
+    }
+
+    public void limparTodosOsCampos() {
+        tfCPF.setText("");
+        tfCodigo.setText("");
+        tfNomeCliente.setText("");
+        tfNomeProduto.setText("");
+    }
+
+    public boolean retornaOpcao() {
+        if (mostraOpcao() == JOptionPane.YES_OPTION) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public int mostraOpcao() {
+        int cancelar = JOptionPane.showConfirmDialog(null, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return cancelar;
+    }
+
+    private void limpaCampo(JTextField textField) {
+        textField.setText("");
+    }
+
+    private void limpaCampo(JTextArea textArea) {
+        textArea.setText("");
+    }
+    
     //--------------------------------------------------------------------------------------------//
     private void decoracao() {
         getContentPane().setBackground(Color.decode("#3f3f46"));
@@ -224,11 +356,11 @@ public class VendaView extends javax.swing.JFrame{
         spQuantidade.setForeground(Color.decode("#18181b"));
         cbParcelas.setBackground(Color.decode("#f3f4f6"));
         cbParcelas.setForeground(Color.decode("#18181b"));
-        
+
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         this.setTitle("Realizar Venda");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -410,7 +542,7 @@ public class VendaView extends javax.swing.JFrame{
                                     .addGap(174, 174, 174)
                                     .addComponent(jLabel2))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel1))
@@ -418,16 +550,16 @@ public class VendaView extends javax.swing.JFrame{
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(tfNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                                                .addComponent(btPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(tfNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btPesquisarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(btRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 100, Short.MAX_VALUE)
-                                            .addComponent(btAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, Short.MAX_VALUE)
-                                            .addComponent(spQuantidade))))
+                                            .addComponent(spQuantidade)
+                                            .addComponent(btAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                            .addComponent(btRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
@@ -458,14 +590,17 @@ public class VendaView extends javax.swing.JFrame{
                                         .addComponent(jLabel11)
                                         .addComponent(cbParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel12)
-                                        .addComponent(btFecharPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(491, 491, 491)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel12)
+                                            .addGap(491, 491, 491))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(btFecharPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(479, 479, 479)))
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(60, Short.MAX_VALUE))
+                        .addContainerGap(47, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btConcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -607,4 +742,3 @@ public class VendaView extends javax.swing.JFrame{
     // End of variables declaration//GEN-END:variables
 
 }
-

@@ -4,18 +4,12 @@ import dao.ClienteDAO;
 import dao.ProdutoDAO;
 import dao.VendaDAO;
 import exceptions.NaoSelecionadoException;
-import exceptions.ValorInvalidoException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 import model.Cliente;
 import model.Funcionario;
 import model.ItemProduto;
@@ -44,7 +38,7 @@ public class VendaController implements Controller{
         this.tela = new VendaView();
         this.vendedor = vendedor;
         
-        mostrarNomeVendedor();
+        tela.mostrarNomeVendedor(vendedor.getNome());
         inicializarBotoes();
         atualizarTotal();
     }
@@ -83,46 +77,36 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //
 //-------------------------                                 METODOS DE PESQUISA                                 -------------------------//
     
-    private void mostrarResultado(Produto p){
-        DefaultListModel<Produto> listaProdutos = new DefaultListModel();
-        listaProdutos.addElement(p);
-        tela.getLtProdutos().setModel(listaProdutos);
-    }
 
-    private void mostrarResultado(Cliente c) {
-        DefaultListModel<Cliente> listaClientes = new DefaultListModel();
-        listaClientes.addElement(c);
-        tela.getLtClientes().setModel(listaClientes);
-    }
     
     private void pesquisarProdutoPorNome(String nome) {
-        for (Produto p : produtoDao.getProdutos()) {
-            if(p.getNome().toLowerCase().contains(nome.toLowerCase()))
-                mostrarResultado(p);
+        for (Produto produto : produtoDao.getProdutos()) {
+            if(produto.getNome().toLowerCase().contains(nome.toLowerCase()))
+              tela.mostrarResultado(produto);
         }
     }
     
     private void pesquisarProdutoPorCodigo(String codigo){
         try{
-            Integer pCodigo = Integer.parseInt(codigo);
+            Integer codigoProduto = Integer.parseInt(codigo);
             
             Map<Integer, Produto> produtos = produtoDao.getProdutos().stream()
                 .collect(Collectors.toMap(Produto::getCodigo, produto -> produto));
             
             for(Integer cod : produtos.keySet()){
-               Produto p = produtos.get(cod);
-                if(p.getCodigo() == pCodigo)
-                    mostrarResultado(p);
+               Produto produto = produtos.get(cod);
+                if(produto.getCodigo() == codigoProduto)
+                    tela.mostrarResultado(produto);
             }
         }catch(NumberFormatException e){
-            mensagem("Insira somente numeros na pesquisa por codigo");
+            tela.exibirMensagem("Insira somente numeros na pesquisa por codigo", "Falha na Operação");
         }
     }
     
     private void pesquisarClientePorNome(String nome) {
-        for (Cliente c : clienteDao.getClientes()) {
-            if(c.getNome().toLowerCase().contains(nome.toLowerCase()))
-                mostrarResultado(c);
+        for (Cliente cliente : clienteDao.getClientes()) {
+            if(cliente.getNome().toLowerCase().contains(nome.toLowerCase()))
+                tela.mostrarResultado(cliente);
         }
     }
 
@@ -130,9 +114,9 @@ public class VendaController implements Controller{
         Set<Cliente> clientes = new HashSet<>();
         clientes.addAll(clienteDao.getClientes());
 
-        for (Cliente c : clientes) {
-            if (c.getCPF().contains(CPF)) {
-                mostrarResultado(c);
+        for (Cliente cliente : clientes) {
+            if (cliente.getCPF().contains(CPF)) {
+                tela.mostrarResultado(cliente);
             }
         }
     }
@@ -147,11 +131,11 @@ public class VendaController implements Controller{
             }
             else if(!campoNomeProdutoVazio() && !campoCodigoVazio()){
                 pesquisarProdutoPorCodigo(tela.getCodigoProduto());
-                if(tela.getLtProdutos().getFirstVisibleIndex() == -1)
+                if(tela.retornaValorIndexListaProduto() == -1)
                     pesquisarProdutoPorNome(tela.getNomeProduto());
             }
             else 
-                mensagem("Nenhum valor inserido!");
+                tela.exibirMensagem("Nenhum valor inserido!", "Falha na Operação");
     }
     
     private void pesquisarCliente(){
@@ -164,11 +148,11 @@ public class VendaController implements Controller{
         }
         else if(!campoNomeClienteVazio() && !campoCPFVazio()){
              pesquisarClientePorCPF(tela.getCPF());
-            if(tela.getLtClientes().getFirstVisibleIndex() == -1)
+            if(tela.retornaValorIndexListaCliente() == -1)
                 pesquisarClientePorNome(tela.getNomeCliente());
         }
         else
-            mensagem("Nenhum valor inserido!");
+            tela.exibirMensagem("Nenhum valor inserido!", "Falha na Operação");
     }
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
@@ -177,36 +161,30 @@ public class VendaController implements Controller{
     
     private void adicionarProdutoTabela(){
         try {
-            Produto item = getProdutoTabela();
+            Produto item = tela.getProdutoTabela();
 
             int quantidade = tela.getQuantidadeProduto();
             if (quantidade <= 0 || quantidade > item.getQuantidade()) {
-                mensagem("Quantidade invalida ou excedente");
-                System.out.println("Quantidade invalida ou excedente");
+                tela.exibirMensagem("Quantidade invalida ou excedente", "Falha na Operação");
             } else {
-                validarItemSelecionado(item, quantidade);
+                tela.validarItemSelecionado(item,quantidade);
                 atualizarTotal();
 
-                limpaCampo(tela.getTfNomeProduto());
-                limpaCampo(tela.getTfCodigo());
+                tela.limparTFNomeProduto();
+                tela.limparTFCodigo();
             }
         } catch (NaoSelecionadoException ex) {
-            mensagem(ex.getMessage());
+            tela.exibirMensagem(ex.getMessage(), "Falha na Operação");
         }
     }
     
-    private Produto getProdutoTabela() throws NaoSelecionadoException {
-        if (tela.getLtProdutos().isSelectionEmpty()) {
-            throw new NaoSelecionadoException("lista produto");
-        }
-        return tela.getLtProdutos().getSelectedValue();
-    }
+    
     
     private void removerProdutoTabela(){
         try{
             acaoRemover();
         }catch(NaoSelecionadoException ex){
-            mensagem(ex.getMessage());
+            tela.exibirMensagem(ex.getMessage(), "Falha na Operação");
         atualizarTotal();
         }
     }
@@ -214,18 +192,18 @@ public class VendaController implements Controller{
     private void atualizarTotal() {
         
         Double valorTotalDaCompra = 0.0;
-        for (int i = 0; i < tela.getTbProdutos().getRowCount(); i++) {
-            valorTotalDaCompra += Double.parseDouble(tela.getTbProdutos().getValueAt(i, 3).toString());
+        for (int linha = 0; linha < tela.getLinhasTotal(); linha++) {
+            valorTotalDaCompra += Double.parseDouble(tela.getValorTotalCompra(linha));
         }
-        tela.getTfTotal().setText("R$" + valorTotalDaCompra);
+        tela.setValorTotal(valorTotalDaCompra);
     }
     
     private void acaoRemover() throws NaoSelecionadoException{
         
-        if(tela.getTbProdutos().getSelectedRow() == -1)
+        if(tela.getLinhaSelecionada() == -1)
             throw new NaoSelecionadoException("lista produto");
         else 
-            ((DefaultTableModel) tela.getTbProdutos().getModel()).removeRow(tela.getTbProdutos().getSelectedRow());
+            tela.removerLinhaSelecionada();
     }
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
@@ -235,17 +213,12 @@ public class VendaController implements Controller{
     private List<ItemProduto> gerarPedido() {
         List<ItemProduto> pedidoGerado = new ArrayList<>();
 
-        byte colunaNome = 0;
-        byte colunaCodigo = 1;
-        byte colunaQuantidade = 2;
-        byte colunaPreco = 3;
+        for (int linhaAtual = 0; linhaAtual < tela.getLinhasTotal(); linhaAtual++) {
 
-        for (int linhaAtual = 0; linhaAtual < tela.getTbProdutos().getRowCount(); linhaAtual++) {
-
-            String nome = (String) tela.getTbProdutos().getValueAt(linhaAtual, colunaNome);
-            Integer codigo = (int) tela.getTbProdutos().getValueAt(linhaAtual, colunaCodigo);
-            Double preco = (Double) tela.getTbProdutos().getValueAt(linhaAtual, colunaPreco);
-            int quantidade = (int) tela.getTbProdutos().getValueAt(linhaAtual, colunaQuantidade);
+            String nome = tela.getColunaNome(linhaAtual);
+            Integer codigo = tela.getColunaCodigo(linhaAtual);
+            int quantidade = tela.getColunaQuantidade(linhaAtual);
+            Double preco = tela.getColunaPreco(linhaAtual);
 
             ItemProduto item = new ItemProduto(nome, codigo, preco, quantidade);
 
@@ -273,13 +246,14 @@ public class VendaController implements Controller{
             
             try{
             if (pedido.isEmpty()) {
-                mensagem("Nenhum produto Selecionado!");
+                tela.exibirMensagem("Nenhum produto Selecionado!", "Falha na Operação");
     
             } else {
-                mensagem("Pedido gerado com sucesso");
+                tela.exibirMensagem("Pedido gerado com sucesso", "Falha na Operação");
             }
             }catch(NullPointerException e){
-                mensagem("Algum produto excede a capacidade disponível, verifique a disponibilidade e refaça o pedido.");
+                tela.exibirMensagem("Algum produto excede a capacidade disponível, verifique a disponibilidade e refaça o pedido.",
+                                    "Falha na Operação");
             }
         }
     }
@@ -287,51 +261,47 @@ public class VendaController implements Controller{
     private void cancelarVenda(){
         
         if (pedido.isEmpty()) {
-            mensagem("nenhum pedido feito");
+            tela.exibirMensagem("nenhum pedido feito", "Falha na Operação");
         } else {
-            int cancelar = JOptionPane.showConfirmDialog
-        (tela, "Deseja cancelar a compra atual?", "Cancelar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (cancelar == JOptionPane.YES_OPTION) {
+            if (tela.retornaOpcao()) {
                 devolverProdutos();
                 pedido = new ArrayList<>();
-                limparTodosOsCampos();
+                tela.limparTodosOsCampos();
             } else {
-                JOptionPane.showMessageDialog(tela, "Operação Cancelada", "Action: Operação Cancelada", JOptionPane.WARNING_MESSAGE);
+                tela.exibirMensagem("Operação Cancelada", "Action: Operação Cancelada");
             }
         }
     }
     
     private Venda gerarVenda(List<ItemProduto> pedido){
         if (pedido == null) {
-            JOptionPane.showMessageDialog(tela, "Compra inválida!"
-                    + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
+            tela.exibirMensagem("Compra inválida!"
+                    + "\nPreencha corretamente todos os campos!", "Compra inválida");
             return null;
         }
 
-        Cliente cliente = tela.getLtClientes().getSelectedValue();
+        Cliente cliente = tela.getClienteSelecionado();
         String formaDePagamento = getFormaDePagemento() + " - " + tela.getParcelas();
         Venda venda = new Venda((Vendedor) vendedor, cliente, pedido, formaDePagamento);
         return venda;
     }
     
     private void finalizarVenda(){
-        if (tela.getLtClientes().getSelectedValue() == null) {
-            JOptionPane.showMessageDialog(tela, "Compra inválida!"
-                    + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
-        } else if (tela.getBgFormasDePagamento().getSelection() == null) {
-            JOptionPane.showMessageDialog(tela, "Compra inválida!"
-                    + "\nPreencha corretamente todos os campos!", "Compra inválida", JOptionPane.ERROR_MESSAGE);
+        if (tela.retornaClienteSelecionado() == null) {
+            tela.exibirError("Compra inválida!"
+                    + "\nPreencha corretamente todos os campos!", "Compra inválida");
+        } else if (tela.retornaFormaDePagamentoSelecionada() == null) {
+            tela.exibirError("Compra inválida!"
+                    + "\nPreencha corretamente todos os campos!", "Compra inválida");
         } else {
             
             try {
                 Venda venda = gerarVenda(pedido);
                 vendaDao.addVenda(venda);
-                JOptionPane.showMessageDialog(tela, "Compra Realizada com Sucesso!", "Compra Concluida", JOptionPane.WARNING_MESSAGE);
-                System.out.println("Foi");
+                tela.exibirMensagem("Compra Realizada com Sucesso!", "Compra Concluida");
                 
             } catch (NullPointerException ex) {
-                mensagem("Operacao falhou");
-                System.out.println("falhou");
+                tela.exibirMensagem("Operacao falhou", "Falha na Operação");
             }
         }
         
@@ -361,31 +331,6 @@ public class VendaController implements Controller{
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- // 
 //-------------------------                                      VALIDAÇÕES                                     -------------------------//
-
- private boolean validarItemSelecionado(Produto item, int quantidade){
-     DefaultTableModel model = (DefaultTableModel) tela.getTbProdutos().getModel();
-        for (int i = 0; i < tela.getTbProdutos().getRowCount(); i++) {
-            if (item.getNome().equals(tela.getTbProdutos().getValueAt(i, 0))) {
-                Integer quantidadeAnterior = Integer.parseInt(tela.getTbProdutos().getValueAt(i, 2).toString());
-                if (quantidadeAnterior + tela.getQuantidadeProduto() > item.getQuantidade()) {
-                    mensagem("Produto excedente da quantidade em estoque");
-                    return false;
- 
-                } else {
-                    tela.getTbProdutos().setValueAt(quantidadeAnterior + quantidade, i, 2);
-                    Double novoPreco = item.getPreco() * Integer.parseInt(tela.getTbProdutos().getValueAt(i, 2).toString());
-                    tela.getTbProdutos().setValueAt(novoPreco, i, 3);
-                    return false;
-                }
-            }
-        }
-        model.addRow(new Object[]{item.getNome(), item.getCodigo(), quantidade, item.getPreco() * quantidade});
-        return true;
-    }
- 
-    private void mostrarNomeVendedor(){
-        tela.getLbVendedorAtual().setText(vendedor.getNome());  
-    }
     
     private void abrirTelaCadastroCliente(){
         CadClienteView cadClienteView = new CadClienteView();
@@ -394,29 +339,18 @@ public class VendaController implements Controller{
     
     private void disableCb(){
         if(tela.dinheiroSelecionado() || tela.debitoSelecionado())
-        tela.getCbParcelas().setEnabled(false);
-        tela.getCbParcelas().setSelectedIndex(0);
+        tela.ChangeStateCBParcelas(false);
     }
     
     private void enableCb(){
-        tela.getCbParcelas().setEnabled(true);
+        tela.ChangeStateCBParcelas(true);
     }
 //-------------------------                                         end                                         -------------------------//
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //   
 //-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- //       
 //-------------------------                                      UTILIDADES                                     -------------------------//
     
-    public void mensagem(String mensagem) {
-        JOptionPane.showMessageDialog(tela, mensagem);
-    }
     
-    public void limpaCampo(JTextField textField) {
-        textField.setText("");
-    }
-
-    public void limpaCampo(JTextArea textArea) {
-        textArea.setText("");
-    }
     
     private boolean campoCodigoVazio() {
         return tela.getCodigoProduto().isBlank();
@@ -433,13 +367,6 @@ public class VendaController implements Controller{
     private boolean campoNomeClienteVazio(){
         return tela.getNomeCliente().isBlank();
     }
-
-    private void limparTodosOsCampos(){
-        tela.getTfNomeCliente().setText("");
-        tela.getTfCPF().setText("");
-        tela.getTfCodigo().setText("");
-        tela.getTfNomeProduto().setText("");
-    }
     
     public Produto buscarProdutoPorNome(String nome){
         for (Produto p : produtoDao.getProdutos()) {
@@ -453,22 +380,6 @@ public class VendaController implements Controller{
         for (Produto p : produtoDao.getProdutos()) {
             if(p.getCodigo() == codigo)
                 return p;
-        }
-        return null;
-    }
-
-    public Cliente buscarClientePorNome(String nome) {
-        for (Cliente c : clienteDao.getClientes()){
-            if(c.getNome().equals(nome))
-                return c;
-        }
-        return null;
-    }
-
-    public Cliente buscarClientePorCPF(String CPF) {
-        for (Cliente c : clienteDao.getClientes()) {
-            if(c.getCPF().equals(CPF))
-                return c;
         }
         return null;
     }
